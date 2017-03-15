@@ -1,0 +1,9 @@
+funcsigs==1.0.2
+Keras==2.0.0
+mock==2.0.0
+numpy==1.12.0
+pbr==2.0.0
+protobuf==3.2.0
+PyYAML==3.12
+six==1.10.0
+tensorflow==1.0.1
