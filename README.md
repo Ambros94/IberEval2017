@@ -15,4 +15,4 @@ Mailing list: coset@googlegroups.com
 
 Developers:
 Ambrosini Luca - luca.ambrosini@supsi.ch
-Giancarlo Nicolò -
+Giancarlo Nicolò - giani1@inf.upv.es
