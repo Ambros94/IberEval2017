@@ -22,17 +22,22 @@ def load_data():
     :return: (X_train, y_train), (X_test, y_test)
     """
     X_train, y_train, X_test, y_test = [], [], [], []
+    # Train set
     with open(abs_train_path, 'rb') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in spamreader:
             X_train.append(row[1])
             y_train.append(row[2])
-
-    with open(abs_dev_path, 'rb') as csvfile:
+    # Dev set
+    with open(abs_dev_path, 'rb') as csvfile
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in spamreader:
             X_train.append(row[1])
             y_train.append(row[2])
+
+    # TODO Go on with data pre-processing, at least join hash tags in a single word
+    # p.s Hashtags are not in the dictionary anymore, we should come up with something
+    #  #perro is not in the dict, perro is
 
     return (X_train[1:], y_train[1:]), (X_test, y_test)
 
