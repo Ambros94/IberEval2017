@@ -14,7 +14,7 @@ from __future__ import print_function
 
 import numpy as np
 
-import data_helper
+import coset
 
 np.random.seed(1337)  # for reproducibility
 
@@ -61,15 +61,15 @@ def add_ngram(sequences, token_indice, ngram_range=2):
 
 # Set parameters:
 # ngram_range = 2 will add bi-grams features
-ngram_range = 3
+ngram_range = 1
 max_features = 20000
-maxlen = 50
-batch_size = 10
+maxlen = 400
+batch_size = 32
 embedding_dims = 50
 nb_epoch = 5
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = data_helper.DataLoader().load_data(nb_validation_samples=100)
+(X_train, y_train), (X_test, y_test) = coset.load_data()
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 print('Average train sequence length: {}'.format(np.mean(list(map(len, X_train)), dtype=int)))
