@@ -15,13 +15,14 @@ from __future__ import print_function
 
 import os
 import sys
+import time
 
 import numpy as np
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
 from keras.utils import to_categorical
 
-BASE_DIR = ''
+BASE_DIR = '../resources'
 TEXT_DATA_DIR = BASE_DIR + '/20_newsgroup/'
 MAX_SEQUENCE_LENGTH = 1000
 MAX_NB_WORDS = 20000
@@ -58,8 +59,8 @@ for name in sorted(os.listdir(TEXT_DATA_DIR)):
                 texts.append(t)
                 f.close()
                 labels.append(label_id)
-
-print(texts)
+                #print(labels)
+                #print(texts)
 
 print('Found %s texts.' % len(texts))
 
@@ -73,6 +74,7 @@ print('Found %s unique tokens.' % len(word_index))
 
 data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 
+print(labels)
 labels = to_categorical(np.asarray(labels))
 print('Shape of data tensor:', data.shape)
 print('Shape of label tensor:', labels.shape)
@@ -88,16 +90,3 @@ x_train = data[:-num_validation_samples]
 y_train = labels[:-num_validation_samples]
 x_val = data[-num_validation_samples:]
 y_val = labels[-num_validation_samples:]
-
-print('Preparing embedding matrix.')
-
-# prepare embedding matrix
-num_words = min(MAX_NB_WORDS, len(word_index))
-embedding_matrix = np.zeros((num_words, EMBEDDING_DIM))
-for word, i in word_index.items():
-    if i >= MAX_NB_WORDS:
-        continue
-    embedding_vector = embeddings_index.get(word)
-    if embedding_vector is not None:
-        # words not found in embedding index will be all-zeros.
-        embedding_matrix[i] = embedding_vector

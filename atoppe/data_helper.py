@@ -11,39 +11,40 @@ abs_dev_path = os.path.join(script_dir, '../resources/coset-dev.csv')
 
 class DataLoader:
     def __init__(self):
-        self.X_train = []
+        self.x_train = []
         self.y_train = []
-        self.X_test = []
-        self.y_test = []
+        self.x_val = []
+        self.y_val = []
 
-    def load_data(self):
+    def load_data(self, nb_validation_samples=500):
         """
         Loads data form file, the train set contains also the dev
         :return: (X_train, y_train), (X_test, y_test)
         """
-
-        # Train set
+        data = []
+        labels = []
+        # Loading
         with open(abs_train_path, 'rt', encoding="utf-8") as csvfile:
             csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
             for row in csv_reader:
-                self.X_train.append(row[1])
-                self.y_train.append(row[2])
-        # Dev set
+                data.append(row[1])
+                labels.append(row[2])
         with open(abs_dev_path, 'rt', encoding="utf-8") as csvfile:
             csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
             for row in csv_reader:
-                self.X_train.append(row[1])
-                self.y_train.append(row[2])
+                data.append(row[1])
+                labels.append(row[2])
 
-        self.tokenize()
-
-        return (self.X_train, self.y_train), (self.X_test, self.y_test)
-
-    def tokenize(self):
+        # Prepare
         tokenizer = Tokenizer(num_words=20000)
-        tokenizer.fit_on_texts(self.X_train)
-        self.X_train = tokenizer.texts_to_sequences(self.X_train)
+        tokenizer.fit_on_texts(data)
+        data = tokenizer.texts_to_sequences(data)
+        word_index = tokenizer.word_index
+        print('Found %s unique tokens.' % len(word_index))
+        # Split in train and test
+        self.x_train = data[:-nb_validation_samples]
+        self.y_train = labels[:-nb_validation_samples]
+        self.x_val = data[-nb_validation_samples:]
+        self.y_val = labels[-nb_validation_samples:]
 
-
-(X_train, y_train), (X_test, y_test) = DataLoader().load_data()
-print(X_train[0], y_train[0])
+        return (self.x_train, self.y_train), (self.x_val, self.y_val)
