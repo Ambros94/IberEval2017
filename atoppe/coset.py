@@ -4,6 +4,8 @@ import os
 
 import keras.backend as K
 from keras.preprocessing.text import Tokenizer
+from keras.utils import np_utils
+from sklearn.preprocessing import LabelEncoder
 
 script_dir = os.path.dirname(__file__)
 abs_train_path = os.path.join(script_dir, '../resources/coset-train.csv')
@@ -49,29 +51,36 @@ def load_data(num_words, n_validation_samples=250, verbose=False, debug=False):
         print("Loaded data-set:")
         for i, d in enumerate(data):
             print("{label}\t:\t{data}".format(data=d, label=labels[i]))
-    # Prepare
+    # Prepare data
     tokenizer = Tokenizer(num_words=num_words)
     tokenizer.fit_on_texts(data)
     data = tokenizer.texts_to_sequences(data)
     print('Found {word_index} unique tokens: {words}'.format(word_index=len(tokenizer.word_index),
                                                              words=tokenizer.word_index))
+    # Prepare labels
+
+    encoder = LabelEncoder()
+    encoder.fit(labels)
+    encoded_y = encoder.transform(labels)
+    ready_y = np_utils.to_categorical(encoded_y)
+
     # Split in train and test
     x_train = data[:-n_validation_samples]
-    y_train = labels[:-n_validation_samples]
+    y_train = ready_y[:-n_validation_samples]
     x_val = data[-n_validation_samples:]
-    y_val = labels[-n_validation_samples:]
+    y_val = ready_y[-n_validation_samples:]
     if verbose:
         print("Pre-processed data-set:")
         for i, d in enumerate(x_train):
             print("{label}\t:\t{data}".format(data=d, label=y_train[i]))
+    print(x_train[0], x_val[0])
+    print(x_train[-1], x_val[-1])
     return (x_train, y_train), (x_val, y_val)
+
+if __name__=="main":
+    load_data()
 
 
 def coset_f1(y_true, y_pred):
     print(y_true, y_pred)
     return K.mean(y_pred)
-
-
-# Remove from here, is just for debug purpose
-if __name__ == "__main__":
-    load_data(num_words=15000, verbose=True, debug=True, n_validation_samples=-3)

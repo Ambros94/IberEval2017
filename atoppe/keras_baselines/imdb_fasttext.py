@@ -59,12 +59,12 @@ def add_ngram(sequences, token_indice, ngram_range=2):
 
 # Set parameters:
 # ngram_range = 2 will add bi-grams features
-ngram_range = 1
-max_features = 20000
+ngram_range = 7
+max_features = 10000
 maxlen = 47
 batch_size = 32
 embedding_dims = 50
-epochs = 5
+epochs = 10
 
 print('Loading data...')
 (X_train, y_train), (X_test, y_test) = coset.load_data(num_words=500)
@@ -121,14 +121,19 @@ model.add(Embedding(max_features,
 model.add(GlobalAveragePooling1D())
 
 # We project onto a single unit output layer, and squash it with a sigmoid:
-model.add(Dense(1, activation='sigmoid'))
+model.add(Dense(5, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy',
               optimizer='adam',
-              metrics=['accuracy'])
+              metrics=['categorical_accuracy'])
 
 model.fit(X_train, y_train,
           batch_size=batch_size,
           epochs=epochs,
           validation_data=(X_test, y_test))
+
+score, acc = model.evaluate(X_test, y_test,
+                            batch_size=batch_size)
+print('Test score:', score)
+print('Test accuracy:', acc)
 

@@ -21,8 +21,8 @@ from keras.layers import Embedding
 from keras.layers import Convolution1D, GlobalMaxPooling1D
 
 # set parameters:
-max_features = 5000
-maxlen = 400
+max_features = 10000
+maxlen = 47
 batch_size = 32
 embedding_dims = 50
 nb_filter = 250
@@ -31,7 +31,7 @@ hidden_dims = 250
 nb_epoch = 2
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = coset.load_data()
+(X_train, y_train), (X_test, y_test) = coset.load_data(num_words=max_features)
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 
@@ -67,12 +67,12 @@ model.add(Dropout(0.2))
 model.add(Activation('relu'))
 
 # We project onto a single unit output layer, and squash it with a sigmoid:
-model.add(Dense(1))
+model.add(Dense(5))
 model.add(Activation('sigmoid'))
 
 model.compile(loss='binary_crossentropy',
               optimizer='adam',
-              metrics=['accuracy'])
+              metrics=['categorical_accuracy'])
 model.fit(X_train, y_train,
           batch_size=batch_size,
           nb_epoch=nb_epoch,

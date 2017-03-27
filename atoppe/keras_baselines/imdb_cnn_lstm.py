@@ -19,8 +19,8 @@ from keras.layers import LSTM
 from keras.layers import Convolution1D, MaxPooling1D
 
 # Embedding
-max_features = 20000
-maxlen = 100
+max_features = 15000
+maxlen = 50
 embedding_size = 128
 
 # Convolution
@@ -32,8 +32,8 @@ pool_length = 4
 lstm_output_size = 70
 
 # Training
-batch_size = 30
-nb_epoch = 2
+batch_size = 10
+nb_epoch = 3
 
 '''
 Note:
@@ -42,7 +42,7 @@ Only 2 epochs are needed as the dataset is very small.
 '''
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = coset.load_data()
+(X_train, y_train), (X_test, y_test) = coset.load_data(num_words=max_features, n_validation_samples=250)
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 
@@ -64,12 +64,12 @@ model.add(Convolution1D(nb_filter=nb_filter,
                         subsample_length=1))
 model.add(MaxPooling1D(pool_length=pool_length))
 model.add(LSTM(lstm_output_size))
-model.add(Dense(1))
+model.add(Dense(5))
 model.add(Activation('sigmoid'))
 
 model.compile(loss='binary_crossentropy',
               optimizer='adam',
-              metrics=['accuracy'])
+              metrics=['categorical_accuracy'])
 
 print('Train...')
 model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=nb_epoch,
