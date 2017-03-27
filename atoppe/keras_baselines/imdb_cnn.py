@@ -7,6 +7,7 @@ Gets to 0.89 test accuracy after 2 epochs.
 '''
 
 from __future__ import print_function
+
 import numpy as np
 
 import coset
@@ -18,8 +19,6 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation
 from keras.layers import Embedding
 from keras.layers import Convolution1D, GlobalMaxPooling1D
-from keras.datasets import imdb
-
 
 # set parameters:
 max_features = 5000

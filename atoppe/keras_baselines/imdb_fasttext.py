@@ -10,8 +10,6 @@ Results on IMDB datasets with uni and bi-gram embeddings:
     Bi-gram : 0.9056 test accuracy after 5 epochs. 2s/epoch on GTX 980M gpu.
 '''
 
-from __future__ import print_function
-
 import numpy as np
 
 import coset
@@ -63,18 +61,19 @@ def add_ngram(sequences, token_indice, ngram_range=2):
 # ngram_range = 2 will add bi-grams features
 ngram_range = 1
 max_features = 20000
-maxlen = 400
+maxlen = 47
 batch_size = 32
 embedding_dims = 50
-nb_epoch = 5
+epochs = 5
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = coset.load_data()
+(X_train, y_train), (X_test, y_test) = coset.load_data(num_words=500)
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 print('Average train sequence length: {}'.format(np.mean(list(map(len, X_train)), dtype=int)))
 print('Average test sequence length: {}'.format(np.mean(list(map(len, X_test)), dtype=int)))
-print(X_train[0], y_train[0])
+print('Max train sequence length: {}'.format(np.max(list(map(len, X_train)))))
+print('Max test sequence length: {}'.format(np.max(list(map(len, X_test)))))
 
 if ngram_range > 1:
     print('Adding {}-gram features'.format(ngram_range))
@@ -100,6 +99,7 @@ if ngram_range > 1:
     X_test = add_ngram(X_test, token_indice, ngram_range)
     print('Average train sequence length: {}'.format(np.mean(list(map(len, X_train)), dtype=int)))
     print('Average test sequence length: {}'.format(np.mean(list(map(len, X_test)), dtype=int)))
+    print('Min test sequence length: {}'.format(np.min(list(map(len, X_test)))))
 
 print('Pad sequences (samples x time)')
 X_train = sequence.pad_sequences(X_train, maxlen=maxlen)
@@ -129,5 +129,6 @@ model.compile(loss='binary_crossentropy',
 
 model.fit(X_train, y_train,
           batch_size=batch_size,
-          nb_epoch=nb_epoch,
+          epochs=epochs,
           validation_data=(X_test, y_test))
+

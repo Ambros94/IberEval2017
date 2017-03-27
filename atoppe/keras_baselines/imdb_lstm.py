@@ -13,15 +13,14 @@ from what you see with CNNs/MLPs/etc.
 from __future__ import print_function
 
 import numpy as np
+from keras.layers import Dense, Activation, Embedding
+from keras.layers import LSTM
+from keras.models import Sequential
+from keras.preprocessing import sequence
 
 import coset
 
 np.random.seed(1337)  # for reproducibility
-
-from keras.preprocessing import sequence
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Embedding
-from keras.layers import LSTM
 
 max_features = 20000
 maxlen = 80  # cut texts after this number of words (among top max_features most common words)

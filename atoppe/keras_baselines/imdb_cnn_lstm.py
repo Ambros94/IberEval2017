@@ -4,6 +4,7 @@ classification task.
 Gets to 0.8498 test accuracy after 2 epochs. 41s/epoch on K520 GPU.
 '''
 from __future__ import print_function
+
 import numpy as np
 
 import coset
@@ -16,8 +17,6 @@ from keras.layers import Dense, Dropout, Activation
 from keras.layers import Embedding
 from keras.layers import LSTM
 from keras.layers import Convolution1D, MaxPooling1D
-from keras.datasets import imdb
-
 
 # Embedding
 max_features = 20000
@@ -43,7 +42,7 @@ Only 2 epochs are needed as the dataset is very small.
 '''
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) =coset.load_data()
+(X_train, y_train), (X_test, y_test) = coset.load_data()
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 
