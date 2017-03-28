@@ -1,7 +1,6 @@
 """
 This example demonstrates the use of Convolution1D for tweets classification.
 
-
 This code is an extension of a keras example
 """
 

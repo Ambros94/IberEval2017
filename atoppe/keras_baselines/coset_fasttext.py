@@ -1,15 +1,11 @@
-'''This example demonstrates the use of fasttext for text classification
+"""This example demonstrates the use of fasttext for text classification
 
 Based on Joulin et al's paper:
 
 Bags of Tricks for Efficient Text Classification
 https://arxiv.org/abs/1607.01759
 
-This code is developed from Keras example
-Results on IMDB datasets with uni and bi-gram embeddings:
-    Uni-gram: 0.8813 test accuracy after 5 epochs. 8s/epoch on i7 cpu.
-    Bi-gram : 0.9056 test accuracy after 5 epochs. 2s/epoch on GTX 980M gpu.
-'''
+"""
 
 import numpy as np
 from keras.layers import Dense

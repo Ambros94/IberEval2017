@@ -1,7 +1,5 @@
-"""Train a Bidirectional LSTM on the COSET tweets classification task.
-
-Output after 4 epochs on CPU: ~0.8146
-Time per epoch on CPU (Core i7): ~150s.
+"""
+Train a Bidirectional LSTM on the COSET tweets classification task.
 """
 
 import numpy as np
