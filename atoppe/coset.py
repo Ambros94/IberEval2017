@@ -20,7 +20,7 @@ abs_dev_path = os.path.join(script_dir, '../resources/coset-dev.csv')
 """
 
 
-def load_data(num_words, n_validation_samples=250, verbose=False, debug=False):
+def load_data(max_words, n_validation_samples=250, verbose=False, debug=False):
     """
     Loads data form file, the train set contains also the dev
     :return: (X_train, y_train), (X_test, y_test)
@@ -52,7 +52,7 @@ def load_data(num_words, n_validation_samples=250, verbose=False, debug=False):
         for i, d in enumerate(data):
             print("{label}\t:\t{data}".format(data=d, label=labels[i]))
     # Prepare data
-    tokenizer = Tokenizer(num_words=num_words)
+    tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(data)
     data = tokenizer.texts_to_sequences(data)
     print('Found {word_index} unique tokens: {words}'.format(word_index=len(tokenizer.word_index),

@@ -5,18 +5,14 @@ Gets to 0.8498 test accuracy after 2 epochs. 41s/epoch on K520 GPU.
 '''
 from __future__ import print_function
 
-import numpy as np
-
-import coset
-
-np.random.seed(1337)  # for reproducibility
-
-from keras.preprocessing import sequence
-from keras.models import Sequential
+from keras.layers import Convolution1D, MaxPooling1D
 from keras.layers import Dense, Dropout, Activation
 from keras.layers import Embedding
 from keras.layers import LSTM
-from keras.layers import Convolution1D, MaxPooling1D
+from keras.models import Sequential
+from keras.preprocessing import sequence
+
+import coset
 
 # Embedding
 max_features = 15000
@@ -42,7 +38,7 @@ Only 2 epochs are needed as the dataset is very small.
 '''
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = coset.load_data(num_words=max_features, n_validation_samples=250)
+(X_train, y_train), (X_test, y_test) = coset.load_data(max_words=max_features, n_validation_samples=250)
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 

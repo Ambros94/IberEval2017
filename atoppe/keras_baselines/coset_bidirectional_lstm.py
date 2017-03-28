@@ -7,21 +7,18 @@ Time per epoch on CPU (Core i7): ~150s.
 from __future__ import print_function
 
 import numpy as np
+from keras.layers import Dense, Dropout, Embedding, LSTM, Bidirectional
+from keras.models import Sequential
+from keras.preprocessing import sequence
 
 import coset
 
-np.random.seed(1337)  # for reproducibility
-
-from keras.preprocessing import sequence
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Embedding, LSTM, Bidirectional
-
 max_features = 20000
-maxlen = 100  # cut texts after this number of words (among top max_features most common words)
+maxlen = 47  # cut texts after this number of words (among top max_features most common words)
 batch_size = 32
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = coset.load_data()
+(X_train, y_train), (X_test, y_test) = coset.load_data(max_words=max_features)
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 

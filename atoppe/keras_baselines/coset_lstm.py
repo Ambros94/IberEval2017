@@ -12,7 +12,6 @@ from what you see with CNNs/MLPs/etc.
 '''
 from __future__ import print_function
 
-import numpy as np
 from keras.layers import Dense, Embedding
 from keras.layers import LSTM
 from keras.models import Sequential
@@ -20,14 +19,12 @@ from keras.preprocessing import sequence
 
 import coset
 
-np.random.seed(1337)  # for reproducibility
-
 max_features = 20000
 maxlen = 47  # cut texts after this number of words (among top max_features most common words)
 batch_size = 32
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = coset.load_data(num_words=max_features, n_validation_samples=400)
+(X_train, y_train), (X_test, y_test) = coset.load_data(max_words=max_features, n_validation_samples=400)
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 
@@ -51,7 +48,7 @@ model.compile(loss='binary_crossentropy',
 print('Train...')
 model.fit(X_train, y_train,
           batch_size=batch_size,
-          epochs=15,
+          epochs=3,
           validation_data=(X_test, y_test))
 score, acc = model.evaluate(X_test, y_test,
                             batch_size=batch_size)

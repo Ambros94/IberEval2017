@@ -8,17 +8,13 @@ Gets to 0.89 test accuracy after 2 epochs.
 
 from __future__ import print_function
 
-import numpy as np
-
-import coset
-
-np.random.seed(1337)  # for reproducibility
-
-from keras.preprocessing import sequence
-from keras.models import Sequential
+from keras.layers import Convolution1D, GlobalMaxPooling1D
 from keras.layers import Dense, Dropout, Activation
 from keras.layers import Embedding
-from keras.layers import Convolution1D, GlobalMaxPooling1D
+from keras.models import Sequential
+from keras.preprocessing import sequence
+
+import coset
 
 # set parameters:
 max_features = 10000
@@ -31,7 +27,7 @@ hidden_dims = 250
 nb_epoch = 2
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = coset.load_data(num_words=max_features)
+(X_train, y_train), (X_test, y_test) = coset.load_data(max_words=max_features)
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 

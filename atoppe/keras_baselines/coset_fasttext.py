@@ -11,16 +11,13 @@ Results on IMDB datasets with uni and bi-gram embeddings:
 '''
 
 import numpy as np
-
-import coset
-
-np.random.seed(1337)  # for reproducibility
-
-from keras.preprocessing import sequence
-from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Embedding
 from keras.layers import GlobalAveragePooling1D
+from keras.models import Sequential
+from keras.preprocessing import sequence
+
+import coset
 
 
 def create_ngram_set(input_list, ngram_value=2):
@@ -67,7 +64,7 @@ embedding_dims = 50
 epochs = 10
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = coset.load_data(num_words=500)
+(X_train, y_train), (X_test, y_test) = coset.load_data(max_words=500)
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 print('Average train sequence length: {}'.format(np.mean(list(map(len, X_train)), dtype=int)))
@@ -136,4 +133,3 @@ score, acc = model.evaluate(X_test, y_test,
                             batch_size=batch_size)
 print('Test score:', score)
 print('Test accuracy:', acc)
-
