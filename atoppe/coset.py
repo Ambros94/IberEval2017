@@ -32,14 +32,13 @@ def load_data(max_words=15000, n_validation_samples=250):
     data = []
     labels = []
     # Loading
-    with open(abs_train_path, 'rt', encoding="utf-8") as csvfile:
-        csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+    with open(abs_train_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
         for row in csv_reader:
             data.append(row[1])
             labels.append(row[2])
-    train_size = len(data)
-    with open(abs_dev_path, 'rt', encoding="utf-8") as csvfile:
-        csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+    with open(abs_dev_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
         for row in csv_reader:
             data.append(row[1])
             labels.append(row[2])
@@ -47,8 +46,8 @@ def load_data(max_words=15000, n_validation_samples=250):
     tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(data)
     data = tokenizer.texts_to_sequences(data)
-    print('Found {word_index} unique tokens: {words}'.format(word_index=len(tokenizer.word_index),
-                                                             words=tokenizer.word_index))
+    print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
+
     # Prepare labels
     encoder = LabelEncoder()
     encoder.fit(labels)
