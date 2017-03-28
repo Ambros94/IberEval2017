@@ -1,10 +1,8 @@
-'''Train a Bidirectional LSTM on the IMDB sentiment classification task.
+"""Train a Bidirectional LSTM on the COSET tweets classification task.
 
 Output after 4 epochs on CPU: ~0.8146
 Time per epoch on CPU (Core i7): ~150s.
-'''
-
-from __future__ import print_function
+"""
 
 import numpy as np
 from keras.layers import Dense, Dropout, Embedding, LSTM, Bidirectional
@@ -14,19 +12,21 @@ from keras.preprocessing import sequence
 import coset
 
 max_features = 20000
-maxlen = 47  # cut texts after this number of words (among top max_features most common words)
+# cut texts after this number of words
+# (among top max_features most common words)
+maxlen = 50
 batch_size = 32
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = coset.load_data(max_words=max_features)
-print(len(X_train), 'train sequences')
-print(len(X_test), 'test sequences')
+(x_train, y_train), (x_test, y_test) = coset.load_data()
+print(len(x_train), 'train sequences')
+print(len(x_test), 'test sequences')
 
 print("Pad sequences (samples x time)")
-X_train = sequence.pad_sequences(X_train, maxlen=maxlen)
-X_test = sequence.pad_sequences(X_test, maxlen=maxlen)
-print('X_train shape:', X_train.shape)
-print('X_test shape:', X_test.shape)
+x_train = sequence.pad_sequences(x_train, maxlen=maxlen)
+x_test = sequence.pad_sequences(x_test, maxlen=maxlen)
+print('x_train shape:', x_train.shape)
+print('x_test shape:', x_test.shape)
 y_train = np.array(y_train)
 y_test = np.array(y_test)
 
@@ -34,13 +34,18 @@ model = Sequential()
 model.add(Embedding(max_features, 128, input_length=maxlen))
 model.add(Bidirectional(LSTM(64)))
 model.add(Dropout(0.5))
-model.add(Dense(1, activation='sigmoid'))
+model.add(Dense(5, activation='sigmoid'))
 
 # try using different optimizers and different optimizer configs
-model.compile('adam', 'binary_crossentropy', metrics=['accuracy'])
+model.compile('adam', 'binary_crossentropy', metrics=['categorical_accuracy'])
 
 print('Train...')
-model.fit(X_train, y_train,
+model.fit(x_train, y_train,
           batch_size=batch_size,
-          nb_epoch=4,
-          validation_data=[X_test, y_test])
+          epochs=4,
+          validation_data=[x_test, y_test])
+
+score, acc = model.evaluate(x_test, y_test,
+                            batch_size=batch_size)
+print('Test score:', score)
+print('Test accuracy:', acc)

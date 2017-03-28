@@ -10,7 +10,6 @@ Some configurations won't converge.
 - LSTM loss decrease patterns during training can be quite different
 from what you see with CNNs/MLPs/etc.
 '''
-from __future__ import print_function
 
 from keras.layers import Dense, Embedding
 from keras.layers import LSTM

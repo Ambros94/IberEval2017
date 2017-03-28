@@ -7,6 +7,8 @@ from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
 
+__author__ = "Ambrosini Luca (@Ambros94)"
+
 script_dir = os.path.dirname(__file__)
 abs_train_path = os.path.join(script_dir, '../resources/coset-train.csv')
 abs_dev_path = os.path.join(script_dir, '../resources/coset-dev.csv')
@@ -20,7 +22,7 @@ abs_dev_path = os.path.join(script_dir, '../resources/coset-dev.csv')
 """
 
 
-def load_data(max_words, n_validation_samples=250, verbose=False, debug=False):
+def load_data(max_words=15000, n_validation_samples=250, verbose=False, debug=False):
     """
     Loads data form file, the train set contains also the dev
     :return: (X_train, y_train), (X_test, y_test)
@@ -77,10 +79,7 @@ def load_data(max_words, n_validation_samples=250, verbose=False, debug=False):
     print(x_train[-1], x_val[-1])
     return (x_train, y_train), (x_val, y_val)
 
-if __name__=="main":
-    load_data()
 
-
-def coset_f1(y_true, y_pred):
-    print(y_true, y_pred)
-    return K.mean(y_pred)
+def coset_f1(y_true, y_predicted):
+    # TODO Implement the correct metrix used in the test instead of normal categorical_accuracy
+    return K.mean(y_predicted)

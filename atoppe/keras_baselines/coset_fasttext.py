@@ -5,6 +5,7 @@ Based on Joulin et al's paper:
 Bags of Tricks for Efficient Text Classification
 https://arxiv.org/abs/1607.01759
 
+This code is developed from Keras example
 Results on IMDB datasets with uni and bi-gram embeddings:
     Uni-gram: 0.8813 test accuracy after 5 epochs. 8s/epoch on i7 cpu.
     Bi-gram : 0.9056 test accuracy after 5 epochs. 2s/epoch on GTX 980M gpu.
@@ -56,7 +57,7 @@ def add_ngram(sequences, token_indice, ngram_range=2):
 
 # Set parameters:
 # ngram_range = 2 will add bi-grams features
-ngram_range = 7
+ngram_range = 3
 max_features = 10000
 maxlen = 47
 batch_size = 32
@@ -64,7 +65,7 @@ embedding_dims = 50
 epochs = 10
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = coset.load_data(max_words=500)
+(X_train, y_train), (X_test, y_test) = coset.load_data()
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 print('Average train sequence length: {}'.format(np.mean(list(map(len, X_train)), dtype=int)))
