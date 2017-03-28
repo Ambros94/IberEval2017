@@ -2,17 +2,32 @@
 import csv
 import os
 
+import keras.backend as K
 from keras.preprocessing.text import Tokenizer
+from keras.utils import np_utils
+from sklearn.preprocessing import LabelEncoder
+
+__author__ = "Ambrosini Luca (@Ambros94)"
 
 script_dir = os.path.dirname(__file__)
 abs_train_path = os.path.join(script_dir, '../resources/coset-train.csv')
 abs_dev_path = os.path.join(script_dir, '../resources/coset-dev.csv')
 
+"""
+1. Political issues Related to the most abstract electoral confrontation.
+2. Policy issues Tweets about sectorial policies.
+9. Campaign issues Related with the evolution of the campaign.
+10. Personal issues The topic is the personal life and activities of the candidates.
+11. Other issues.
+"""
 
-def load_data(nb_validation_samples=250):
+
+def load_data(max_words=15000, n_validation_samples=250):
     """
     Loads data form file, the train set contains also the dev
-    :return: (X_train, y_train), (X_test, y_test)
+    :param max_words: 
+    :param n_validation_samples: How many examples have to go from the dataset into the test set
+    :return: (x_train, y_train), (x_test, y_test)
     """
     data = []
     labels = []
@@ -22,22 +37,32 @@ def load_data(nb_validation_samples=250):
         for row in csv_reader:
             data.append(row[1])
             labels.append(row[2])
+    train_size = len(data)
     with open(abs_dev_path, 'rt', encoding="utf-8") as csvfile:
         csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in csv_reader:
             data.append(row[1])
             labels.append(row[2])
-
-    # Prepare
-    tokenizer = Tokenizer(num_words=20000)
+    # Prepare data
+    tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(data)
     data = tokenizer.texts_to_sequences(data)
-    word_index = tokenizer.word_index
-    print('Found %s unique tokens.' % len(word_index))
-    # Split in train and test
-    x_train = data[:-nb_validation_samples]
-    y_train = labels[:-nb_validation_samples]
-    x_val = data[-nb_validation_samples:]
-    y_val = labels[-nb_validation_samples:]
+    print('Found {word_index} unique tokens: {words}'.format(word_index=len(tokenizer.word_index),
+                                                             words=tokenizer.word_index))
+    # Prepare labels
+    encoder = LabelEncoder()
+    encoder.fit(labels)
+    encoded_y = encoder.transform(labels)
+    ready_y = np_utils.to_categorical(encoded_y)
 
+    # Split in train and test
+    x_train = data[:-n_validation_samples]
+    y_train = ready_y[:-n_validation_samples]
+    x_val = data[-n_validation_samples:]
+    y_val = ready_y[-n_validation_samples:]
     return (x_train, y_train), (x_val, y_val)
+
+
+def coset_f1(y_true, y_predicted):
+    # TODO Implement the correct metrix used in the test instead of normal categorical_accuracy
+    return K.mean(y_predicted)
