@@ -1,3 +1,5 @@
+from random import choice
+
 from hyperas import optim
 from hyperopt import Trials, tpe, STATUS_OK
 from keras.layers import Conv1D, GlobalMaxPooling1D
@@ -10,71 +12,35 @@ import coset
 
 
 def data():
-    '''
-    Data providing function:
-
-    This function is separated from model() so that hyperopt
-    won't reload data for each evaluation run.
-    '''
-    (X_train, Y_train), (X_test, Y_test) = coset.load_data()
-    X_train = sequence.pad_sequences(X_train, maxlen=50)
-    X_test = sequence.pad_sequences(X_test, maxlen=50)
-    return X_train, Y_train, X_test, Y_test
-
-
-def model(X_train, Y_train, X_test, Y_test):
     """
-    Model providing function:
-
-    Create Keras model with double curly brackets dropped-in as needed.
-    Return value has to be a valid python dictionary with two customary keys:
-        - loss: Specify a numeric evaluation metric to be minimized
-        - status: Just use STATUS_OK and see hyperopt documentation if not feasible
-    The last one is optional, though recommended, namely:
-        - model: specify the model just created so that we can later use it again.
-    
-    model = Sequential()
-    model.add(Dense(512, input_shape=(784,)))
-    model.add(Activation('relu'))
-    model.add(Dropout({{uniform(0, 1)}}))
-    model.add(Dense({{choice([256, 512, 1024])}}))
-    model.add(Activation({{choice(['relu', 'sigmoid'])}}))
-    model.add(Dropout({{uniform(0, 1)}}))
-
-    if conditional({{choice(['three', 'four'])}}) == 'four':
-        model.add(Dense(100))
-        model.add({{choice([Dropout(0.5), Activation('linear')])}})
-        model.add(Activation('relu'))
-
-    model.add(Dense(10))
-    model.add(Activation('softmax'))
-
-    model.compile(loss='categorical_crossentropy', metrics=['accuracy'],
-                  optimizer={{choice(['rmsprop', 'adam', 'sgd'])}})
-
-    model.fit(X_train, Y_train,
-              batch_size={{choice([64, 128])}},
-              epochs=1,
-              verbose=2,
-              validation_data=(X_test, Y_test))
-    score, acc = model.evaluate(X_test, Y_test, verbose=0)
-    print('Test accuracy:', acc)
-    return {'loss': -acc, 'status': STATUS_OK, 'model': model}
+    Provide data for the model in the right format
+    :return: x_train, y_train, x_test, y_test
     """
+    (x_train, y_train), (x_test, y_test) = coset.load_data()
+    x_train = sequence.pad_sequences(x_train, maxlen=50)
+    x_test = sequence.pad_sequences(x_test, maxlen=50)
+    return x_train, y_train, x_test, y_test
+
+
+def model(x_train, y_train, x_test, y_test):
+    # Fixed params
+
+    max_len = 50
+    # Parameter that need to be optimized
+
     max_features = 15000
-    maxlen = 50
     batch_size = 32
-    embedding_dims = 50
-    filters = 250
-    kernel_size = 3
-    hidden_dims = 250
-    epochs = 5
+    embedding_dims = {{choice([25, 50, 100])}}
+    filters = {{choice([150, 200, 250, 300])}}
+    kernel_size = {{choice([2, 3, 4, 5])}}
+    hidden_dims = {{choice([150, 200, 250, 300])}}
+    epochs = {{choice([5, 6, 7, 8])}}
 
     model = Sequential()
 
     model.add(Embedding(max_features,
                         embedding_dims,
-                        input_length=maxlen))
+                        input_length=max_len))
     model.add(Dropout(0.2))
 
     model.add(Conv1D(filters,
@@ -94,12 +60,13 @@ def model(X_train, Y_train, X_test, Y_test):
     model.compile(loss='binary_crossentropy',
                   optimizer='adam',
                   metrics=['categorical_accuracy'])
-    model.fit(X_train, Y_train,
+    model.fit(x_train, y_train,
               batch_size=batch_size,
               epochs=epochs,
-              validation_data=(X_test, Y_test))
+              verbose=2,
+              validation_data=(x_test, y_test))
 
-    score, acc = model.evaluate(X_test, Y_test,
+    score, acc = model.evaluate(x_test, y_test,
                                 batch_size=batch_size)
     print('Test score:', score)
     print('Test accuracy:', acc)
@@ -107,7 +74,7 @@ def model(X_train, Y_train, X_test, Y_test):
 
 
 if __name__ == '__main__':
-    max_evaluations = 5
+    max_evaluations = 100
     best_run, best_model = optim.minimize(model=model,
                                           data=data,
                                           algo=tpe.suggest,
