@@ -22,10 +22,12 @@ abs_dev_path = os.path.join(script_dir, '../resources/coset-dev.csv')
 """
 
 
-def load_data(max_words=15000, n_validation_samples=250, verbose=False, debug=False):
+def load_data(max_words=15000, n_validation_samples=250):
     """
     Loads data form file, the train set contains also the dev
-    :return: (X_train, y_train), (X_test, y_test)
+    :param max_words: 
+    :param n_validation_samples: How many examples have to go from the dataset into the test set
+    :return: (x_train, y_train), (x_test, y_test)
     """
     data = []
     labels = []
@@ -36,23 +38,11 @@ def load_data(max_words=15000, n_validation_samples=250, verbose=False, debug=Fa
             data.append(row[1])
             labels.append(row[2])
     train_size = len(data)
-    if verbose:
-        print("Loaded {n_examples} examples from train set".format(n_examples=train_size))
     with open(abs_dev_path, 'rt', encoding="utf-8") as csvfile:
         csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
         for row in csv_reader:
             data.append(row[1])
             labels.append(row[2])
-    if verbose:
-        print("Loaded {n_examples} examples from dev set".format(n_examples=len(data) - train_size))
-    # Keep only some very small data so it's easier to manually analise
-    if debug:
-        data = data[:3]
-        labels = labels[:3]
-    if verbose:
-        print("Loaded data-set:")
-        for i, d in enumerate(data):
-            print("{label}\t:\t{data}".format(data=d, label=labels[i]))
     # Prepare data
     tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(data)
@@ -60,7 +50,6 @@ def load_data(max_words=15000, n_validation_samples=250, verbose=False, debug=Fa
     print('Found {word_index} unique tokens: {words}'.format(word_index=len(tokenizer.word_index),
                                                              words=tokenizer.word_index))
     # Prepare labels
-
     encoder = LabelEncoder()
     encoder.fit(labels)
     encoded_y = encoder.transform(labels)
@@ -71,12 +60,6 @@ def load_data(max_words=15000, n_validation_samples=250, verbose=False, debug=Fa
     y_train = ready_y[:-n_validation_samples]
     x_val = data[-n_validation_samples:]
     y_val = ready_y[-n_validation_samples:]
-    if verbose:
-        print("Pre-processed data-set:")
-        for i, d in enumerate(x_train):
-            print("{label}\t:\t{data}".format(data=d, label=y_train[i]))
-    print(x_train[0], x_val[0])
-    print(x_train[-1], x_val[-1])
     return (x_train, y_train), (x_val, y_val)
 
 
