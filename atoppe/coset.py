@@ -25,8 +25,8 @@ abs_dev_path = os.path.join(script_dir, '../resources/coset-dev.csv')
 def load_data(max_words=15000, n_validation_samples=250):
     """
     Loads data form file, the train set contains also the dev
-    :param max_words: 
-    :param n_validation_samples: How many examples have to go from the dataset into the test set
+    :param max_words: Max number of words that are considered (Most used words in corpus)
+    :param n_validation_samples: How many examples have to go from the data-set into the test set
     :return: (x_train, y_train), (x_test, y_test)
     """
     data = []
