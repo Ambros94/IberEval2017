@@ -10,8 +10,8 @@ from sklearn.preprocessing import LabelEncoder
 __author__ = "Ambrosini Luca (@Ambros94)"
 
 script_dir = os.path.dirname(__file__)
-abs_train_path = os.path.join(script_dir, '../resources/coset-train.csv')
-abs_dev_path = os.path.join(script_dir, '../resources/coset-dev.csv')
+abs_train_path = os.path.join(script_dir, '../resources/coset/coset-train.csv')
+abs_dev_path = os.path.join(script_dir, '../resources/coset/coset-dev.csv')
 
 """
 1. Political issues Related to the most abstract electoral confrontation.
@@ -25,21 +25,20 @@ abs_dev_path = os.path.join(script_dir, '../resources/coset-dev.csv')
 def load_data(max_words=15000, n_validation_samples=250):
     """
     Loads data form file, the train set contains also the dev
-    :param max_words: 
-    :param n_validation_samples: How many examples have to go from the dataset into the test set
+    :param max_words: Max number of words that are considered (Most used words in corpus)
+    :param n_validation_samples: How many examples have to go from the data-set into the test set
     :return: (x_train, y_train), (x_test, y_test)
     """
     data = []
     labels = []
     # Loading
-    with open(abs_train_path, 'rt', encoding="utf-8") as csvfile:
-        csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+    with open(abs_train_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
         for row in csv_reader:
             data.append(row[1])
             labels.append(row[2])
-    train_size = len(data)
-    with open(abs_dev_path, 'rt', encoding="utf-8") as csvfile:
-        csv_reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+    with open(abs_dev_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
         for row in csv_reader:
             data.append(row[1])
             labels.append(row[2])
@@ -47,8 +46,8 @@ def load_data(max_words=15000, n_validation_samples=250):
     tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(data)
     data = tokenizer.texts_to_sequences(data)
-    print('Found {word_index} unique tokens: {words}'.format(word_index=len(tokenizer.word_index),
-                                                             words=tokenizer.word_index))
+    print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
+
     # Prepare labels
     encoder = LabelEncoder()
     encoder.fit(labels)

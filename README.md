@@ -1,5 +1,8 @@
 # IberEval2017
-This code is developed to take part into IberEval2017 competition In particular Classification Of Spanish Election Tweets (COSET)
+This code is developed to take part into IberEval2017 competition .
+
+In particular Classification Of Spanish Election Tweets (COSET) and  STANCE AND GENDER DETECTION IN TWEETS ON CATALAN
+
 Task deadlines:
 March 20th, 2017 Release of training data. 
 
