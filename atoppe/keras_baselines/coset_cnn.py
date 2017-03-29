@@ -11,7 +11,7 @@ from keras.models import Sequential
 from keras.preprocessing import sequence
 
 # set parameters:
-import coset
+import stance
 
 max_features = 15000
 maxlen = 50
@@ -23,15 +23,15 @@ hidden_dims = 250
 epochs = 5
 
 print('Loading data...')
-(x_train, y_train), (x_test, y_test) = coset.load_data()
-print(len(x_train), 'train sequences')
-print(len(x_test), 'test sequences')
+(x_train, y_train), (x_test, y_test) = stance.load_data(n_validation_samples=5)
 
 print('Pad sequences (samples x time)')
 x_train = sequence.pad_sequences(x_train, maxlen=maxlen)
 x_test = sequence.pad_sequences(x_test, maxlen=maxlen)
 print('x_train shape:', x_train.shape)
 print('x_test shape:', x_test.shape)
+print('y_train shape:', y_train.shape)
+print('y_test shape:', y_test.shape)
 
 print('Build model...')
 model = Sequential()
@@ -59,7 +59,7 @@ model.add(Dropout(0.2))
 model.add(Activation('relu'))
 
 # We project onto a single unit output layer, and squash it with a sigmoid:
-model.add(Dense(5))
+model.add(Dense(6))
 model.add(Activation('sigmoid'))
 
 model.compile(loss='binary_crossentropy',

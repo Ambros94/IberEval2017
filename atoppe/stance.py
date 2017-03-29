@@ -33,15 +33,15 @@ def load_data(max_words=15000, n_validation_samples=250):
     labels = []
     # Loading data
     with open(abs_truth_path, 'rt', encoding="utf-8") as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
-        for row in csv_reader:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for i, row in enumerate(csv_reader):
             labels.append(row[1] + row[2])
     with open(abs_tweets_path, 'rt', encoding="utf-8") as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
-        for row in csv_reader:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for i, row in enumerate(csv_reader):
             data.append(row[1])
+            print(i, row)
 
-    print(labels)
     # Prepare data
     tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(data)
@@ -55,6 +55,7 @@ def load_data(max_words=15000, n_validation_samples=250):
     ready_y = np_utils.to_categorical(encoded_y)
 
     # Split in train and test
+    print(len(labels))
     x_train = data[:-n_validation_samples]
     y_train = ready_y[:-n_validation_samples]
     x_val = data[-n_validation_samples:]
