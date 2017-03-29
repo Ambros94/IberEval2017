@@ -29,19 +29,21 @@ def model(x_train, y_train, x_test, y_test):
     # Parameter that need to be optimized
 
     max_features = 15000
-    batch_size = 32
-    embedding_dims = {{choice([25, 50, 100])}}
-    filters = {{choice([150, 200, 250, 300])}}
-    kernel_size = {{choice([2, 3, 4, 5])}}
+    batch_size = {{choice([16, 32, 64])}}
+    embedding_dims = {{choice([25, 50, 75, 100, 125])}}
+    filters = {{choice([50, 100, 150, 200, 250, 300])}}
+    kernel_size = {{choice([3, 4, 5, 10, 15, 20])}}
     hidden_dims = {{choice([150, 200, 250, 300])}}
     epochs = {{choice([5, 6, 7, 8])}}
+    drop_out_chance_embedding = {{choice([0.2, 0.3, 0.4, 0.5])}}
+    drop_out_chance_dense = {{choice([0.2, 0.3, 0.4, 0.5])}}
 
     model = Sequential()
 
     model.add(Embedding(max_features,
                         embedding_dims,
                         input_length=max_len))
-    model.add(Dropout(0.2))
+    model.add(Dropout(drop_out_chance_embedding))
 
     model.add(Conv1D(filters,
                      kernel_size,
@@ -51,7 +53,7 @@ def model(x_train, y_train, x_test, y_test):
     model.add(GlobalMaxPooling1D())
 
     model.add(Dense(hidden_dims))
-    model.add(Dropout(0.2))
+    model.add(Dropout(drop_out_chance_dense))
     model.add(Activation('relu'))
 
     model.add(Dense(5))
