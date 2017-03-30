@@ -11,7 +11,7 @@ from keras.models import Sequential
 from keras.preprocessing import sequence
 
 # set parameters:
-import coset
+from data_loaders import coset
 
 max_features = 15000
 maxlen = 50

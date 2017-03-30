@@ -7,7 +7,7 @@ from keras.layers import LSTM
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-import coset
+from data_loaders import coset
 
 max_features = 20000
 maxlen = 47  # cut texts after this number of words (among top max_features most common words)

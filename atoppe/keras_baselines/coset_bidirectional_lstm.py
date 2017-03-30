@@ -7,7 +7,7 @@ from keras.layers import Dense, Dropout, Embedding, LSTM, Bidirectional
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-import coset
+from data_loaders import coset
 
 max_features = 20000
 # cut texts after this number of words

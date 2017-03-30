@@ -14,7 +14,7 @@ from keras.layers import GlobalAveragePooling1D
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-import coset
+from data_loaders import coset
 
 
 def create_ngram_set(input_list, ngram_value=2):
