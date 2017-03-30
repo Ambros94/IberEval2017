@@ -46,7 +46,7 @@ def load_data(max_words=15000, n_validation_samples=250):
     tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(data)
     data = tokenizer.texts_to_sequences(data)
-    print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
+    # print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
 
     # Prepare labels
     encoder = LabelEncoder()

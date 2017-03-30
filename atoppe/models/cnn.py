@@ -9,15 +9,9 @@ from models.base import Model
 
 class CNNModel(Model):
     def build(self, params):
-        print('Pad sequences (samples x time)')
         self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
         self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
-        print('x_train shape:', self.x_train.shape)
-        print('x_test shape:', self.x_test.shape)
-        print('y_train shape:', self.y_train.shape)
-        print('y_test shape:', self.y_test.shape)
 
-        print('Build model...')
         self.model = Sequential()
 
         # we start off with an efficient embedding layer which maps

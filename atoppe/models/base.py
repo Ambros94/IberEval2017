@@ -13,6 +13,7 @@ class Model:
 
     def run(self, batch_size, epochs, **params):
         self.build(params)
+
         self.train(batch_size=batch_size, epochs=epochs)
         return self.evaluate(batch_size=batch_size)
 
@@ -22,6 +23,8 @@ class Model:
         return
 
     def train(self, batch_size, epochs):
+        if self.model is None:
+            raise Exception("Cannot find a model! Have you build it yet?")
         self.model.fit(self.x_train, self.y_train,
                        batch_size=batch_size,
                        epochs=epochs,
