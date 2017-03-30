@@ -10,8 +10,8 @@ from sklearn.preprocessing import LabelEncoder
 __author__ = "Ambrosini Luca (@Ambros94)"
 
 script_dir = os.path.dirname(__file__)
-abs_truth_path = os.path.join(script_dir, '../resources/stance/alc-truth.csv')
-abs_tweets_path = os.path.join(script_dir, '../resources/stance/alc-tweets.csv')
+abs_truth_path = os.path.join(script_dir, '../../resources/stance/alc-truth.csv')
+abs_tweets_path = os.path.join(script_dir, '../../resources/stance/alc-tweets.csv')
 
 """
 1. Political issues Related to the most abstract electoral confrontation.
@@ -22,7 +22,7 @@ abs_tweets_path = os.path.join(script_dir, '../resources/stance/alc-tweets.csv')
 """
 
 
-def load_data(max_words=15000, n_validation_samples=250):
+def load_data(max_words=15000, n_validation_samples=5):
     """
     Loads data form file, the train set contains also the dev
     :param max_words: Max number of words that are considered (Most used words in corpus)
@@ -34,13 +34,12 @@ def load_data(max_words=15000, n_validation_samples=250):
     # Loading data
     with open(abs_truth_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
-        for i, row in enumerate(csv_reader):
+        for row in csv_reader:
             labels.append(row[1] + row[2])
     with open(abs_tweets_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
-        for i, row in enumerate(csv_reader):
+        for row in csv_reader:
             data.append(row[1])
-            print(i, row)
 
     # Prepare data
     tokenizer = Tokenizer(num_words=max_words)
@@ -55,7 +54,6 @@ def load_data(max_words=15000, n_validation_samples=250):
     ready_y = np_utils.to_categorical(encoded_y)
 
     # Split in train and test
-    print(len(labels))
     x_train = data[:-n_validation_samples]
     y_train = ready_y[:-n_validation_samples]
     x_val = data[-n_validation_samples:]
