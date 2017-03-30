@@ -4,12 +4,13 @@ import abc
 class Model:
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, data_function):
+    def __init__(self, data_function, verbose=2):
         (self.x_train, self.y_train), (self.x_test, self.y_test) = data_function()
         if len(self.y_train) == 0:
             raise Exception("You should provide at least one train label")
         self.output_size = len(self.y_train[0])
         self.model = None
+        self.verbose = verbose
 
     def run(self, batch_size, epochs, **params):
         self.build(params)
@@ -26,6 +27,7 @@ class Model:
         if self.model is None:
             raise Exception("Cannot find a model! Have you build it yet?")
         self.model.fit(self.x_train, self.y_train,
+                       verbose=self.verbose,
                        batch_size=batch_size,
                        epochs=epochs,
                        validation_data=(self.x_test, self.y_test))
