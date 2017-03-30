@@ -8,7 +8,7 @@ from keras.layers import Embedding
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-import coset
+from data_loaders import coset
 
 
 def data():

@@ -10,8 +10,8 @@ from sklearn.preprocessing import LabelEncoder
 __author__ = "Ambrosini Luca (@Ambros94)"
 
 script_dir = os.path.dirname(__file__)
-abs_train_path = os.path.join(script_dir, '../resources/coset/coset-train.csv')
-abs_dev_path = os.path.join(script_dir, '../resources/coset/coset-dev.csv')
+abs_train_path = os.path.join(script_dir, '../../resources/coset/coset-train.csv')
+abs_dev_path = os.path.join(script_dir, '../../resources/coset/coset-dev.csv')
 
 """
 1. Political issues Related to the most abstract electoral confrontation.
@@ -46,7 +46,7 @@ def load_data(max_words=15000, n_validation_samples=250):
     tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(data)
     data = tokenizer.texts_to_sequences(data)
-    print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
+    # print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
 
     # Prepare labels
     encoder = LabelEncoder()
