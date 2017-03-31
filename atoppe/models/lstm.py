@@ -8,7 +8,6 @@ from models.base import Model
 
 class LSTMModel(Model):
     def build(self, params):
-
         self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
         self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
 
@@ -20,4 +19,4 @@ class LSTMModel(Model):
         # try using different optimizers and different optimizer configs
         self.model.compile(loss='binary_crossentropy',
                            optimizer='adam',
-                           metrics=['categorical_accuracy'])
+                           metrics=params['metrics'])

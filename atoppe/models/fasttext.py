@@ -94,4 +94,4 @@ class FastTextModel(Model):
 
         self.model.compile(loss='binary_crossentropy',
                            optimizer='adam',
-                           metrics=['categorical_accuracy'])
+                           metrics=params['metrics'])
