@@ -7,7 +7,7 @@ from keras.layers import Dense, Dropout, Activation
 from keras.layers import Embedding
 from keras.models import Sequential
 from keras.preprocessing import sequence
-from numpy import isnan
+
 from data_loaders import coset
 
 
@@ -62,29 +62,29 @@ def model(x_train, y_train, x_test, y_test):
     model.compile(loss='categorical_crossentropy',
                   optimizer='adam',
                   metrics=['categorical_accuracy'])
-    print(model.metrics_names)
     model.fit(x_train, y_train,
               batch_size=batch_size,
               epochs=epochs,
               verbose=2,
               validation_data=(x_test, y_test))
 
-    f1_score, f1 = model.evaluate(x_test, y_test,
-                                  batch_size=batch_size)
-
-    f1 = 0 if isnan(f1) else f1
-    print('Test f1_score:', f1_score)
-    print('Test f1:', f1)
-    return {'loss': -f1, 'status': STATUS_OK, 'model': model}
+    score, acc = model.evaluate(x_test, y_test,
+                                batch_size=batch_size)
+    print("")
+    print("*************")
+    print("score: {score},accuracy {acc}".format(score=score, acc=acc))
+    print("*************")
+    return {'loss': -acc, 'status': STATUS_OK, 'model': model}
 
 
 if __name__ == '__main__':
-    max_evaluations = 3
+    max_evaluations = 2
     best_run, best_model = optim.minimize(model=model,
                                           data=data,
                                           algo=tpe.suggest,
                                           max_evals=max_evaluations,
                                           trials=Trials())
     X_train, Y_train, X_test, Y_test = data()
+    print("")
     print("Best performing model performances: {performance}".format(performance=best_model.evaluate(X_test, Y_test)))
     print("Best performing model parameters: {params}".format(params=best_run))
