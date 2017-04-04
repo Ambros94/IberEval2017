@@ -25,7 +25,7 @@ embedding_dims = 50
 filters = 100
 kernel_size = 3
 hidden_dims = 150
-epochs = 5
+epochs = 10
 drop_out_chance_embedding = 0.3
 drop_out_chance_dense = 0.3
 
@@ -52,7 +52,7 @@ model.add(Activation('sigmoid'))
 
 model.compile(loss='categorical_crossentropy',
               optimizer='adam',
-              metrics=[coset.precision, coset.recall])
+              metrics=['categorical_accuracy'])
 print(model.metrics_names)
 history = model.fit(x_train, y_train,
                     batch_size=batch_size,
@@ -62,28 +62,17 @@ history = model.fit(x_train, y_train,
 
 model.evaluate(x_test, y_test,
                batch_size=batch_size)
-print(history.history.keys())
-# summarize history for recall
-matplotlib.pyplot.plot(history.history['recall'])
-plt.plot(history.history['val_recall'])
-plt.title('model recall')
-plt.ylabel('recall')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
-# summarize history for accuracy
-matplotlib.pyplot.plot(history.history['precision'])
-plt.plot(history.history['val_precision'])
-plt.title('model precision')
-plt.ylabel('precision')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
-# summarize history for loss
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('model loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
+
+f, axarr = plt.subplots(2, sharex=True)
+# Categorical accuracy
+axarr[0].plot(history.history['categorical_accuracy'])
+axarr[0].plot(history.history['val_categorical_accuracy'])
+axarr[0].set_title('Categorical accuracy')
+axarr[0].legend(['train', 'test'], loc='upper left')
+# Loss function value
+axarr[1].plot(history.history['loss'])
+axarr[1].plot(history.history['val_loss'])
+axarr[1].set_title('CA value')
+axarr[1].legend(['train', 'test'], loc='upper left')
+
 plt.show()
