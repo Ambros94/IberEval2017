@@ -78,7 +78,7 @@ def model(x_train, y_train, x_test, y_test):
 
 
 if __name__ == '__main__':
-    max_evaluations = 2
+    max_evaluations = 5
     best_run, best_model = optim.minimize(model=model,
                                           data=data,
                                           algo=tpe.suggest,
