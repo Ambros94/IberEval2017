@@ -72,7 +72,7 @@ axarr[0].legend(['train', 'test'], loc='upper left')
 # Loss function value
 axarr[1].plot(history.history['loss'])
 axarr[1].plot(history.history['val_loss'])
-axarr[1].set_title('CA value')
+axarr[1].set_title('Categorical cross-entropy')
 axarr[1].legend(['train', 'test'], loc='upper left')
 
 plt.show()
