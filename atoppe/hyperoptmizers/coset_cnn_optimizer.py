@@ -59,7 +59,7 @@ def model(x_train, y_train, x_test, y_test):
     model.add(Dense(5))
     model.add(Activation('sigmoid'))
 
-    model.compile(loss='binary_crossentropy',
+    model.compile(loss='categorical_crossentropy',
                   optimizer='adam',
                   metrics=['categorical_accuracy'])
     model.fit(x_train, y_train,
@@ -70,18 +70,21 @@ def model(x_train, y_train, x_test, y_test):
 
     score, acc = model.evaluate(x_test, y_test,
                                 batch_size=batch_size)
-    print('Test score:', score)
-    print('Test accuracy:', acc)
+    print("")
+    print("*************")
+    print("score: {score},accuracy {acc}".format(score=score, acc=acc))
+    print("*************")
     return {'loss': -acc, 'status': STATUS_OK, 'model': model}
 
 
 if __name__ == '__main__':
-    max_evaluations = 100
+    max_evaluations = 5
     best_run, best_model = optim.minimize(model=model,
                                           data=data,
                                           algo=tpe.suggest,
                                           max_evals=max_evaluations,
                                           trials=Trials())
     X_train, Y_train, X_test, Y_test = data()
+    print("")
     print("Best performing model performances: {performance}".format(performance=best_model.evaluate(X_test, Y_test)))
     print("Best performing model parameters: {params}".format(params=best_run))

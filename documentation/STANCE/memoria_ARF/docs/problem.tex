@@ -1,0 +1,32 @@
+\chapter{Problem description} \label{chapter:problem}
+
+In the present chapter will be illustrated the problem under observation and the proposed approach to tackle it. Complete description of the tackled problem can be found at \cite{STANCE}.
+
+\section{Problem}
+
+The aim of this task is to detect the author's gender and stance with respect to the target \emph{independence of Catalonia} in tweets written in Spanish and/or Catalan.
+
+
+\section{Proposed approach}
+
+The approach that will be developed to tackle to problem exploit technique from pattern recognition and machine learning fields, in detail we are going to use neural networks as classifiers for the above task.
+
+In details, we are going to develop different neural model and estimate their best hyper-parameters. The neural models we are going to use are the following:
+\begin{itemize}
+\item LSTM: long short-term memory
+\item Bi-LSTM: bidirectional long short-term memory
+\item CNN: convolutional neural network
+\item CNN+LSTM: convolutional neural network followed by a long short-term memory
+\end{itemize}
+Moreover, we are going to approach the problem through a classical \emph{n-gram} model (i.e. NGRAM).
+
+\section{Technical notes}
+
+For the development of the whole project we are going to use the following tools:
+
+\begin{itemize}
+\item Tensorflow: as backend engine
+\item Keras: as high-level neural network API
+\item Hyperas: as hyper-parameters estimator
+\end{itemize}
+

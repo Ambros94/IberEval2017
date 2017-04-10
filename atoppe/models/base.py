@@ -1,7 +1,5 @@
 import abc
 
-from sklearn.metrics import f1_score
-
 
 class Model:
     __metaclass__ = abc.ABCMeta
@@ -16,14 +14,13 @@ class Model:
 
     def run(self, batch_size, epochs, **params):
         self.build(params)
-
         self.train(batch_size=batch_size, epochs=epochs)
         return self.evaluate(batch_size=batch_size)
 
     @abc.abstractmethod
     def build(self, params):
         """Build a model providing all necessary parameters"""
-        return
+        raise Exception("This is an abstract method!")
 
     def train(self, batch_size, epochs):
         if self.model is None:
@@ -35,5 +32,7 @@ class Model:
                        validation_data=(self.x_test, self.y_test))
 
     def evaluate(self, batch_size):
+        if self.model is None:
+            raise Exception("Cannot find a model! Have you build it yet?")
         return self.model.evaluate(self.x_test, self.y_test,
                                    batch_size=batch_size)

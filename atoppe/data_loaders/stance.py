@@ -2,7 +2,6 @@
 import csv
 import os
 
-import keras.backend as K
 from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
@@ -10,8 +9,11 @@ from sklearn.preprocessing import LabelEncoder
 __author__ = "Ambrosini Luca (@Ambros94)"
 
 script_dir = os.path.dirname(__file__)
-abs_truth_path = os.path.join(script_dir, '../../resources/stance/alc-truth.csv')
-abs_tweets_path = os.path.join(script_dir, '../../resources/stance/alc-tweets.csv')
+abs_truth_ca_path = os.path.join(script_dir, '../../resources/stance/training_truth_ca.txt')
+abs_tweets_ca_path = os.path.join(script_dir, '../../resources/stance/training_tweets_ca.txt')
+
+abs_truth_es_path = os.path.join(script_dir, '../../resources/stance/training_truth_es.txt')
+abs_tweets_es_path = os.path.join(script_dir, '../../resources/stance/training_tweets_es.txt')
 
 """
 1. Political issues Related to the most abstract electoral confrontation.
@@ -22,7 +24,7 @@ abs_tweets_path = os.path.join(script_dir, '../../resources/stance/alc-tweets.cs
 """
 
 
-def load_data(max_words=15000, n_validation_samples=5):
+def load_data(max_words=15000, n_validation_samples=250):
     """
     Loads data form file, the train set contains also the dev
     :param max_words: Max number of words that are considered (Most used words in corpus)
@@ -31,15 +33,31 @@ def load_data(max_words=15000, n_validation_samples=5):
     """
     data = []
     labels = []
-    # Loading data
-    with open(abs_truth_path, 'rt', encoding="utf-8") as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
+    # Loading ca
+    with open(abs_truth_ca_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
         for row in csv_reader:
             labels.append(row[1] + row[2])
-    with open(abs_tweets_path, 'rt', encoding="utf-8") as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
+    with open(abs_tweets_ca_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
         for row in csv_reader:
-            data.append(row[1])
+            if len(row) > 2:
+                data.append(';'.join(row[1:]))
+            else:
+                data.append(row[1])
+
+    """
+    with open(abs_truth_es_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            labels.append(row[1] + row[2])
+    with open(abs_tweets_es_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for i, row in enumerate(csv_reader):
+            if len(row) >= 2:
+                data.append(';'.join(row[1:]))
+            else:
+                data.append(row[1])"""
 
     # Prepare data
     tokenizer = Tokenizer(num_words=max_words)
@@ -59,8 +77,3 @@ def load_data(max_words=15000, n_validation_samples=5):
     x_val = data[-n_validation_samples:]
     y_val = ready_y[-n_validation_samples:]
     return (x_train, y_train), (x_val, y_val)
-
-
-def stance_metric(y_true, y_predicted):
-    # TODO Implement the correct metrix used in the test instead of normal categorical_accuracy
-    return K.mean(y_predicted)
