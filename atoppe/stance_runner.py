@@ -37,6 +37,7 @@ lstm = LSTMModel(data_function=stance.load_data)
 lstm_acc = lstm.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50, batch_size=32, epochs=3)
 
 # Log everything on file
+
 logging.info('CNN accuracy:\t{f1_score}'.format(f1_score=cnn_acc))
 logging.info('BidirectionalLSTM accuracy:\t{f1_score}'.format(f1_score=b_lstm_acc))
 logging.info('CNN_LSTM accuracy:\t{f1_score}'.format(f1_score=b_cnn_lstm_acc))

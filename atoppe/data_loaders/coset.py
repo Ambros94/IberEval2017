@@ -3,6 +3,7 @@ import csv
 import os
 
 import keras.backend as K
+import numpy
 from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
@@ -20,6 +21,12 @@ abs_dev_path = os.path.join(script_dir, '../../resources/coset/coset-dev.csv')
 10. Personal issues The topic is the personal life and activities of the candidates.
 11. Other issues.
 """
+
+
+def unison_shuffled_copies(a, b):
+    assert len(a) == len(b)
+    p = numpy.random.permutation(len(a))
+    return a[p], b[p]
 
 
 def precision(y_true, y_pred):
@@ -99,6 +106,8 @@ def load_data(max_words=15000, n_validation_samples=250):
         for row in csv_reader:
             data.append(row[1])
             labels.append(row[2])
+
+
     # Prepare data
     tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(data)
