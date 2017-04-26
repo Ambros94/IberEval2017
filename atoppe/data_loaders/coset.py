@@ -86,7 +86,7 @@ def fbeta_score(y_true, y_pred, beta=1):
     return f_score
 
 
-def load_data(max_words=15000, n_validation_samples=250):
+def load_data(max_words=10000, n_validation_samples=250):
     """
     Loads data form file, the train set contains also the dev
     :param max_words: Max number of words that are considered (Most used words in corpus)
@@ -106,7 +106,6 @@ def load_data(max_words=15000, n_validation_samples=250):
         for row in csv_reader:
             data.append(row[1])
             labels.append(row[2])
-
 
     # Prepare data
     tokenizer = Tokenizer(num_words=max_words)
