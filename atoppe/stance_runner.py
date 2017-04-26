@@ -4,6 +4,7 @@ from time import gmtime, strftime
 from data_loaders import stance
 from models.bidirectional_lstm import BidirectionalLSTMModel
 from models.cnn import CNNModel
+from models.cnn_grams import CNNGramsModel
 from models.cnn_lstm import CnnLstmModel
 from models.fasttext import FastTextModel
 from models.lstm import LSTMModel
@@ -11,18 +12,26 @@ from models.lstm import LSTMModel
 logging.basicConfig(filename="../stance-" + strftime("%Y%m%d_%H%M%S", gmtime()) + ".log", level=logging.INFO)
 
 # Create models
-fast_text = FastTextModel(data_function=stance.load_data)
-fast_text_acc = fast_text.run(metrics=['categorical_accuracy'],
-                              max_features=15000, maxlen=50,
-                              ngram_range=1, embedding_dims=50,
-                              batch_size=32, epochs=5)
 
+cnn_n_grams = CNNGramsModel(data_function=stance.load_data)
+cnn_n_grams_acc = cnn_n_grams.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50,
+                                  batch_size=32,
+                                  embedding_dims=50, filters=250,
+                                  kernel_size=3,
+                                  hidden_dims=250, epochs=5)
 cnn = CNNModel(data_function=stance.load_data)
 cnn_acc = cnn.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50,
                   batch_size=32,
                   embedding_dims=50, filters=250,
                   kernel_size=3,
                   hidden_dims=250, epochs=5)
+
+fast_text = FastTextModel(data_function=stance.load_data)
+fast_text_acc = fast_text.run(metrics=['categorical_accuracy'],
+                              max_features=15000, maxlen=50,
+                              ngram_range=1, embedding_dims=50,
+                              batch_size=32, epochs=5)
+
 
 b_cnn_lstm = CnnLstmModel(data_function=stance.load_data)
 b_cnn_lstm_acc = b_cnn_lstm.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50,
