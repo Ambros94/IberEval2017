@@ -18,7 +18,8 @@ cnn_n_grams_acc = cnn_n_grams.run(metrics=['categorical_accuracy'], max_features
                                   batch_size=32,
                                   embedding_dims=50, filters=250,
                                   kernel_size=3,
-                                  hidden_dims=250, epochs=5)
+                                  hidden_dims=250, epochs=5, ngram_range=2)
+
 cnn = CNNModel(data_function=stance.load_data)
 cnn_acc = cnn.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50,
                   batch_size=32,
@@ -31,7 +32,6 @@ fast_text_acc = fast_text.run(metrics=['categorical_accuracy'],
                               max_features=15000, maxlen=50,
                               ngram_range=1, embedding_dims=50,
                               batch_size=32, epochs=5)
-
 
 b_cnn_lstm = CnnLstmModel(data_function=stance.load_data)
 b_cnn_lstm_acc = b_cnn_lstm.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50,
