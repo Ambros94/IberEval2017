@@ -2,8 +2,6 @@ import abc
 
 from keras.models import load_model
 
-from atoppe.data_loaders import coset
-
 
 class Model:
     __metaclass__ = abc.ABCMeta
@@ -31,14 +29,6 @@ class Model:
 
     def persist_model(self, name):
         self.model.save(name)
-
-    def evaluate_on_task(self, batch_size):
-        ids, tweets=coset
-        predictions = self.model.predict(test_set, batch_size=batch_size)
-
-        # Load the ground truth
-        true_ids, true_labels = coset.load_ground_truth()
-
 
     def train(self, batch_size, epochs):
         if self.model is None:

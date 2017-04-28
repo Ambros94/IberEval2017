@@ -41,6 +41,6 @@ class CNNModel(Model):
         self.model.add(Dense(self.output_size))
         self.model.add(Activation('sigmoid'))
 
-        self.model.compile(loss='binary_crossentropy',
+        self.model.compile(loss='categorical_crossentropy',
                            optimizer='adam',
                            metrics=params['metrics'])

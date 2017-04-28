@@ -14,7 +14,7 @@ logging.basicConfig(filename="../coset-" + strftime("%Y%m%d_%H%M%S", gmtime()) +
 data = coset.load_data(char_level=True)
 
 fast_text = FastTextModel(data=data)
-fast_text_acc = fast_text.run(metrics=['categorical_accuracy'],
+fast_text_acc = fast_text.run(metrics=['categorical_accuracy',coset.fbeta_score],
                               max_features=227, maxlen=700,
                               ngram_range=6, embedding_dims=50,
                               batch_size=64, epochs=100)

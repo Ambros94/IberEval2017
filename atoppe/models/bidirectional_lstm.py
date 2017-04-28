@@ -22,4 +22,4 @@ class BidirectionalLSTMModel(Model):
         self.model.add(Dropout(0.5))
         self.model.add(Dense(self.output_size, activation='sigmoid'))
 
-        self.model.compile('adam', 'binary_crossentropy', metrics=params['metrics'])
+        self.model.compile('adam', 'categorical_crossentropy', metrics=params['metrics'])

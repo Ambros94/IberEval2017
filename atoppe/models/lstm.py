@@ -17,6 +17,6 @@ class LSTMModel(Model):
         self.model.add(Dense(self.output_size, activation='sigmoid'))
 
         # try using different optimizers and different optimizer configs
-        self.model.compile(loss='binary_crossentropy',
+        self.model.compile(loss='categorical_crossentropy',
                            optimizer='adam',
                            metrics=params['metrics'])

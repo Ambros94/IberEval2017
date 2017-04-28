@@ -36,6 +36,6 @@ class FastTextModel(Model):
         # We project onto a single unit output layer, and squash it with a sigmoid:
         self.model.add(Dense(self.output_size, activation='sigmoid'))
 
-        self.model.compile(loss='binary_crossentropy',
+        self.model.compile(loss='categorical_crossentropy',
                            optimizer='adam',
                            metrics=params['metrics'])
