@@ -2,12 +2,15 @@ import abc
 
 from keras.models import load_model
 
+import data_loaders.coset as c
+
 
 class Model:
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, data, verbose=2):
-        (self.x_train, self.y_train), (self.x_val, self.y_val), (self.x_test, self.y_test) = data
+        (self.ids_train, self.x_train, self.y_train), (self.ids_val, self.x_val, self.y_val), (
+            self.ids_test, self.x_test, self.y_test) = data
         if len(self.y_train) == 0:
             raise Exception("You should provide at least one train label")
         self.output_size = len(self.y_train[0])
@@ -17,7 +20,7 @@ class Model:
     def run(self, batch_size, epochs, **params):
         self.build(params)
         self.train(batch_size=batch_size, epochs=epochs)
-        return self.evaluate(batch_size=batch_size)
+        return self.evaluate_val(batch_size=batch_size)
 
     @abc.abstractmethod
     def build(self, params):
@@ -39,14 +42,23 @@ class Model:
                        epochs=epochs,
                        validation_data=(self.x_val, self.y_val))
 
-    def evaluate(self, batch_size):
+    def evaluate_val(self, batch_size):
         if self.model is None:
             raise Exception("Cannot find a model! Have you build it yet?")
         return self.model.evaluate(self.x_val, self.y_val,
                                    batch_size=batch_size)
 
-    def predict(self, batch_size):
+    def evaluate_test(self, batch_size):
         if self.model is None:
             raise Exception("Cannot find a model! Have you build it yet?")
-        return self.model.predict(self.x_test,
+        return self.model.evaluate(self.x_test, self.y_test,
+                                   batch_size=batch_size)
+
+    def predict(self, data, batch_size):
+        if self.model is None:
+            raise Exception("Cannot find a model! Have you build it yet?")
+        return self.model.predict(data,
                                   batch_size=batch_size)
+
+    def persist_result(self):
+        c.persist_solution(self.ids_test, self.predict(data=self.x_test, batch_size=32))

@@ -86,5 +86,5 @@ if __name__ == '__main__':
                                           trials=Trials())
     X_train, Y_train, X_test, Y_test = data()
     print("")
-    print("Best performing model performances: {performance}".format(performance=best_model.evaluate(X_test, Y_test)))
+    print("Best performing model performances: {performance}".format(performance=best_model.evaluate_val(X_test, Y_test)))
     print("Best performing model parameters: {params}".format(params=best_run))

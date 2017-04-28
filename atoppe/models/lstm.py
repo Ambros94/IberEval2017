@@ -20,3 +20,4 @@ class LSTMModel(Model):
         self.model.compile(loss='categorical_crossentropy',
                            optimizer='adam',
                            metrics=params['metrics'])
+

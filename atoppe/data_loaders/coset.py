@@ -23,6 +23,7 @@ abs_test_truth_path = os.path.join(script_dir, '../../resources/coset/coset-pred
 10. Personal issues The topic is the personal life and activities of the candidates.
 11. Other issues.
 """
+label_encoder = None
 
 
 def fbeta_score(y_true, y_pred, beta=1):
@@ -117,12 +118,15 @@ def load_data(max_words=10000, char_level=False):
     ready_y = np_utils.to_categorical(encoded_y)
 
     # Train
+    ids_train = ids[0:training_samples]
     x_train = data[0:training_samples]
     y_train = ready_y[0:training_samples]
     # Dev
+    ids_val = ids[training_samples:training_samples + validation_samples]
     x_val = data[training_samples:training_samples + validation_samples]
     y_val = ready_y[training_samples:training_samples + validation_samples]
     # Test
+    ids_test = ids[training_samples + validation_samples:]
     x_test = data[training_samples + validation_samples:]
     y_test = ready_y[training_samples + validation_samples:]
 
@@ -134,10 +138,23 @@ def load_data(max_words=10000, char_level=False):
     print('Max val sequence length: {}'.format(np.max(list(map(len, x_val)))))
     print('Max test sequence length: {}'.format(np.max(list(map(len, x_test)))))
 
-    return (x_train, y_train), (x_val, y_val), (x_test, y_test)
+    return (ids_train, x_train, y_train), (ids_val, x_val, y_val), (ids_test, x_test, y_test)
 
 
-def persist(ids, labels):
+def decode_label(label):
+    decoded = \
+        {0: 1,
+         3: 2,
+         4: 9,
+         1: 10,
+         2: 11}.get(label.argmax(), "Error")
+    return decoded
+
+
+def persist_solution(ids, labels):
+    decoded_labels = []
+    for label in labels:
+        decoded_labels.append(decode_label(label))
     with open('results.txt', 'w') as out_file:
-        for id, label in zip(ids, labels):
-            print(id, label, out_file)
+        for id, label in zip(ids, decoded_labels):
+            out_file.write("{id}\t{label}\n".format(id=id, label=label))
