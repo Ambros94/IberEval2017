@@ -8,8 +8,8 @@ from atoppe.data_loaders import coset
 class Model:
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, data_function, verbose=2):
-        (self.x_train, self.y_train), (self.x_test, self.y_test) = data_function()
+    def __init__(self, data, verbose=2):
+        (self.x_train, self.y_train), (self.x_test, self.y_test) = data
         if len(self.y_train) == 0:
             raise Exception("You should provide at least one train label")
         self.output_size = len(self.y_train[0])
