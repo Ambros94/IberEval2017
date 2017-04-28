@@ -11,13 +11,13 @@ from models.lstm import LSTMModel
 logging.basicConfig(filename="../coset-" + strftime("%Y%m%d_%H%M%S", gmtime()) + ".log", level=logging.INFO)
 
 # Create models
-data = coset.load_data()
+data = coset.load_data(char_level=True)
 
 fast_text = FastTextModel(data=data)
 fast_text_acc = fast_text.run(metrics=['categorical_accuracy'],
-                              max_features=15000, maxlen=400,
-                              ngram_range=3, embedding_dims=50,
-                              batch_size=64, epochs=50)
+                              max_features=227, maxlen=700,
+                              ngram_range=6, embedding_dims=50,
+                              batch_size=64, epochs=100)
 
 cnn = CNNModel(data=data)
 cnn_acc = cnn.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50,
@@ -28,8 +28,8 @@ cnn_acc = cnn.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=5
 
 cnn_lstm = CnnLstmModel(data=data)
 cnn_lstm_acc = cnn_lstm.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50,
-                                embedding_size=128, kernel_size=5,
-                                filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=6)
+                            embedding_size=128, kernel_size=5,
+                            filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=6)
 
 b_lstm = BidirectionalLSTMModel(data=data)
 b_lstm_acc = b_lstm.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50, batch_size=32,

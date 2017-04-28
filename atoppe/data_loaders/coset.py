@@ -67,9 +67,11 @@ def fbeta_score(y_true, y_pred, beta=1):
     return f_score
 
 
-def load_data(max_words=10000, n_validation_samples=250):
+def load_data(max_words=10000, n_validation_samples=250, char_level=False, pre_process=None):
     """
     Loads data form file, the train set contains also the dev
+    :param pre_process: 
+    :param char_level: If True char_level tokenizer is used
     :param max_words: Max number of words that are considered (Most used words in corpus)
     :param n_validation_samples: How many examples have to go from the data-set into the test set
     :return: (x_train, y_train), (x_test, y_test)
@@ -89,9 +91,8 @@ def load_data(max_words=10000, n_validation_samples=250):
             labels.append(row[2])
 
     # Test+dev are 2492 examples
-
     # Prepare data
-    tokenizer = Tokenizer(num_words=max_words, char_level=True)
+    tokenizer = Tokenizer(num_words=max_words, char_level=char_level)
     tokenizer.fit_on_texts(data)
     data = tokenizer.texts_to_sequences(data)
     print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
