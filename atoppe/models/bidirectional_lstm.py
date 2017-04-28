@@ -3,7 +3,7 @@ from keras.layers import Dense, Dropout, Embedding, LSTM, Bidirectional
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.base import Model
+from models.model import Model
 
 
 class BidirectionalLSTMModel(Model):

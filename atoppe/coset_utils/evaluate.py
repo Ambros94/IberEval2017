@@ -1,6 +1,8 @@
 import argparse
 from os.path import isfile
+
 from sklearn.metrics import f1_score
+
 
 def get_parameters():
     """ Show the arguments help and get the filename of the prediction file."""
@@ -67,7 +69,8 @@ def sort_predictions(true_ids, prediction_dict):
             prediction_labels.append(prediction_dict[tweet_id])
     return prediction_labels
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     # Get the prediction filename
     prediction_path, truth_path = get_parameters()
     if not isfile(prediction_path):

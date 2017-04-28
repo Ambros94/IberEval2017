@@ -4,7 +4,7 @@ from keras.layers import GlobalAveragePooling1D
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.base import Model
+from models.model import Model
 from nlp_utils.n_grams import augment_with_n_grams
 
 

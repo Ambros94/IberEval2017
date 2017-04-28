@@ -130,3 +130,7 @@ def load_data(max_words=10000, n_validation_samples=250):
 def coset_f1(y_true, y_predicted):
     # TODO Implement the correct metrix used in the test instead of normal categorical_accuracy
     return K.mean(y_predicted)
+
+
+def load_test_set():
+    return None

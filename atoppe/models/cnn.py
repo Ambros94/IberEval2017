@@ -4,7 +4,7 @@ from keras.layers import Embedding
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.base import Model
+from models.model import Model
 
 
 class CNNModel(Model):
