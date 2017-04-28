@@ -11,32 +11,34 @@ from models.lstm import LSTMModel
 logging.basicConfig(filename="../coset-" + strftime("%Y%m%d_%H%M%S", gmtime()) + ".log", level=logging.INFO)
 
 # Create models
-data = coset.load_data(char_level=True)
-
-fast_text = FastTextModel(data=data)
-fast_text_acc = fast_text.run(metrics=['categorical_accuracy',coset.fbeta_score],
-                              max_features=227, maxlen=700,
-                              ngram_range=6, embedding_dims=50,
-                              batch_size=64, epochs=100)
+data = coset.load_data()
 
 cnn = CNNModel(data=data)
-cnn_acc = cnn.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50,
+cnn_acc = cnn.run(metrics=['categorical_accuracy', coset.fbeta_score], max_features=15000, maxlen=50,
                   batch_size=32,
                   embedding_dims=50, filters=250,
                   kernel_size=3,
                   hidden_dims=250, epochs=5)
 
+fast_text = FastTextModel(data=data)
+fast_text_acc = fast_text.run(metrics=['categorical_accuracy', coset.fbeta_score],
+                              max_features=15000, maxlen=50,
+                              ngram_range=1, embedding_dims=50,
+                              batch_size=32, epochs=5)
+
 cnn_lstm = CnnLstmModel(data=data)
-cnn_lstm_acc = cnn_lstm.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50,
+cnn_lstm_acc = cnn_lstm.run(metrics=['categorical_accuracy', coset.fbeta_score], max_features=15000, maxlen=50,
                             embedding_size=128, kernel_size=5,
                             filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=6)
 
 b_lstm = BidirectionalLSTMModel(data=data)
-b_lstm_acc = b_lstm.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50, batch_size=32,
+b_lstm_acc = b_lstm.run(metrics=['categorical_accuracy', coset.fbeta_score], max_features=15000, maxlen=50,
+                        batch_size=32,
                         epochs=3)
 
 lstm = LSTMModel(data=data)
-lstm_acc = lstm.run(metrics=['categorical_accuracy'], max_features=15000, maxlen=50, batch_size=32, epochs=3)
+lstm_acc = lstm.run(metrics=['categorical_accuracy', coset.fbeta_score], max_features=15000, maxlen=50, batch_size=32,
+                    epochs=3)
 
 # Log everything on file
 logging.info('CNN accuracy:\t{f1_score}'.format(f1_score=cnn_acc))

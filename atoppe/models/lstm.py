@@ -14,9 +14,8 @@ class LSTMModel(Model):
         self.model = Sequential()
         self.model.add(Embedding(params['max_features'], 128))
         self.model.add(LSTM(128, dropout=0.2, recurrent_dropout=0.2))
-        self.model.add(Dense(self.output_size, activation='sigmoid'))
+        self.model.add(Dense(self.output_size, activation='softmax'))
 
-        # try using different optimizers and different optimizer configs
         self.model.compile(loss='categorical_crossentropy',
                            optimizer='adam',
                            metrics=params['metrics'])

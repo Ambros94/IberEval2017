@@ -23,18 +23,13 @@ class FastTextModel(Model):
         self.x_test = sequence.pad_sequences(self.x_test, maxlen=maxlen)
         self.model = Sequential()
 
-        # we start off with an efficient embedding layer which maps
-        # our vocab indices into embedding_dims dimensions
         self.model.add(Embedding(max_features,
                                  embedding_dims,
                                  input_length=maxlen))
 
-        # we add a GlobalAveragePooling1D, which will average the embeddings
-        # of all words in the document
         self.model.add(GlobalAveragePooling1D())
 
-        # We project onto a single unit output layer, and squash it with a sigmoid:
-        self.model.add(Dense(self.output_size, activation='sigmoid'))
+        self.model.add(Dense(self.output_size, activation='softmax'))
 
         self.model.compile(loss='categorical_crossentropy',
                            optimizer='adam',

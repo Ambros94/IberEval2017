@@ -20,6 +20,6 @@ class BidirectionalLSTMModel(Model):
         self.model.add(Embedding(max_features, 128, input_length=maxlen))
         self.model.add(Bidirectional(LSTM(64)))
         self.model.add(Dropout(0.5))
-        self.model.add(Dense(self.output_size, activation='sigmoid'))
+        self.model.add(Dense(self.output_size, activation='softmax'))
 
         self.model.compile('adam', 'categorical_crossentropy', metrics=params['metrics'])

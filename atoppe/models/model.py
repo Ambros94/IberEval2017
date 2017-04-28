@@ -7,7 +7,7 @@ class Model:
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, data, verbose=2):
-        (self.x_train, self.y_train), (self.x_test, self.y_test) = data
+        (self.x_train, self.y_train), (self.x_val, self.y_val), (self.x_test, self.y_test) = data
         if len(self.y_train) == 0:
             raise Exception("You should provide at least one train label")
         self.output_size = len(self.y_train[0])
@@ -37,10 +37,16 @@ class Model:
                        verbose=self.verbose,
                        batch_size=batch_size,
                        epochs=epochs,
-                       validation_data=(self.x_test, self.y_test))
+                       validation_data=(self.x_val, self.y_val))
 
     def evaluate(self, batch_size):
         if self.model is None:
             raise Exception("Cannot find a model! Have you build it yet?")
-        return self.model.evaluate(self.x_test, self.y_test,
+        return self.model.evaluate(self.x_val, self.y_val,
                                    batch_size=batch_size)
+
+    def predict(self, batch_size):
+        if self.model is None:
+            raise Exception("Cannot find a model! Have you build it yet?")
+        return self.model.predict(self.x_val,
+                                  batch_size=batch_size)

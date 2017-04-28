@@ -3,7 +3,7 @@ import csv
 import os
 
 import keras.backend as K
-import numpy
+import numpy as np
 from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
@@ -13,6 +13,8 @@ __author__ = "Ambrosini Luca (@Ambros94)"
 script_dir = os.path.dirname(__file__)
 abs_train_path = os.path.join(script_dir, '../../resources/coset/coset-train.csv')
 abs_dev_path = os.path.join(script_dir, '../../resources/coset/coset-dev.csv')
+abs_test_tweets_path = os.path.join(script_dir, '../../resources/coset/coset-test-text.csv')
+abs_test_truth_path = os.path.join(script_dir, '../../resources/coset/coset-pred-forest.test')
 
 """
 1. Political issues Related to the most abstract electoral confrontation.
@@ -21,12 +23,6 @@ abs_dev_path = os.path.join(script_dir, '../../resources/coset/coset-dev.csv')
 10. Personal issues The topic is the personal life and activities of the candidates.
 11. Other issues.
 """
-
-
-def unison_shuffled_copies(a, b):
-    assert len(a) == len(b)
-    p = numpy.random.permutation(len(a))
-    return a[p], b[p]
 
 
 def fbeta_score(y_true, y_pred, beta=1):
@@ -67,30 +63,47 @@ def fbeta_score(y_true, y_pred, beta=1):
     return f_score
 
 
-def load_data(max_words=10000, n_validation_samples=250, char_level=False, pre_process=None):
+def load_data(max_words=10000, char_level=False):
     """
     Loads data form file, the train set contains also the dev
-    :param pre_process: 
     :param char_level: If True char_level tokenizer is used
     :param max_words: Max number of words that are considered (Most used words in corpus)
-    :param n_validation_samples: How many examples have to go from the data-set into the test set
-    :return: (x_train, y_train), (x_test, y_test)
+    :return: (x_train, y_train), (x_val, y_val), (x_test, y_test)
     """
+    ids = []
     data = []
     labels = []
-    # Loading test set
+    training_samples, validation_samples, test_samples_1, test_samples_2 = 0, 0, 0, 0
+    # Loading training set
     with open(abs_train_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
         for row in csv_reader:
+            ids.append(row[0])
             data.append(row[1])
             labels.append(row[2])
+            training_samples += 1
+    # Loading validation set
     with open(abs_dev_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
         for row in csv_reader:
+            ids.append(row[0])
             data.append(row[1])
             labels.append(row[2])
+            validation_samples += 1
 
-    # Test+dev are 2492 examples
+    # Loading test set
+    with open(abs_test_truth_path) as true_file:
+        for line in true_file:
+            tweet_id, topic = line.strip().split('\t')
+            labels.append(int(topic))
+            ids.append(int(tweet_id))
+            test_samples_1 += 1
+    with open(abs_test_tweets_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
+        for row in csv_reader:
+            data.append(row[1])
+            test_samples_2 += 1
+
     # Prepare data
     tokenizer = Tokenizer(num_words=max_words, char_level=char_level)
     tokenizer.fit_on_texts(data)
@@ -103,13 +116,28 @@ def load_data(max_words=10000, n_validation_samples=250, char_level=False, pre_p
     encoded_y = encoder.transform(labels)
     ready_y = np_utils.to_categorical(encoded_y)
 
-    # Split in train and test
-    x_train = data[:-n_validation_samples]
-    y_train = ready_y[:-n_validation_samples]
-    x_val = data[-n_validation_samples:]
-    y_val = ready_y[-n_validation_samples:]
-    return (x_train, y_train), (x_val, y_val)
+    # Train
+    x_train = data[0:training_samples]
+    y_train = ready_y[0:training_samples]
+    # Dev
+    x_val = data[training_samples:training_samples + validation_samples]
+    y_val = ready_y[training_samples:training_samples + validation_samples]
+    # Test
+    x_test = data[training_samples + validation_samples:]
+    y_test = ready_y[training_samples + validation_samples:]
+
+    print('Average train sequence length: {}'.format(np.mean(list(map(len, x_train)), dtype=int)))
+    print('Average val sequence length: {}'.format(np.mean(list(map(len, x_val)), dtype=int)))
+    print('Average test sequence length: {}'.format(np.mean(list(map(len, x_test)), dtype=int)))
+
+    print('Max train sequence length: {}'.format(np.max(list(map(len, x_train)))))
+    print('Max val sequence length: {}'.format(np.max(list(map(len, x_val)))))
+    print('Max test sequence length: {}'.format(np.max(list(map(len, x_test)))))
+
+    return (x_train, y_train), (x_val, y_val), (x_test, y_test)
 
 
-def load_test_set():
-    return None
+def persist(ids, labels):
+    with open('results.txt', 'w') as out_file:
+        for id, label in zip(ids, labels):
+            print(id, label, out_file)

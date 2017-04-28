@@ -36,7 +36,7 @@ class CnnLstmModel(Model):
         self.model.add(MaxPooling1D(pool_size=pool_size))
         self.model.add(LSTM(lstm_output_size))
         self.model.add(Dense(self.output_size))
-        self.model.add(Activation('sigmoid'))
+        self.model.add(Activation('softmax'))
 
         self.model.compile(loss='categorical_crossentropy',
                            optimizer='adam',
