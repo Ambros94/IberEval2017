@@ -22,8 +22,9 @@ class CnnLstmModel(Model):
         # LSTM
         lstm_output_size = params['lstm_output_size']
 
-        self.x_train = sequence.pad_sequences(self.x_train, maxlen=max_len)
-        self.x_test = sequence.pad_sequences(self.x_test, maxlen=max_len)
+        self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
+        self.x_val = sequence.pad_sequences(self.x_val, maxlen=params['maxlen'])
+        self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
 
         self.model = Sequential()
         self.model.add(Embedding(max_features, embedding_size, input_length=max_len))

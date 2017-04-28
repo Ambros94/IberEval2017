@@ -48,5 +48,5 @@ class Model:
     def predict(self, batch_size):
         if self.model is None:
             raise Exception("Cannot find a model! Have you build it yet?")
-        return self.model.predict(self.x_val,
+        return self.model.predict(self.x_test,
                                   batch_size=batch_size)

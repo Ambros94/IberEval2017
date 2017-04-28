@@ -19,8 +19,9 @@ class FastTextModel(Model):
                                                                        max_features=max_features,
                                                                        ngram_range=ngram_range)
 
-        self.x_train = sequence.pad_sequences(self.x_train, maxlen=maxlen)
-        self.x_test = sequence.pad_sequences(self.x_test, maxlen=maxlen)
+        self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
+        self.x_val = sequence.pad_sequences(self.x_val, maxlen=params['maxlen'])
+        self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
         self.model = Sequential()
 
         self.model.add(Embedding(max_features,

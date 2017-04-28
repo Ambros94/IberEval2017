@@ -11,8 +11,9 @@ class BidirectionalLSTMModel(Model):
         max_features = params['max_features']
         maxlen = params['maxlen']
 
-        self.x_train = sequence.pad_sequences(self.x_train, maxlen=maxlen)
-        self.x_test = sequence.pad_sequences(self.x_test, maxlen=maxlen)
+        self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
+        self.x_val = sequence.pad_sequences(self.x_val, maxlen=params['maxlen'])
+        self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
         self.y_train = np.array(self.y_train)
         self.y_test = np.array(self.y_test)
 
