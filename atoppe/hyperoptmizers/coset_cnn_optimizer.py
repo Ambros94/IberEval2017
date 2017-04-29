@@ -16,7 +16,8 @@ def data():
     Provide data for the model in the right format
     :return: x_train, y_train, x_test, y_test
     """
-    (x_train, y_train), (x_test, y_test) = coset.load_data()
+    (ids_train, x_train, y_train), (ids_val, x_val, y_val), (
+        ids_test, x_test, y_test) = coset.load_data()
     x_train = sequence.pad_sequences(x_train, maxlen=50)
     x_test = sequence.pad_sequences(x_test, maxlen=50)
     return x_train, y_train, x_test, y_test
@@ -86,5 +87,6 @@ if __name__ == '__main__':
                                           trials=Trials())
     X_train, Y_train, X_test, Y_test = data()
     print("")
-    print("Best performing model performances: {performance}".format(performance=best_model.evaluate_val(X_test, Y_test)))
+    print(
+        "Best performing model performances: {performance}".format(performance=best_model.evaluate_val(X_test, Y_test)))
     print("Best performing model parameters: {params}".format(params=best_run))
