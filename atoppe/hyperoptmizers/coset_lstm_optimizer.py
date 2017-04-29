@@ -40,6 +40,13 @@ def model(x_train, y_train, x_test, y_test):
     epochs = {{choice([3, 4, 5, 6, 7, 8, 9, 10, 11])}}
     units = {{choice([32, 64, 128, 150, 256])}}
 
+    print("embedding_dims", embedding_dims)
+    print("batch_size", batch_size)
+    print("dropout", dropout)
+    print("recurrent_dropout", recurrent_dropout)
+    print("epochs", epochs)
+    print("units", units)
+
     model = Sequential()
     model.add(Embedding(max_features, embedding_dims))
     model.add(LSTM(units, dropout=dropout, recurrent_dropout=recurrent_dropout))
