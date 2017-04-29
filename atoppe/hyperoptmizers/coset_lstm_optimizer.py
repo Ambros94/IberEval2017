@@ -33,12 +33,12 @@ def model(x_train, y_train, x_test, y_test):
     # Fixed params
 
     max_features = 15000
-    embedding_dims = {{choice([30, 50, 80, 100, 120])}}
+    embedding_dims = {{choice([30, 50, 80, 100, 120, 150, 200, 250, 300])}}
     batch_size = {{choice([16, 32, 64])}}
     dropout = {{choice([0.2, 0.3, 0.4, 0.5])}}
     recurrent_dropout = {{choice([0.2, 0.3, 0.4, 0.5])}}
-    epochs = {{choice([3, 4, 5, 6, 7, 8])}}
-    units = {{choice([32, 64, 128, 256])}}
+    epochs = {{choice([3, 4, 5, 6, 7, 8, 9, 10, 11])}}
+    units = {{choice([32, 64, 128, 150, 256])}}
 
     model = Sequential()
     model.add(Embedding(max_features, embedding_dims))
@@ -64,7 +64,7 @@ def model(x_train, y_train, x_test, y_test):
 
 
 if __name__ == '__main__':
-    max_evaluations = 3
+    max_evaluations = 2000
     best_run, best_model = optim.minimize(model=model,
                                           data=data,
                                           algo=tpe.suggest,
