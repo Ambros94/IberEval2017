@@ -4,13 +4,13 @@ from keras.layers import Embedding
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.base import Model
+from models.model import Model
 
 
 class CNNModel(Model):
-
     def build(self, params):
         self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
+        self.x_val = sequence.pad_sequences(self.x_val, maxlen=params['maxlen'])
         self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
 
         self.model = Sequential()
@@ -39,8 +39,8 @@ class CNNModel(Model):
 
         # We project onto a single unit output layer, and squash it with a sigmoid:
         self.model.add(Dense(self.output_size))
-        self.model.add(Activation('sigmoid'))
+        self.model.add(Activation('softmax'))
 
-        self.model.compile(loss='binary_crossentropy',
+        self.model.compile(loss='categorical_crossentropy',
                            optimizer='adam',
                            metrics=params['metrics'])

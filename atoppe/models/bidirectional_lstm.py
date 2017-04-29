@@ -3,7 +3,7 @@ from keras.layers import Dense, Dropout, Embedding, LSTM, Bidirectional
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.base import Model
+from models.model import Model
 
 
 class BidirectionalLSTMModel(Model):
@@ -11,8 +11,9 @@ class BidirectionalLSTMModel(Model):
         max_features = params['max_features']
         maxlen = params['maxlen']
 
-        self.x_train = sequence.pad_sequences(self.x_train, maxlen=maxlen)
-        self.x_test = sequence.pad_sequences(self.x_test, maxlen=maxlen)
+        self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
+        self.x_val = sequence.pad_sequences(self.x_val, maxlen=params['maxlen'])
+        self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
         self.y_train = np.array(self.y_train)
         self.y_test = np.array(self.y_test)
 
@@ -20,6 +21,6 @@ class BidirectionalLSTMModel(Model):
         self.model.add(Embedding(max_features, 128, input_length=maxlen))
         self.model.add(Bidirectional(LSTM(64)))
         self.model.add(Dropout(0.5))
-        self.model.add(Dense(self.output_size, activation='sigmoid'))
+        self.model.add(Dense(self.output_size, activation='softmax'))
 
-        self.model.compile('adam', 'binary_crossentropy', metrics=params['metrics'])
+        self.model.compile('adam', 'categorical_crossentropy', metrics=params['metrics'])

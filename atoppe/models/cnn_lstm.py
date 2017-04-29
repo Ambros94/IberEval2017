@@ -5,7 +5,7 @@ from keras.layers import LSTM
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.base import Model
+from models.model import Model
 
 
 class CnnLstmModel(Model):
@@ -22,8 +22,9 @@ class CnnLstmModel(Model):
         # LSTM
         lstm_output_size = params['lstm_output_size']
 
-        self.x_train = sequence.pad_sequences(self.x_train, maxlen=max_len)
-        self.x_test = sequence.pad_sequences(self.x_test, maxlen=max_len)
+        self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
+        self.x_val = sequence.pad_sequences(self.x_val, maxlen=params['maxlen'])
+        self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
 
         self.model = Sequential()
         self.model.add(Embedding(max_features, embedding_size, input_length=max_len))
@@ -36,8 +37,8 @@ class CnnLstmModel(Model):
         self.model.add(MaxPooling1D(pool_size=pool_size))
         self.model.add(LSTM(lstm_output_size))
         self.model.add(Dense(self.output_size))
-        self.model.add(Activation('sigmoid'))
+        self.model.add(Activation('softmax'))
 
-        self.model.compile(loss='binary_crossentropy',
+        self.model.compile(loss='categorical_crossentropy',
                            optimizer='adam',
                            metrics=params['metrics'])

@@ -23,6 +23,21 @@ abs_tweets_es_path = os.path.join(script_dir, '../../resources/stance/training_t
 11. Other issues.
 """
 
+from random import shuffle
+
+
+def unison_shuffled_copies(a, b):
+    assert len(a) == len(b)
+    # Given list1 and list2
+    list1_shuf = []
+    list2_shuf = []
+    index_shuf = list(range(len(a)))
+    shuffle(index_shuf)
+    for i in index_shuf:
+        list1_shuf.append(a[i])
+        list2_shuf.append(b[i])
+    return list1_shuf, list2_shuf
+
 
 def load_data(max_words=15000, n_validation_samples=250):
     """
@@ -46,7 +61,6 @@ def load_data(max_words=15000, n_validation_samples=250):
             else:
                 data.append(row[1])
 
-    """
     with open(abs_truth_es_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
         for row in csv_reader:
@@ -57,8 +71,9 @@ def load_data(max_words=15000, n_validation_samples=250):
             if len(row) >= 2:
                 data.append(';'.join(row[1:]))
             else:
-                data.append(row[1])"""
+                data.append(row[1])
 
+    data, labels = unison_shuffled_copies(data, labels)
     # Prepare data
     tokenizer = Tokenizer(num_words=max_words)
     tokenizer.fit_on_texts(data)

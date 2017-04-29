@@ -3,6 +3,7 @@ import csv
 import os
 
 import keras.backend as K
+import numpy as np
 from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
@@ -12,6 +13,8 @@ __author__ = "Ambrosini Luca (@Ambros94)"
 script_dir = os.path.dirname(__file__)
 abs_train_path = os.path.join(script_dir, '../../resources/coset/coset-train.csv')
 abs_dev_path = os.path.join(script_dir, '../../resources/coset/coset-dev.csv')
+abs_test_tweets_path = os.path.join(script_dir, '../../resources/coset/coset-test-text.csv')
+abs_test_truth_path = os.path.join(script_dir, '../../resources/coset/coset-pred-forest.test')
 
 """
 1. Political issues Related to the most abstract electoral confrontation.
@@ -20,30 +23,12 @@ abs_dev_path = os.path.join(script_dir, '../../resources/coset/coset-dev.csv')
 10. Personal issues The topic is the personal life and activities of the candidates.
 11. Other issues.
 """
-
-
-def precision(y_true, y_pred):
-    '''Calculates the precision, a metric for multi-label classification of
-    how many selected items are relevant.
-    '''
-    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
-    precision = true_positives / (predicted_positives + K.epsilon())
-    return precision
-
-
-def recall(y_true, y_pred):
-    '''Calculates the recall, a metric for multi-label classification of
-    how many relevant items are selected.
-    '''
-    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    possible_positives = K.sum(K.round(K.clip(y_true, 0, 1)))
-    recall = true_positives / (possible_positives + K.epsilon())
-    return recall
+label_encoder = None
 
 
 def fbeta_score(y_true, y_pred, beta=1):
-    '''Computes the F score, the weighted harmonic mean of precision and recall.
+    """
+    Computes the F score, the weighted harmonic mean of precision and recall.
     This is useful for multi-label classification where input samples can be
     tagged with a set of labels. By only using accuracy (precision) a model
     would achieve a perfect score by simply assigning every class to every
@@ -54,7 +39,7 @@ def fbeta_score(y_true, y_pred, beta=1):
     With beta = 1, this is equivalent to a F-measure. With beta < 1, assigning
     correct classes becomes more important, and with beta > 1 the metric is
     instead weighted towards penalizing incorrect class assignments.
-    '''
+    """
     if beta < 0:
         raise ValueError('The lowest choosable beta is zero (only precision).')
 
@@ -79,31 +64,52 @@ def fbeta_score(y_true, y_pred, beta=1):
     return f_score
 
 
-def load_data(max_words=15000, n_validation_samples=250):
+def load_data(max_words=10000, char_level=False):
     """
     Loads data form file, the train set contains also the dev
+    :param char_level: If True char_level tokenizer is used
     :param max_words: Max number of words that are considered (Most used words in corpus)
-    :param n_validation_samples: How many examples have to go from the data-set into the test set
-    :return: (x_train, y_train), (x_test, y_test)
+    :return: (x_train, y_train), (x_val, y_val), (x_test, y_test)
     """
+    ids = []
     data = []
     labels = []
-    # Loading
+    training_samples, validation_samples, test_samples_1, test_samples_2 = 0, 0, 0, 0
+    # Loading training set
     with open(abs_train_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
         for row in csv_reader:
+            ids.append(row[0])
             data.append(row[1])
             labels.append(row[2])
+            training_samples += 1
+    # Loading validation set
     with open(abs_dev_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
         for row in csv_reader:
+            ids.append(row[0])
             data.append(row[1])
             labels.append(row[2])
+            validation_samples += 1
+
+    # Loading test set
+    with open(abs_test_truth_path) as true_file:
+        for line in true_file:
+            tweet_id, topic = line.strip().split('\t')
+            labels.append(int(topic))
+            ids.append(int(tweet_id))
+            test_samples_1 += 1
+    with open(abs_test_tweets_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
+        for row in csv_reader:
+            data.append(row[1])
+            test_samples_2 += 1
+
     # Prepare data
-    tokenizer = Tokenizer(num_words=max_words)
+    tokenizer = Tokenizer(num_words=max_words, char_level=char_level)
     tokenizer.fit_on_texts(data)
     data = tokenizer.texts_to_sequences(data)
-    # print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
+    print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
 
     # Prepare labels
     encoder = LabelEncoder()
@@ -111,14 +117,50 @@ def load_data(max_words=15000, n_validation_samples=250):
     encoded_y = encoder.transform(labels)
     ready_y = np_utils.to_categorical(encoded_y)
 
-    # Split in train and test
-    x_train = data[:-n_validation_samples]
-    y_train = ready_y[:-n_validation_samples]
-    x_val = data[-n_validation_samples:]
-    y_val = ready_y[-n_validation_samples:]
-    return (x_train, y_train), (x_val, y_val)
+    # Train
+    ids_train = ids[0:training_samples]
+    x_train = data[0:training_samples]
+    y_train = ready_y[0:training_samples]
+    # Dev
+    ids_val = ids[training_samples:training_samples + validation_samples]
+    x_val = data[training_samples:training_samples + validation_samples]
+    y_val = ready_y[training_samples:training_samples + validation_samples]
+    # Test
+    ids_test = ids[training_samples + validation_samples:]
+    x_test = data[training_samples + validation_samples:]
+    y_test = ready_y[training_samples + validation_samples:]
+
+    print('Average train sequence length: {}'.format(np.mean(list(map(len, x_train)), dtype=int)))
+    print('Average val sequence length: {}'.format(np.mean(list(map(len, x_val)), dtype=int)))
+    print('Average test sequence length: {}'.format(np.mean(list(map(len, x_test)), dtype=int)))
+
+    print('Max train sequence length: {}'.format(np.max(list(map(len, x_train)))))
+    print('Max val sequence length: {}'.format(np.max(list(map(len, x_val)))))
+    print('Max test sequence length: {}'.format(np.max(list(map(len, x_test)))))
+
+    return (ids_train, x_train, y_train), (ids_val, x_val, y_val), (ids_test, x_test, y_test)
 
 
-def coset_f1(y_true, y_predicted):
-    # TODO Implement the correct metrix used in the test instead of normal categorical_accuracy
-    return K.mean(y_predicted)
+def decode_label(label):
+    decoded = \
+        {0: 1,
+         3: 2,
+         4: 9,
+         1: 10,
+         2: 11}.get(label.argmax(), "Error")
+    return decoded
+
+
+def decode_labels(labels):
+    decoded_labels = []
+    for label in labels:
+        decoded_labels.append(decode_label(label))
+    return decoded_labels
+
+
+def persist_solution(ids, labels):
+    decoded_labels = decode_labels(labels)
+
+    with open('results.txt', 'w') as out_file:
+        for id, label in zip(ids, decoded_labels):
+            out_file.write("{id}\t{label}\n".format(id=id, label=label))
