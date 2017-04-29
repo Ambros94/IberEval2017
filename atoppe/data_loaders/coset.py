@@ -151,10 +151,16 @@ def decode_label(label):
     return decoded
 
 
-def persist_solution(ids, labels):
+def decode_labels(labels):
     decoded_labels = []
     for label in labels:
         decoded_labels.append(decode_label(label))
+    return decoded_labels
+
+
+def persist_solution(ids, labels):
+    decoded_labels = decode_labels(labels)
+
     with open('results.txt', 'w') as out_file:
         for id, label in zip(ids, decoded_labels):
             out_file.write("{id}\t{label}\n".format(id=id, label=label))

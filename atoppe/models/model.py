@@ -1,6 +1,7 @@
 import abc
 
 from keras.models import load_model
+from sklearn.metrics import f1_score
 
 import data_loaders.coset as c
 
@@ -17,15 +18,15 @@ class Model:
         self.model = None
         self.verbose = verbose
 
-    def run(self, batch_size, epochs, **params):
-        self.build(params)
-        self.train(batch_size=batch_size, epochs=epochs)
-        return self.evaluate_val(batch_size=batch_size)
-
     @abc.abstractmethod
     def build(self, params):
         """Build a model providing all necessary parameters"""
         raise Exception("This is an abstract method!")
+
+    def run(self, batch_size, epochs, **params):
+        self.build(params)
+        self.train(batch_size=batch_size, epochs=epochs)
+        return self.test_f1_micro(), self.test_f1_macro()
 
     def load_model(self, name):
         self.model = load_model(name)
@@ -60,5 +61,20 @@ class Model:
         return self.model.predict(data,
                                   batch_size=batch_size)
 
+    def test_f1_micro(self):
+        predictions = self.predict(data=self.x_test, batch_size=32)
+        sk_f1_micro = f1_score(c.decode_labels(self.y_test), c.decode_labels(predictions), average='micro')
+        k_f1_micro = self.model.evaluate(self.x_val, self.y_val,
+                                         batch_size=32)
+        print("-------------------->", sk_f1_micro, k_f1_micro)
+        return sk_f1_micro
+
+    def test_f1_macro(self):
+        predictions = self.predict(data=self.x_test, batch_size=32)
+        return f1_score(c.decode_labels(self.y_test), c.decode_labels(predictions), average='macro')
+
     def persist_result(self):
-        c.persist_solution(self.ids_test, self.predict(data=self.x_test, batch_size=32))
+        predictions = self.predict(data=self.x_test, batch_size=32)
+        score = f1_score(c.decode_labels(self.y_test), c.decode_labels(predictions), average='macro')
+        print('* The macro F1-score achieved is: {:.4f}'.format(score))
+        c.persist_solution(self.ids_test, predictions)
