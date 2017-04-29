@@ -64,9 +64,6 @@ class Model:
     def test_f1_micro(self):
         predictions = self.predict(data=self.x_test, batch_size=32)
         sk_f1_micro = f1_score(c.decode_labels(self.y_test), c.decode_labels(predictions), average='micro')
-        k_f1_micro = self.model.evaluate(self.x_val, self.y_val,
-                                         batch_size=32)
-        print("-------------------->", sk_f1_micro, k_f1_micro)
         return sk_f1_micro
 
     def test_f1_macro(self):

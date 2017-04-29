@@ -9,23 +9,28 @@ from models.fasttext import FastTextModel
 from models.lstm import LSTMModel
 
 # Create models
-data = coset.load_data()
+data = coset.load_data(pre_process=True)
 
 cnn = CNNModel(data=data)
-cnn_f1_micro = cnn.run(metrics=['categorical_accuracy', coset.fbeta_score], max_features=15000, maxlen=50,
+cnn_f1_micro = cnn.run(metrics=[coset.fbeta_score], max_features=15000, maxlen=50,
                        batch_size=32,
                        embedding_dims=50, filters=250,
                        kernel_size=3,
                        hidden_dims=250, epochs=5)
 
+lstm = LSTMModel(data=data)
+lstm_f1_micro = lstm.run(metrics=[coset.fbeta_score], max_features=15000, maxlen=50,
+                         batch_size=32,
+                         epochs=3)
+
 fast_text = FastTextModel(data=data)
-fast_text_f1_micro = fast_text.run(metrics=['categorical_accuracy', coset.fbeta_score],
+fast_text_f1_micro = fast_text.run(metrics=[coset.fbeta_score],
                                    max_features=15000, maxlen=50,
                                    ngram_range=1, embedding_dims=50,
                                    batch_size=32, epochs=5)
 
 cnn_lstm = CnnLstmModel(data=data)
-cnn_lstm_f1_micro = cnn_lstm.run(metrics=['categorical_accuracy', coset.fbeta_score], max_features=15000, maxlen=50,
+cnn_lstm_f1_micro = cnn_lstm.run(metrics=[coset.fbeta_score], max_features=15000, maxlen=50,
                                  embedding_size=128, kernel_size=5,
                                  filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=6)
 
@@ -34,13 +39,8 @@ b_lstm_f1_micro = b_lstm.run(metrics=['categorical_accuracy', coset.fbeta_score]
                              batch_size=32,
                              epochs=3)
 
-lstm = LSTMModel(data=data)
-lstm_f1_micro = lstm.run(metrics=['categorical_accuracy', coset.fbeta_score], max_features=15000, maxlen=50,
-                         batch_size=32,
-                         epochs=3)
-
 with open("../coset-" + strftime("%Y%m%d_%H%M%S", gmtime()) + ".log", 'w') as outcsv:
-    writer = csv.writer(outcsv)
+    writer = csv.writer(outcsv, delimiter='\t')
     writer.writerow(["model_name", "test_f1_micro", "test_f1_macro"])
     writer.writerow(["cnn", cnn_f1_micro[0], cnn_f1_micro[1]])
     writer.writerow(["fast_text", fast_text_f1_micro[0], fast_text_f1_micro[1]])

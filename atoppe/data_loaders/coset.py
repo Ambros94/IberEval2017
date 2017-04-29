@@ -4,6 +4,7 @@ import os
 
 import keras.backend as K
 import numpy as np
+import preprocessor as p
 from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
@@ -64,9 +65,10 @@ def fbeta_score(y_true, y_pred, beta=1):
     return f_score
 
 
-def load_data(max_words=10000, char_level=False):
+def load_data(max_words=10000, char_level=False, pre_process=False):
     """
     Loads data form file, the train set contains also the dev
+    :param pre_process: Use pre-processor to tokenize tweets
     :param char_level: If True char_level tokenizer is used
     :param max_words: Max number of words that are considered (Most used words in corpus)
     :return: (x_train, y_train), (x_val, y_val), (x_test, y_test)
@@ -105,6 +107,11 @@ def load_data(max_words=10000, char_level=False):
             data.append(row[1])
             test_samples_2 += 1
 
+    if pre_process:
+        p.set_options(p.OPT.RESERVED)
+        data = [p.clean(d) for d in data]
+        p.set_options(p.OPT.URL)
+        data = [p.tokenize(d) for d in data]
     # Prepare data
     tokenizer = Tokenizer(num_words=max_words, char_level=char_level)
     tokenizer.fit_on_texts(data)
