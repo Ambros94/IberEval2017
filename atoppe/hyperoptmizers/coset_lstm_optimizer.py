@@ -10,9 +10,6 @@ from sklearn.metrics import f1_score
 
 from data_loaders import coset
 
-g_x_test = None
-g_y_test = None
-
 
 def data():
     """
@@ -65,8 +62,18 @@ def model(x_train, y_train, x_test, y_test):
     f1 = f1_score(coset.decode_labels(y_test), coset.decode_labels(predictions), average='macro')
 
     print("*************")
-    print("f1_macro: {f1_macro},accuracy {f1_macro}".format(f1_macro=f1))
+    print("f1_macro: {f1_macro}".format(f1_macro=f1))
     print("*************")
+    with open('optimization_result.txt', 'a') as out_file:
+        out_file.write("*************\n")
+        out_file.write("f1_macro: {f1_macro}\n".format(f1_macro=f1))
+        out_file.write("embedding_dims {}\n".format(embedding_dims))
+        out_file.write("batch_size {}\n".format(batch_size))
+        out_file.write("dropout {}\n".format(dropout))
+        out_file.write("recurrent_dropout {}\n".format(recurrent_dropout))
+        out_file.write("epochs {}\n".format(epochs))
+        out_file.write("units {}\n".format(units))
+        out_file.write("*************\n")
     return {'loss': -f1, 'status': STATUS_OK, 'model': model}
 
 
@@ -77,7 +84,6 @@ if __name__ == '__main__':
                                           algo=tpe.suggest,
                                           max_evals=max_evaluations,
                                           trials=Trials())
-    global g_x_test, g_y_test
-    print("Best model summary:")
-    print("Model: {model}".format(model=best_model))
-    print("Parameters: {params}".format(params=best_run))
+    with open('optimization_result.txt', 'a') as out_file:
+        out_file.write("Model: {model}".format(model=best_model))
+        out_file.write("Parameters: {params}".format(params=best_run))
