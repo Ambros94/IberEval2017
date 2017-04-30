@@ -37,13 +37,6 @@ def model(x_train, y_train, x_test, y_test):
     epochs = {{choice([3, 4, 5, 6, 7, 8, 9, 10, 11])}}
     units = {{choice([32, 64, 128, 150, 256])}}
 
-    print("embedding_dims", embedding_dims)
-    print("batch_size", batch_size)
-    print("dropout", dropout)
-    print("recurrent_dropout", recurrent_dropout)
-    print("epochs", epochs)
-    print("units", units)
-
     model = Sequential()
     model.add(Embedding(max_features, embedding_dims))
     model.add(LSTM(units, dropout=dropout, recurrent_dropout=recurrent_dropout))
@@ -60,10 +53,16 @@ def model(x_train, y_train, x_test, y_test):
 
     predictions = model.predict(x_test, batch_size=batch_size)
     f1 = f1_score(coset.decode_labels(y_test), coset.decode_labels(predictions), average='macro')
+    print("*************\n")
+    print("f1_macro: {f1_macro}\n".format(f1_macro=f1))
+    print("embedding_dims {}\n".format(embedding_dims))
+    print("batch_size {}\n".format(batch_size))
+    print("dropout {}\n".format(dropout))
+    print("recurrent_dropout {}\n".format(recurrent_dropout))
+    print("epochs {}\n".format(epochs))
+    print("units {}\n".format(units))
+    print("*************\n")
 
-    print("*************")
-    print("f1_macro: {f1_macro}".format(f1_macro=f1))
-    print("*************")
     with open('optimization_result.txt', 'a') as out_file:
         out_file.write("*************\n")
         out_file.write("f1_macro: {f1_macro}\n".format(f1_macro=f1))
