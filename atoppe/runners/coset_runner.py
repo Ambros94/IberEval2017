@@ -12,7 +12,7 @@ from models.lstm import LSTMModel
 data = coset.load_data(pre_process=True)
 
 b_lstm = BidirectionalLSTMModel(data=data)
-b_lstm_f1_micro = b_lstm.run(metrics=['categorical_accuracy', coset.fbeta_score], max_features=13500, max_len=50,
+b_lstm_f1_micro = b_lstm.run(metrics=[coset.fbeta_score], max_features=13500, max_len=50,
                              batch_size=32, embedding_dims=128, recurrent_units=64, dropout=0.1,
                              epochs=5)
 
