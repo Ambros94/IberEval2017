@@ -4,6 +4,7 @@ import os
 
 import keras.backend as K
 import numpy as np
+import preprocessor as p
 from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
@@ -64,12 +65,13 @@ def fbeta_score(y_true, y_pred, beta=1):
     return f_score
 
 
-def load_data(max_words=10000, char_level=False):
+def load_data(max_words=10000, char_level=False, pre_process=False):
     """
     Loads data form file, the train set contains also the dev
+    :param pre_process: Use pre-processor to tokenize tweets
     :param char_level: If True char_level tokenizer is used
     :param max_words: Max number of words that are considered (Most used words in corpus)
-    :return: (x_train, y_train), (x_val, y_val), (x_test, y_test)
+    :return: (ids_train, x_train, y_train),(ids_test, x_test, y_test)
     """
     ids = []
     data = []
@@ -105,6 +107,9 @@ def load_data(max_words=10000, char_level=False):
             data.append(row[1])
             test_samples_2 += 1
 
+    if pre_process:
+        p.set_options(p.OPT.URL, p.OPT.RESERVED, p.OPT.MENTION, p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
+        data = [p.tokenize(d) for d in data]
     # Prepare data
     tokenizer = Tokenizer(num_words=max_words, char_level=char_level)
     tokenizer.fit_on_texts(data)
@@ -118,27 +123,21 @@ def load_data(max_words=10000, char_level=False):
     ready_y = np_utils.to_categorical(encoded_y)
 
     # Train
-    ids_train = ids[0:training_samples]
-    x_train = data[0:training_samples]
-    y_train = ready_y[0:training_samples]
-    # Dev
-    ids_val = ids[training_samples:training_samples + validation_samples]
-    x_val = data[training_samples:training_samples + validation_samples]
-    y_val = ready_y[training_samples:training_samples + validation_samples]
+    ids_train = ids[0:training_samples + validation_samples]
+    x_train = data[0:training_samples + validation_samples]
+    y_train = ready_y[0:training_samples + validation_samples]
     # Test
     ids_test = ids[training_samples + validation_samples:]
     x_test = data[training_samples + validation_samples:]
     y_test = ready_y[training_samples + validation_samples:]
 
     print('Average train sequence length: {}'.format(np.mean(list(map(len, x_train)), dtype=int)))
-    print('Average val sequence length: {}'.format(np.mean(list(map(len, x_val)), dtype=int)))
     print('Average test sequence length: {}'.format(np.mean(list(map(len, x_test)), dtype=int)))
 
     print('Max train sequence length: {}'.format(np.max(list(map(len, x_train)))))
-    print('Max val sequence length: {}'.format(np.max(list(map(len, x_val)))))
     print('Max test sequence length: {}'.format(np.max(list(map(len, x_test)))))
 
-    return (ids_train, x_train, y_train), (ids_val, x_val, y_val), (ids_test, x_test, y_test)
+    return (ids_train, x_train, y_train), (ids_test, x_test, y_test)
 
 
 def decode_label(label):

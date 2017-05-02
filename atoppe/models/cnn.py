@@ -10,7 +10,6 @@ from models.model import Model
 class CNNModel(Model):
     def build(self, params):
         self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
-        self.x_val = sequence.pad_sequences(self.x_val, maxlen=params['maxlen'])
         self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
 
         self.model = Sequential()

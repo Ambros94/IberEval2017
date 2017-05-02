@@ -10,7 +10,7 @@ class Model:
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, data, verbose=2):
-        (self.ids_train, self.x_train, self.y_train), (self.ids_val, self.x_val, self.y_val), (
+        (self.ids_train, self.x_train, self.y_train), (
             self.ids_test, self.x_test, self.y_test) = data
         if len(self.y_train) == 0:
             raise Exception("You should provide at least one train label")
@@ -41,7 +41,7 @@ class Model:
                        verbose=self.verbose,
                        batch_size=batch_size,
                        epochs=epochs,
-                       validation_data=(self.x_val, self.y_val))
+                       validation_data=(self.x_test, self.y_test))
 
     def evaluate_val(self, batch_size):
         if self.model is None:
@@ -64,9 +64,6 @@ class Model:
     def test_f1_micro(self):
         predictions = self.predict(data=self.x_test, batch_size=32)
         sk_f1_micro = f1_score(c.decode_labels(self.y_test), c.decode_labels(predictions), average='micro')
-        k_f1_micro = self.model.evaluate(self.x_val, self.y_val,
-                                         batch_size=32)
-        print("-------------------->", sk_f1_micro, k_f1_micro)
         return sk_f1_micro
 
     def test_f1_macro(self):
