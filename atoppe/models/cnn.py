@@ -19,7 +19,7 @@ class CNNModel(Model):
         self.model.add(Embedding(params['max_features'],
                                  params['embedding_dims'],
                                  input_length=params['maxlen']))
-        self.model.add(Dropout(0.2))
+        self.model.add(Dropout(params['dropout']))
 
         # we add a Convolution1D, which will learn filters
         # word group filters of size filter_length:
@@ -27,13 +27,13 @@ class CNNModel(Model):
                               params['kernel_size'],
                               padding='valid',
                               activation='relu',
-                              strides=1))
+                              strides=params['strides']))
         # we use max pooling:
         self.model.add(GlobalMaxPooling1D())
 
         # We add a vanilla hidden layer:
         self.model.add(Dense(params['hidden_dims']))
-        self.model.add(Dropout(0.2))
+        self.model.add(Dropout(params['dropout_final']))
         self.model.add(Activation('relu'))
 
         # We project onto a single unit output layer, and squash it with a sigmoid:

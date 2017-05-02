@@ -16,13 +16,10 @@ def data():
     Provide data for the model in the right format
     :return: x_train, y_train, x_test, y_test
     """
-    (ids_train, x_train, y_train), (ids_val, x_val, y_val), (
+    (ids_train, x_train, y_train), (
         ids_test, x_test, y_test) = coset.load_data()
     x_train = sequence.pad_sequences(x_train, maxlen=50)
     x_test = sequence.pad_sequences(x_test, maxlen=50)
-    global g_x_test, g_y_test
-    g_x_test = x_test
-    g_y_test = y_test
     return x_train, y_train, x_test, y_test
 
 
