@@ -21,8 +21,14 @@ def data():
     """
     (ids_train, x_train, y_train), (ids_val, x_val, y_val), (
         ids_test, x_test, y_test) = coset.load_data(char_level=True)
+
+    x_train, x_test, max_features = augment_with_n_grams(x_train=self.x_train, x_test=self.x_test,
+                                                                   max_features=max_features,
+                                                                   ngram_range=ngram_range)
+
     x_train = sequence.pad_sequences(x_train, maxlen=140)
     x_test = sequence.pad_sequences(x_test, maxlen=140)
+
     global g_x_test, g_y_test
     g_x_test = x_test
     g_y_test = y_test
@@ -30,7 +36,6 @@ def data():
 
 
 def model(x_train, y_train, x_test, y_test):
-    # Fixed params
 
     max_features = 350
     embedding_dims = {{choice([30, 50, 80, 100, 120, 150, 200, 250, 300])}}

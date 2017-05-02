@@ -9,6 +9,7 @@ from keras.preprocessing import sequence
 from sklearn.metrics import f1_score
 
 from data_loaders import coset
+from nlp_utils.n_grams import augment_with_n_grams
 
 
 def data():
@@ -17,19 +18,23 @@ def data():
     :return: x_train, y_train, x_test, y_test
     """
     (ids_train, x_train, y_train), (
-        ids_test, x_test, y_test) = coset.load_data(pre_process=True)
-    x_train = sequence.pad_sequences(x_train, maxlen=50)
-    x_test = sequence.pad_sequences(x_test, maxlen=50)
+        ids_test, x_test, y_test) = coset.load_data(pre_process=True, char_level=True)
+    x_train, x_test, max_features = augment_with_n_grams(x_train=x_train, x_test=x_test,
+                                                         max_features=160,
+                                                         ngram_range=3)
+    print(max_features)
+    x_train = sequence.pad_sequences(x_train, maxlen=400)
+    x_test = sequence.pad_sequences(x_test, maxlen=400)
     return x_train, y_train, x_test, y_test
 
 
 def model(x_train, y_train, x_test, y_test):
     # Fixed params
 
-    max_len = 50
+    max_len = 400
     # Parameter that need to be optimized
 
-    max_features = 15000
+    max_features = 16846
     batch_size = {{choice([16, 32, 64])}}
     embedding_dims = {{choice([25, 50, 75, 100, 125])}}
     filters = {{choice([50, 100, 150, 200, 250, 300])}}

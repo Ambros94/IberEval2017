@@ -60,5 +60,7 @@ def augment_with_n_grams(x_train, x_test, max_features, ngram_range=2):
         x_test = add_ngram(x_test, token_indice, ngram_range)
         print('Average train sequence length: {}'.format(np.mean(list(map(len, x_train)), dtype=int)))
         print('Average test sequence length: {}'.format(np.mean(list(map(len, x_test)), dtype=int)))
-        print('Min test sequence length: {}'.format(np.min(list(map(len, x_test)))))
+
+        print('Max train sequence length: {}'.format(np.max(list(map(len, x_train)))))
+        print('Max test sequence length: {}'.format(np.max(list(map(len, x_test)))))
     return x_train, x_test, max_features
