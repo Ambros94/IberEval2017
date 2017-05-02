@@ -7,6 +7,9 @@ import numpy as np
 import preprocessor as p
 from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
+from nltk.corpus import stopwords
+from nltk.stem.snowball import SpanishStemmer
+from nltk.tokenize import TweetTokenizer
 from sklearn.preprocessing import LabelEncoder
 
 __author__ = "Ambrosini Luca (@Ambros94)"
@@ -65,9 +68,27 @@ def fbeta_score(y_true, y_pred, beta=1):
     return f_score
 
 
-def load_data(max_words=10000, char_level=False, pre_process=False):
+def clean(original_tweet):
+    # Clean HTML tags
+
+    tokenizer = TweetTokenizer(reduce_len=True)
+    word_list = tokenizer.tokenize(original_tweet)
+    filtered_words = [word for word in word_list if word not in stopwords.words('spanish')]
+    stemmer = SpanishStemmer()
+    stemmed_words = [stemmer.stem(word=word) for word in filtered_words]
+    tweet = " ".join([word for word in stemmed_words])
+    # if original_tweet != tweet:
+    #    print("************************************************************")
+    #    print("Original tweet:", original_tweet)
+    #    print("Splitted tweet:", tweet)
+
+    return tweet
+
+
+def load_data(max_words=10000, char_level=False, pre_process=False, use_nltk=False):
     """
     Loads data form file, the train set contains also the dev
+    :param use_nltk: 
     :param pre_process: Use pre-processor to tokenize tweets
     :param char_level: If True char_level tokenizer is used
     :param max_words: Max number of words that are considered (Most used words in corpus)
@@ -107,6 +128,8 @@ def load_data(max_words=10000, char_level=False, pre_process=False):
             data.append(row[1])
             test_samples_2 += 1
 
+    if use_nltk:
+        data = [clean(d) for d in data]
     if pre_process:
         p.set_options(p.OPT.URL, p.OPT.RESERVED, p.OPT.MENTION, p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
         data = [p.tokenize(d) for d in data]

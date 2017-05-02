@@ -9,34 +9,36 @@ from models.fasttext import FastTextModel
 from models.lstm import LSTMModel
 
 # Create models
-data = coset.load_data(pre_process=True)
-
+data = coset.load_data(pre_process=False, use_nltk=True)
+max_features = 11000
+max_len = 20
 b_lstm = BidirectionalLSTMModel(data=data)
-b_lstm_f1_micro = b_lstm.run(metrics=[coset.fbeta_score], max_features=13500, max_len=50,
+b_lstm_f1_micro = b_lstm.run(metrics=[coset.fbeta_score], max_features=max_features, max_len=max_len,
                              batch_size=32, embedding_dims=128, recurrent_units=64, dropout=0.1,
-                             epochs=5)
+                             epochs=2)
 
 fast_text = FastTextModel(data=data)
 fast_text_f1_micro = fast_text.run(metrics=[coset.fbeta_score],
-                                   max_features=9300, maxlen=50,
+                                   max_features=max_features, maxlen=max_len,
                                    ngram_range=1, embedding_dims=300, hidden_dims=100,
-                                   batch_size=32, epochs=5)
+                                   batch_size=32, epochs=6)
 lstm = LSTMModel(data=data)
-lstm_f1_micro = lstm.run(metrics=[coset.fbeta_score], max_features=13500, maxlen=50, embedding_dims=100, batch_size=32,
+lstm_f1_micro = lstm.run(metrics=[coset.fbeta_score], max_features=max_features, maxlen=max_len, embedding_dims=100,
+                         batch_size=32,
                          dropout=0.2, recurrent_dropout=0.4, lstm_units=128, epochs=4)
 
 cnn_lstm = CnnLstmModel(data=data)
-cnn_lstm_f1_micro = cnn_lstm.run(metrics=[coset.fbeta_score], max_features=13500, maxlen=50,
+cnn_lstm_f1_micro = cnn_lstm.run(metrics=[coset.fbeta_score], max_features=max_features, maxlen=max_len,
                                  embedding_size=128, kernel_size=5, dropout=0.25, strides=1,
-                                 filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=3)
+                                 filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=2)
 
 cnn = CNNModel(data=data)
-cnn_f1_micro = cnn.run(metrics=[coset.fbeta_score], max_features=13500, maxlen=300,
+cnn_f1_micro = cnn.run(metrics=[coset.fbeta_score], max_features=max_features, maxlen=max_len,
                        batch_size=32, strides=1,
                        embedding_dims=50, filters=100,
                        kernel_size=3, dropout=0.2,
                        dropout_final=0.2,
-                       hidden_dims=50, epochs=4)
+                       hidden_dims=50, epochs=3)
 
 with open("../coset-" + strftime("%Y%m%d_%H%M%S", gmtime()) + ".log", 'w') as outcsv:
     writer = csv.writer(outcsv, delimiter='\t')
