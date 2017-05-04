@@ -1,13 +1,13 @@
-from keras.layers import Conv1D, GlobalMaxPooling1D, Conv2D
+from keras.layers import Conv1D, GlobalMaxPooling1D
 from keras.layers import Dense, Dropout, Activation
 from keras.layers import Embedding
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.model import Model
+from models.mymodel import MyModel
 
 
-class CNNModel(Model):
+class CNNModel(MyModel):
     def build(self, params):
         self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
         self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
@@ -42,4 +42,3 @@ class CNNModel(Model):
 
         self.model.compile(loss='categorical_crossentropy',
                            optimizer='adam', metrics=params['metrics'])
-        print(self.model.summary())

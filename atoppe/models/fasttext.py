@@ -4,11 +4,11 @@ from keras.layers import GlobalAveragePooling1D
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.model import Model
+from models.mymodel import MyModel
 from nlp_utils.n_grams import augment_with_n_grams
 
 
-class FastTextModel(Model):
+class FastTextModel(MyModel):
     def build(self, params):
         ngram_range = params['ngram_range']
         max_features = params['max_features']

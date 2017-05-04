@@ -1,15 +1,15 @@
 from random import choice
 
+import keras
 from hyperas import optim
 from hyperopt import Trials, tpe, STATUS_OK
-from keras.layers import Dense, Activation, Convolution1D, MaxPooling1D, Flatten, Merge
+from keras.engine import Input, Model
+from keras.layers import Dense, MaxPooling1D, Flatten, Conv1D
 from keras.layers import Embedding
-from keras.models import Sequential
 from keras.preprocessing import sequence
 from sklearn.metrics import f1_score
 
 from data_loaders import coset
-from nlp_utils.n_grams import augment_with_n_grams
 
 
 def data():
@@ -19,60 +19,55 @@ def data():
     """
     (ids_train, x_train, y_train), (
         ids_test, x_test, y_test) = coset.load_data(pre_process=True, char_level=False)
-    x_train, x_test, max_features = augment_with_n_grams(x_train=x_train, x_test=x_test,
-                                                         max_features=9277,
-                                                         ngram_range=2)
-    print(max_features)
-    x_train = sequence.pad_sequences(x_train, maxlen=50)
-    x_test = sequence.pad_sequences(x_test, maxlen=50)
+    x_train = sequence.pad_sequences(x_train, maxlen=30)
+    x_test = sequence.pad_sequences(x_test, maxlen=30)
     return x_train, y_train, x_test, y_test
 
 
 def model(x_train, y_train, x_test, y_test):
     # Fixed params
 
-    max_len = 50
+    max_len = 30
     # Parameter that need to be optimized
 
-    max_features = 35817
+    max_features = 8100
     batch_size = {{choice([16, 32, 64])}}
-    embedding_dims = {{choice([25, 50, 75, 100, 125])}}
+    embedding_dims = {{choice([25, 50, 75, 100, 125, 200, 300])}}
     filters = {{choice([50, 100, 150, 200, 250, 300])}}
     pooling_length = {{choice([1, 2, 3])}}
-    epochs = {{choice([2, 3, 4])}}
-    subsample_length = {{choice([1, 2, 3])}}
+    epochs = {{choice([2, 3,])}}
+    padding = {{choice(["valid", "same"])}}
+    dilation = {{choice([2, 3, 4])}}
 
-    branches = []
-    for filter_len in [2, 3, 4]:
-        branch = Sequential()
-        branch.add(Embedding(max_features,
-                             embedding_dims,
-                             input_length=max_len))
-        branch.add(Convolution1D(nb_filter=filters,
-                                 filter_length=filter_len,
-                                 border_mode='valid',
-                                 activation='relu',
-                                 subsample_length=subsample_length))
-        branch.add(MaxPooling1D(pool_length=pooling_length))
-        branch.add(Flatten())
+    x = Input(shape=(max_len,))
+    emb = Embedding(max_features,
+                    embedding_dims,
+                    input_length=max_len)(x)
+    merge_input = []
+    for kernel_size in [2, 3, 7, 8]:
+        conv = Conv1D(filters=filters,
+                      kernel_size=kernel_size,
+                      padding=padding,
+                      dilation_rate=dilation,
+                      activation='relu', input_shape=(max_len, embedding_dims))(emb)
+        max_pooling = MaxPooling1D(pool_size=pooling_length)(conv)
+        flatten = Flatten()(max_pooling)
+        merge_input.append(flatten)
 
-        branches.append(branch)
-    model = Sequential()
-    model.add(Merge(branches, mode='concat'))
-
-    model.add(Dense(5))
-    model.add(Activation('softmax'))
+    merged = keras.layers.concatenate(merge_input)
+    y = Dense(5, activation='sigmoid')(merged)
+    model = Model(inputs=x, outputs=y)
 
     model.compile(loss='categorical_crossentropy',
                   optimizer='adam',
                   metrics=[coset.fbeta_score])
-    model.fit([x_train, x_train, x_train], y_train,
+    model.fit(x_train, y_train,
               batch_size=batch_size,
               epochs=epochs,
               verbose=2,
-              validation_data=([x_test, x_test, x_test], y_test))
+              validation_data=(x_test, y_test))
 
-    predictions = model.predict([x_test, x_test, x_test], batch_size=batch_size)
+    predictions = model.predict(x_test, batch_size=batch_size)
     f1 = f1_score(coset.decode_labels(y_test), coset.decode_labels(predictions), average='macro')
     print("*************\n")
     print("f1_macro: {f1_macro}\n".format(f1_macro=f1))

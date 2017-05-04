@@ -5,10 +5,10 @@ from keras.layers import LSTM
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.model import Model
+from models.mymodel import MyModel
 
 
-class CnnLstmModel(Model):
+class CnnLstmModel(MyModel):
     def build(self, params):
         max_features = params['max_features']
         max_len = params['maxlen']

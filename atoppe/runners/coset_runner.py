@@ -5,16 +5,23 @@ from data_loaders import coset
 from models.bidirectional_lstm import BidirectionalLSTMModel
 from models.cnn import CNNModel
 from models.cnn_lstm import CnnLstmModel
+from models.cnnv2 import CNNModelv2
 from models.fasttext import FastTextModel
 from models.lstm import LSTMModel
 
 # Create models
-data = coset.load_data(pre_process=False, use_nltk=True)
+data = coset.load_data(pre_process=False, use_nltk=False)
 (ids_train, x_train, y_train), (ids_test, x_test, y_test) = data
-print("Training set shape", len(x_train))
-print("Validation set shape", len(x_test))
 max_features = 11000
 max_len = 20
+
+cnn2 = CNNModelv2(data=data)
+cnn2_f1_micro = cnn2.run(metrics=[coset.fbeta_score], max_features=max_features, maxlen=max_len,
+                         batch_size=32, strides=1,
+                         embedding_dims=50, filters=100,
+                         kernel_size=50, dropout=0.2,
+                         dropout_final=0.2,
+                         hidden_dims=50, epochs=3, padding='same', dilation_rate=1, pool_size=1)
 
 cnn = CNNModel(data=data)
 cnn_f1_micro = cnn.run(metrics=[coset.fbeta_score], max_features=max_features, maxlen=max_len,

@@ -6,7 +6,7 @@ from sklearn.metrics import f1_score
 import data_loaders.coset as c
 
 
-class Model:
+class MyModel:
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, data, verbose=2):
@@ -15,7 +15,7 @@ class Model:
         if len(self.y_train) == 0:
             raise Exception("You should provide at least one train label")
         self.output_size = len(self.y_train[0])
-        self.model = None
+        self.keras_model = None
         self.verbose = verbose
 
     @abc.abstractmethod
@@ -29,31 +29,31 @@ class Model:
         return self.test_f1_micro(), self.test_f1_macro()
 
     def load_model(self, name):
-        self.model = load_model(name)
+        self.keras_model = load_model(name)
 
     def persist_model(self, name):
-        self.model.save(name)
+        self.keras_model.save(name)
 
     def train(self, batch_size, epochs):
-        if self.model is None:
+        if self.keras_model is None:
             raise Exception("Cannot find a model! Have you build it yet?")
-        self.model.fit(self.x_train, self.y_train,
-                       verbose=self.verbose,
-                       batch_size=batch_size,
-                       epochs=epochs,
-                       validation_data=(self.x_test, self.y_test))
+        self.keras_model.fit(self.x_train, self.y_train,
+                             verbose=self.verbose,
+                             batch_size=batch_size,
+                             epochs=epochs,
+                             validation_data=(self.x_test, self.y_test))
 
     def evaluate_test(self, batch_size):
-        if self.model is None:
+        if self.keras_model is None:
             raise Exception("Cannot find a model! Have you build it yet?")
-        return self.model.evaluate(self.x_test, self.y_test,
-                                   batch_size=batch_size)
+        return self.keras_model.evaluate(self.x_test, self.y_test,
+                                         batch_size=batch_size)
 
     def predict(self, data, batch_size):
-        if self.model is None:
+        if self.keras_model is None:
             raise Exception("Cannot find a model! Have you build it yet?")
-        return self.model.predict(data,
-                                  batch_size=batch_size)
+        return self.keras_model.predict(data,
+                                        batch_size=batch_size)
 
     def test_f1_micro(self):
         predictions = self.predict(data=self.x_test, batch_size=32)

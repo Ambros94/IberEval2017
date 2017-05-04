@@ -1,45 +1,36 @@
-from keras.layers import Conv1D, GlobalMaxPooling1D, Conv2D
-from keras.layers import Dense, Dropout, Activation
+import keras
+from keras.engine import Input, Model
+from keras.layers import Conv1D, MaxPooling1D, Flatten
+from keras.layers import Dense
 from keras.layers import Embedding
-from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.model import Model
+from models.mymodel import MyModel
 
 
-class CNNModel(Model):
+class CNNModelv2(MyModel):
     def build(self, params):
         self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
         self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
 
-        self.model = Sequential()
+        x = Input(shape=(params['maxlen'],))
+        emb = Embedding(params['max_features'],
+                        params['embedding_dims'],
+                        input_length=params['maxlen'])(x)
+        merge_input = []
+        for kernel_size in [2, 3, 4]:
+            conv = Conv1D(filters=params['filters'],
+                          kernel_size=kernel_size,
+                          padding=params['padding'],
+                          dilation_rate=params['dilation_rate'],
+                          activation='relu', input_shape=(params['maxlen'], params['embedding_dims']))(emb)
+            max_pooling = MaxPooling1D(pool_size=params['pool_size'])(conv)
+            flatten = Flatten()(max_pooling)
+            merge_input.append(flatten)
 
-        # we start off with an efficient embedding layer which maps
-        # our vocab indices into embedding_dims dimensions
-        self.model.add(Embedding(params['max_features'],
-                                 params['embedding_dims'],
-                                 input_length=params['maxlen']))
-        self.model.add(Dropout(params['dropout']))
+        merged = keras.layers.concatenate(merge_input)
+        y = Dense(self.output_size, activation='sigmoid')(merged)
+        self.keras_model = Model(inputs=x, outputs=y)
 
-        # we add a Convolution1D, which will learn filters
-        # word group filters of size filter_length:
-        self.model.add(Conv1D(params['filters'],
-                              params['kernel_size'],
-                              padding='same',
-                              activation='relu',
-                              strides=params['strides']))
-        # we use max pooling:
-        self.model.add(GlobalMaxPooling1D())
-
-        # We add a vanilla hidden layer:
-        self.model.add(Dense(params['hidden_dims']))
-        self.model.add(Dropout(params['dropout_final']))
-        self.model.add(Activation('relu'))
-
-        # We project onto a single unit output layer, and squash it with a sigmoid:
-        self.model.add(Dense(self.output_size))
-        self.model.add(Activation('softmax'))
-
-        self.model.compile(loss='categorical_crossentropy',
-                           optimizer='adam', metrics=params['metrics'])
-        print(self.model.summary())
+        self.keras_model.compile(loss='categorical_crossentropy',
+                                 optimizer='adam', metrics=params['metrics'])
