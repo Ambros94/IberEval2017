@@ -3,7 +3,7 @@ import os
 
 import numpy as np
 import preprocessor as p
-from keras.layers import Dense, LSTM
+from keras.layers import Dense, Conv1D, GlobalMaxPooling1D, Dropout, Activation
 from keras.layers import Embedding
 from keras.models import Sequential
 from keras.preprocessing import sequence
@@ -13,6 +13,7 @@ from sklearn.metrics import f1_score
 from sklearn.preprocessing import LabelEncoder
 
 from data_loaders import coset
+from data_loaders.coset import clean
 
 MAX_SEQUENCE_LENGTH = 30
 MAX_NB_WORDS = 20000
@@ -75,9 +76,9 @@ with open(abs_test_tweets_path, 'rt', encoding="utf-8") as csv_file:
         data.append(row[1])
         test_samples_2 += 1
 
-# data = [clean(d) for d in data]
-p.set_options(p.OPT.URL, p.OPT.RESERVED, p.OPT.MENTION, p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
-data = [p.tokenize(d) for d in data]
+data = [clean(d) for d in data]
+p.set_options(p.OPT.URL, p.OPT.RESERVED, p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
+data = [p.clean(d) for d in data]
 # Prepare data
 tokenizer = Tokenizer(num_words=MAX_NB_WORDS)
 tokenizer.fit_on_texts(data)
@@ -135,9 +136,25 @@ model.add(Embedding(num_words,
                     EMBEDDING_DIM,
                     weights=[embedding_matrix],
                     input_length=MAX_SEQUENCE_LENGTH,
-                    trainable=False))
-model.add(LSTM(64, dropout=0.2, recurrent_dropout=0.2))
+                    trainable=True))
+# model.add(LSTM(64, dropout=0.2, recurrent_dropout=0.2))
 
+# we add a Convolution1D, which will learn filters
+# word group filters of size filter_length:
+model.add(Conv1D(200,
+                 5,
+                 padding='valid',
+                 activation='relu',
+                 strides=1))
+# we use max pooling:
+model.add(GlobalMaxPooling1D())
+
+# We add a vanilla hidden layer:
+model.add(Dense(100))
+model.add(Dropout(0.5))
+model.add(Activation('relu'))
+
+# We project onto a single unit output layer, and squash it with a sigmoid:
 model.add(Dense(5, activation='softmax'))
 model.compile(loss='categorical_crossentropy',
               optimizer='adam',
@@ -145,7 +162,7 @@ model.compile(loss='categorical_crossentropy',
 
 model.fit(x_train, y_train,
           batch_size=32,
-          epochs=10,
+          epochs=3,
           validation_data=(x_test, y_test))
 predictions = model.predict(x_test, batch_size=32)
 print(f1_score(coset.decode_labels(y_test), coset.decode_labels(predictions), average='macro'))

@@ -43,12 +43,6 @@ class Model:
                        epochs=epochs,
                        validation_data=(self.x_test, self.y_test))
 
-    def evaluate_val(self, batch_size):
-        if self.model is None:
-            raise Exception("Cannot find a model! Have you build it yet?")
-        return self.model.evaluate(self.x_val, self.y_val,
-                                   batch_size=batch_size)
-
     def evaluate_test(self, batch_size):
         if self.model is None:
             raise Exception("Cannot find a model! Have you build it yet?")

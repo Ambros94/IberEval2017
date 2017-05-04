@@ -106,6 +106,7 @@ def load_data(max_words=10000, char_level=False, pre_process=False, use_nltk=Fal
             data.append(row[1])
             labels.append(row[2])
             training_samples += 1
+
     # Loading validation set
     with open(abs_dev_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
