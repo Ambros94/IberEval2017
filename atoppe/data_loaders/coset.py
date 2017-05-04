@@ -5,10 +5,8 @@ import os
 import keras.backend as K
 import numpy as np
 import preprocessor as p
-from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
 from nltk.corpus import stopwords
-from nltk.stem.snowball import SpanishStemmer
 from nltk.tokenize import TweetTokenizer
 from sklearn.preprocessing import LabelEncoder
 
@@ -72,14 +70,9 @@ def clean(original_tweet):
     tokenizer = TweetTokenizer(reduce_len=True)
     word_list = tokenizer.tokenize(original_tweet)
     filtered_words = [word for word in word_list if word not in stopwords.words('spanish')]
-    stemmer = SpanishStemmer()
-    stemmed_words = [stemmer.stem(word=word) for word in filtered_words]
-    tweet = " ".join([word for word in stemmed_words])
-    # if original_tweet != tweet:
-    #    print("************************************************************")
-    #    print("Original tweet:", original_tweet)
-    #    print("Splitted tweet:", tweet)
-
+    # stemmer = SpanishStemmer()
+    # stemmed_words = [stemmer.stem(word=word) for word in filtered_words]
+    tweet = " ".join([word for word in filtered_words])
     return tweet
 
 
@@ -117,13 +110,10 @@ def load_data(max_words=10000, char_level=False, pre_process=False, use_nltk=Fal
     if use_nltk:
         data = [clean(d) for d in data]
     if pre_process:
-        p.set_options(p.OPT.URL, p.OPT.RESERVED, p.OPT.MENTION, p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
+        p.set_options(p.OPT.URL, p.OPT.RESERVED)
+        data = [p.clean(d) for d in data]
+        p.set_options(p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
         data = [p.tokenize(d) for d in data]
-    # Prepare data
-    tokenizer = Tokenizer(num_words=max_words, char_level=char_level)
-    tokenizer.fit_on_texts(data)
-    data = tokenizer.texts_to_sequences(data)
-    print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
 
     # Prepare labels
     encoder = LabelEncoder()

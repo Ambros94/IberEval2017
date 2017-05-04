@@ -137,7 +137,6 @@ model.add(Embedding(num_words,
                     weights=[embedding_matrix],
                     input_length=MAX_SEQUENCE_LENGTH,
                     trainable=True))
-# model.add(LSTM(64, dropout=0.2, recurrent_dropout=0.2))
 
 # we add a Convolution1D, which will learn filters
 # word group filters of size filter_length:
