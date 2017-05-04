@@ -10,8 +10,20 @@ from models.lstm import LSTMModel
 
 # Create models
 data = coset.load_data(pre_process=False, use_nltk=True)
+(ids_train, x_train, y_train), (ids_test, x_test, y_test) = data
+print("Training set shape", len(x_train))
+print("Validation set shape", len(x_test))
 max_features = 11000
 max_len = 20
+
+cnn = CNNModel(data=data)
+cnn_f1_micro = cnn.run(metrics=[coset.fbeta_score], max_features=max_features, maxlen=max_len,
+                       batch_size=32, strides=1,
+                       embedding_dims=50, filters=100,
+                       kernel_size=50, dropout=0.2,
+                       dropout_final=0.2,
+                       hidden_dims=50, epochs=3)
+
 b_lstm = BidirectionalLSTMModel(data=data)
 b_lstm_f1_micro = b_lstm.run(metrics=[coset.fbeta_score], max_features=max_features, max_len=max_len,
                              batch_size=32, embedding_dims=128, recurrent_units=64, dropout=0.1,
@@ -31,14 +43,6 @@ cnn_lstm = CnnLstmModel(data=data)
 cnn_lstm_f1_micro = cnn_lstm.run(metrics=[coset.fbeta_score], max_features=max_features, maxlen=max_len,
                                  embedding_size=128, kernel_size=5, dropout=0.25, strides=1,
                                  filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=2)
-
-cnn = CNNModel(data=data)
-cnn_f1_micro = cnn.run(metrics=[coset.fbeta_score], max_features=max_features, maxlen=max_len,
-                       batch_size=32, strides=1,
-                       embedding_dims=50, filters=100,
-                       kernel_size=3, dropout=0.2,
-                       dropout_final=0.2,
-                       hidden_dims=50, epochs=3)
 
 with open("../coset-" + strftime("%Y%m%d_%H%M%S", gmtime()) + ".log", 'w') as outcsv:
     writer = csv.writer(outcsv, delimiter='\t')

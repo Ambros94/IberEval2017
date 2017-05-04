@@ -69,20 +69,12 @@ for i in range(0, num_tweets):
     # clean reviews
     clean_train_tweets.append(review_to_words(train_data[i]))
 
-# vectorizer = TfidfVectorizer(analyzer="word", tokenizer=None, preprocessor=None, stop_words=None, max_features=8000,binary=True)
+# vectorizer = TfidfVectorizer(analyzer="word", tokenizer=None, preprocessor=None, stop_words=None)
+vectorizer = TfidfVectorizer(ngram_range=(1, 3), analyzer='word', token_pattern=r'\b\w+\b', min_df=1, binary=False)
 
-vectorizer = TfidfVectorizer(ngram_range=(1, 2), analyzer='word', token_pattern=r'\b\w+\b', min_df=1, binary=False)
-
-# fit_transform() does two functions: First, it fits the model
-# and learns the vocabulary; second, it transforms our training data
-# into feature vectors. The input to fit_transform should be a list of
-# strings.
 train_data_features = vectorizer.fit_transform(clean_train_tweets)
-
-# Numpy arrays are easy to work with, so convert the result to an
-# array
 train_data_features = train_data_features.toarray()
-
+max_features = train_data_features.shape[1]
 print("Training the classifier...")
 
 # Initialize a Random Forest classifier with 100 trees
@@ -99,15 +91,12 @@ test_ids = []
 test_data = []
 test_labels = []
 
-with open(abs_test_truth_path) as true_file:
-    for line in true_file:
-        tweet_id, topic = line.strip().split('\t')
-        test_labels.append(int(topic))
-        test_ids.append(int(tweet_id))
-with open(abs_test_tweets_path, 'rt', encoding="utf-8") as csv_file:
+with open(abs_dev_path, 'rt', encoding="utf-8") as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
     for row in csv_reader:
-        test_data.append(str(row[1]))
+        test_ids.append(row[0])
+        test_data.append(row[1])
+        test_labels.append(row[2])
 
 # Create an empty list and append the clean reviews one by one
 num_test_tweets = len(test_data)
@@ -127,6 +116,6 @@ test_data_features = test_data_features.toarray()
 # Use the random forest to make sentiment label predictions
 result = forest.predict(test_data_features)
 int_result = [int(r) for r in result]
-print("int_result", int_result)
-print("test_labels", test_labels)
-print(f1_score(int_result, test_labels, average='macro'))
+print(int_result)
+print(test_labels)
+print(f1_score(result, test_labels, average='macro'))

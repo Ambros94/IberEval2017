@@ -17,8 +17,6 @@ __author__ = "Ambrosini Luca (@Ambros94)"
 script_dir = os.path.dirname(__file__)
 abs_train_path = os.path.join(script_dir, '../../resources/coset/coset-train.csv')
 abs_dev_path = os.path.join(script_dir, '../../resources/coset/coset-dev.csv')
-abs_test_tweets_path = os.path.join(script_dir, '../../resources/coset/coset-test-text.csv')
-abs_test_truth_path = os.path.join(script_dir, '../../resources/coset/coset-pred-forest.test')
 
 """
 1. Political issues Related to the most abstract electoral confrontation.
@@ -97,7 +95,7 @@ def load_data(max_words=10000, char_level=False, pre_process=False, use_nltk=Fal
     ids = []
     data = []
     labels = []
-    training_samples, validation_samples, test_samples_1, test_samples_2 = 0, 0, 0, 0
+    training_samples, validation_samples = 0, 0
     # Loading training set
     with open(abs_train_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
@@ -115,19 +113,6 @@ def load_data(max_words=10000, char_level=False, pre_process=False, use_nltk=Fal
             data.append(row[1])
             labels.append(row[2])
             validation_samples += 1
-
-    # Loading test set
-    with open(abs_test_truth_path) as true_file:
-        for line in true_file:
-            tweet_id, topic = line.strip().split('\t')
-            labels.append(int(topic))
-            ids.append(int(tweet_id))
-            test_samples_1 += 1
-    with open(abs_test_tweets_path, 'rt', encoding="utf-8") as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
-        for row in csv_reader:
-            data.append(row[1])
-            test_samples_2 += 1
 
     if use_nltk:
         data = [clean(d) for d in data]
@@ -147,13 +132,13 @@ def load_data(max_words=10000, char_level=False, pre_process=False, use_nltk=Fal
     ready_y = np_utils.to_categorical(encoded_y)
 
     # Train
-    ids_train = ids[0:training_samples + validation_samples]
-    x_train = data[0:training_samples + validation_samples]
-    y_train = ready_y[0:training_samples + validation_samples]
+    ids_train = ids[0:training_samples]
+    x_train = data[0:training_samples]
+    y_train = ready_y[0:training_samples]
     # Test
-    ids_test = ids[training_samples + validation_samples:]
-    x_test = data[training_samples + validation_samples:]
-    y_test = ready_y[training_samples + validation_samples:]
+    ids_test = ids[training_samples:]
+    x_test = data[training_samples:]
+    y_test = ready_y[training_samples:]
 
     print('Average train sequence length: {}'.format(np.mean(list(map(len, x_train)), dtype=int)))
     print('Average test sequence length: {}'.format(np.mean(list(map(len, x_test)), dtype=int)))
