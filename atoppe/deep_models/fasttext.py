@@ -39,7 +39,7 @@ class FastTextModel(ToppeModel):
         self.keras_model = Sequential()
 
         self.keras_model.add(Embedding(max_features,
-                                       embedding_dims,
+                                       embedding_dims, trainable=True,
                                        weights=[embedding_matrix],
                                        input_length=maxlen))
 

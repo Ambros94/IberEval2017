@@ -1,0 +1,14 @@
+model_name	test_f1_micro	test_f1_macro
+cnn	0.616	0.565836490006
+fast_text	0.66	0.562394854748
+cnn_lstm	0.588	0.451220703436
+b_lstm	0.62	0.48457779947
+lstm	0.696	0.60724745111
+kim	0.628	0.5688467796
+Preprocessing:
+def _clean_tweet(tweet):
+    p.set_options(p.OPT.URL, p.OPT.RESERVED)
+    tweet = p.clean(tweet)
+    p.set_options(p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
+    tweet = p.tokenize(tweet)
+    return tweet

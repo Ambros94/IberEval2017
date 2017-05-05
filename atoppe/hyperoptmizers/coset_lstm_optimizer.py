@@ -6,9 +6,13 @@ from keras.layers import Dense, LSTM
 from keras.layers import Embedding
 from keras.models import Sequential
 from keras.preprocessing import sequence
+from keras.preprocessing.text import Tokenizer
 from sklearn.metrics import f1_score
 
 from data_loaders import coset
+from deep_models import metrics
+from nlp_utils import word_vecors
+from nlp_utils.tweets_preprocessor import clean_tweets
 
 
 def data():
@@ -18,15 +22,13 @@ def data():
     """
     (ids_train, x_train, y_train), (
         ids_test, x_test, y_test) = coset.load_data()
-    x_train = sequence.pad_sequences(x_train, maxlen=50)
-    x_test = sequence.pad_sequences(x_test, maxlen=50)
+
     return x_train, y_train, x_test, y_test
 
 
 def model(x_train, y_train, x_test, y_test):
     # Fixed params
 
-    max_features = 15000
     embedding_dims = {{choice([30, 50, 80, 100, 120, 150, 200, 250, 300])}}
     batch_size = {{choice([16, 32, 64])}}
     dropout = {{choice([0.2, 0.3, 0.4, 0.5])}}
@@ -35,16 +37,27 @@ def model(x_train, y_train, x_test, y_test):
     units = {{choice([32, 64, 128])}}
     units_2 = {{choice([32, 64, 128])}}
     units_3 = {{choice([32, 64, 128])}}
+    x_train = clean_tweets(x_train)
+    x_test = clean_tweets(x_test)
+    tokenizer = Tokenizer()
+    tokenizer.fit_on_texts(x_train)
+    num_words = len(tokenizer.word_index) + 1
+    x_train = tokenizer.texts_to_sequences(x_train)
+    x_test = tokenizer.texts_to_sequences(x_test)
+    print('Found {word_index} words'.format(word_index=num_words))
+    x_train = sequence.pad_sequences(x_train, maxlen=30)
+    x_test = sequence.pad_sequences(x_test, maxlen=30)
 
     model = Sequential()
-    model.add(Embedding(max_features, embedding_dims))
+    embedding_matrix = word_vecors.load_vectors(tokenizer.word_index, language='en')
+    model.add(Embedding(num_words, 300, weights=[embedding_matrix], input_length=num_words, trainable=True))
     model.add(LSTM(units, dropout=dropout, recurrent_dropout=recurrent_dropout, return_sequences=True))
     model.add(LSTM(units_2, dropout=dropout, recurrent_dropout=recurrent_dropout, return_sequences=True))
     model.add(LSTM(units_3, dropout=dropout, recurrent_dropout=recurrent_dropout))
     model.add(Dense(5, activation='softmax'))
     model.compile(loss='categorical_crossentropy',
                   optimizer='adam',
-                  metrics=[coset.fbeta_score])
+                  metrics=[metrics.fbeta_score])
 
     model.fit(x_train, y_train,
               batch_size=batch_size,

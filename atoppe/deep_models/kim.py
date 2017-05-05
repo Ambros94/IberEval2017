@@ -14,7 +14,7 @@ from nlp_utils.tweets_preprocessor import clean_tweets
 class KimModel(ToppeModel):
     def build(self, params):
         # Cleaning data
-        language=params['language']
+        language = params['language']
         self.x_train = clean_tweets(self.x_train)
         self.x_test = clean_tweets(self.x_test)
         # Prepare data
