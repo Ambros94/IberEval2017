@@ -6,12 +6,16 @@ from keras.layers import MaxPooling1D, Dropout
 from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 
-from models.toppemodel import ToppeModel
+from deep_models.toppemodel import ToppeModel
 from nlp_utils import word_vecors
+from nlp_utils.tweets_preprocessor import clean_tweets
 
 
 class KimModel(ToppeModel):
     def build(self, params):
+        # Cleaning data
+        self.x_train = clean_tweets(self.x_train)
+        self.x_test = clean_tweets(self.x_test)
         # Prepare data
         tokenizer = Tokenizer()
         tokenizer.fit_on_texts(self.x_train)

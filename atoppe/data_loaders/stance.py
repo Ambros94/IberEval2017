@@ -1,6 +1,7 @@
 # encoding=utf8
 import csv
 import os
+from random import shuffle
 
 from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
@@ -23,8 +24,6 @@ abs_tweets_es_path = os.path.join(script_dir, '../../resources/stance/training_t
 11. Other issues.
 """
 
-from random import shuffle
-
 
 def unison_shuffled_copies(a, b):
     assert len(a) == len(b)
@@ -39,10 +38,9 @@ def unison_shuffled_copies(a, b):
     return list1_shuf, list2_shuf
 
 
-def load_data(max_words=15000, n_validation_samples=250):
+def load_data(n_validation_samples=250):
     """
     Loads data form file, the train set contains also the dev
-    :param max_words: Max number of words that are considered (Most used words in corpus)
     :param n_validation_samples: How many examples have to go from the data-set into the test set
     :return: (x_train, y_train), (x_test, y_test)
     """
@@ -75,7 +73,7 @@ def load_data(max_words=15000, n_validation_samples=250):
 
     data, labels = unison_shuffled_copies(data, labels)
     # Prepare data
-    tokenizer = Tokenizer(num_words=max_words)
+    tokenizer = Tokenizer()
     tokenizer.fit_on_texts(data)
     data = tokenizer.texts_to_sequences(data)
     print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
@@ -86,9 +84,12 @@ def load_data(max_words=15000, n_validation_samples=250):
     encoded_y = encoder.transform(labels)
     ready_y = np_utils.to_categorical(encoded_y)
 
-    # Split in train and test
+    # Train
+    ids_train = ids[:-n_validation_samples]
     x_train = data[:-n_validation_samples]
     y_train = ready_y[:-n_validation_samples]
+    # Validation
+    ids_val = ids[-n_validation_samples:]
     x_val = data[-n_validation_samples:]
     y_val = ready_y[-n_validation_samples:]
-    return (x_train, y_train), (x_val, y_val)
+    return (ids_train, x_train, y_train), (ids_val, x_val, y_val)

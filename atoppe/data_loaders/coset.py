@@ -2,12 +2,8 @@
 import csv
 import os
 
-import keras.backend as K
 import numpy as np
-import preprocessor as p
 from keras.utils import np_utils
-from nltk.corpus import stopwords
-from nltk.tokenize import TweetTokenizer
 from sklearn.preprocessing import LabelEncoder
 
 __author__ = "Ambrosini Luca (@Ambros94)"
@@ -26,61 +22,9 @@ abs_dev_path = os.path.join(script_dir, '../../resources/coset/coset-dev.csv')
 label_encoder = None
 
 
-def fbeta_score(y_true, y_pred, beta=1):
+def load_data():
     """
-    Computes the F score, the weighted harmonic mean of precision and recall.
-    This is useful for multi-label classification where input samples can be
-    tagged with a set of labels. By only using accuracy (precision) a model
-    would achieve a perfect score by simply assigning every class to every
-    input. In order to avoid this, a metric should penalize incorrect class
-    assignments as well (recall). The F-beta score (ranged from 0.0 to 1.0)
-    computes this, as a weighted mean of the proportion of correct class
-    assignments vs. the proportion of incorrect class assignments.
-    With beta = 1, this is equivalent to a F-measure. With beta < 1, assigning
-    correct classes becomes more important, and with beta > 1 the metric is
-    instead weighted towards penalizing incorrect class assignments.
-    """
-    if beta < 0:
-        raise ValueError('The lowest choosable beta is zero (only precision).')
-
-    # Count positive samples.
-    c1 = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    c2 = K.sum(K.round(K.clip(y_pred, 0, 1)))
-    c3 = K.sum(K.round(K.clip(y_true, 0, 1)))
-
-    # If there are no true samples, fix the F score at 0.
-    if c3 == 0:
-        return 0
-
-    # How many selected items are relevant?
-    precision = c1 / c2
-
-    # How many relevant items are selected?
-    recall = c1 / c3
-
-    # Weight precision and recall together as a single scalar.
-    beta2 = beta ** 2
-    f_score = (1 + beta2) * (precision * recall) / (beta2 * precision + recall)
-    return f_score
-
-
-def clean(original_tweet):
-    # Clean HTML tags
-
-    tokenizer = TweetTokenizer(reduce_len=True)
-    word_list = tokenizer.tokenize(original_tweet)
-    filtered_words = [word for word in word_list if word not in stopwords.words('spanish')]
-    # stemmer = SpanishStemmer()
-    # stemmed_words = [stemmer.stem(word=word) for word in filtered_words]
-    tweet = " ".join([word for word in filtered_words])
-    return tweet
-
-
-def load_data(pre_process=False, use_nltk=False):
-    """
-    Loads data form file, the train set contains also the dev
-    :param use_nltk: 
-    :param pre_process: Use pre-processor to tokenize tweets
+    Loads coset training and dev data sets
     :return: (ids_train, x_train, y_train),(ids_test, x_test, y_test)
     """
     ids = []
@@ -104,14 +48,6 @@ def load_data(pre_process=False, use_nltk=False):
             data.append(row[1])
             labels.append(row[2])
             validation_samples += 1
-
-    if use_nltk:
-        data = [clean(d) for d in data]
-    if pre_process:
-        p.set_options(p.OPT.URL, p.OPT.RESERVED)
-        data = [p.clean(d) for d in data]
-        p.set_options(p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
-        data = [p.tokenize(d) for d in data]
 
     # Prepare labels
     encoder = LabelEncoder()
