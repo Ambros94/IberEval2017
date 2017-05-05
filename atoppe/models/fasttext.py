@@ -1,36 +1,49 @@
-from keras.layers import Dense
-from keras.layers import Embedding
+from keras.layers import Embedding, Dense
 from keras.layers import GlobalAveragePooling1D
 from keras.models import Sequential
 from keras.preprocessing import sequence
+from keras.preprocessing.text import Tokenizer
 
-from models.mymodel import MyModel
+from models.toppemodel import ToppeModel
+from nlp_utils import word_vecors
 from nlp_utils.n_grams import augment_with_n_grams
 
 
-class FastTextModel(MyModel):
+class FastTextModel(ToppeModel):
     def build(self, params):
+        # Extract params
         ngram_range = params['ngram_range']
-        max_features = params['max_features']
+        max_features = params['max_words']
         maxlen = params['maxlen']
         embedding_dims = params['embedding_dims']
+        hidden_dims = params['hidden_dims']
 
-        self.x_train, self.x_test, max_features = augment_with_n_grams(x_train=self.x_train, x_test=self.x_test,
+        # Prepare data
+        tokenizer = Tokenizer()
+        tokenizer.fit_on_texts(self.x_train)
+        x_train = tokenizer.texts_to_sequences(self.x_train)
+        x_test = tokenizer.texts_to_sequences(self.x_test)
+        print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
+
+        self.x_train, self.x_test, max_features = augment_with_n_grams(x_train=x_train, x_test=x_test,
                                                                        max_features=max_features,
                                                                        ngram_range=ngram_range)
+        print('After {n}_grams we have {max_features} features'.format(n=ngram_range, max_features=max_features))
+        embedding_matrix = word_vecors.load_vectors(tokenizer.word_index, max_features)
 
-        self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
-        self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])
-        self.model = Sequential()
+        self.x_train = sequence.pad_sequences(self.x_train, maxlen=maxlen)
+        self.x_test = sequence.pad_sequences(self.x_test, maxlen=maxlen)
+        self.keras_model = Sequential()
 
-        self.model.add(Embedding(max_features,
-                                 embedding_dims,
-                                 input_length=maxlen))
+        self.keras_model.add(Embedding(max_features,
+                                       embedding_dims,
+                                       weights=[embedding_matrix],
+                                       input_length=maxlen))
 
-        self.model.add(GlobalAveragePooling1D())
+        self.keras_model.add(GlobalAveragePooling1D())
+        self.keras_model.add(Dense(hidden_dims, activation='relu'))
+        self.keras_model.add(Dense(self.output_size, activation='softmax'))
 
-        self.model.add(Dense(self.output_size, activation='softmax'))
-
-        self.model.compile(loss='categorical_crossentropy',
-                           optimizer='adam',
-                           metrics=params['metrics'])
+        self.keras_model.compile(loss='categorical_crossentropy',
+                                 optimizer='adam',
+                                 metrics=params['metrics'])

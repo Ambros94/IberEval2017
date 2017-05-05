@@ -76,13 +76,11 @@ def clean(original_tweet):
     return tweet
 
 
-def load_data(max_words=10000, char_level=False, pre_process=False, use_nltk=False):
+def load_data(pre_process=False, use_nltk=False):
     """
     Loads data form file, the train set contains also the dev
     :param use_nltk: 
     :param pre_process: Use pre-processor to tokenize tweets
-    :param char_level: If True char_level tokenizer is used
-    :param max_words: Max number of words that are considered (Most used words in corpus)
     :return: (ids_train, x_train, y_train),(ids_test, x_test, y_test)
     """
     ids = []
@@ -130,11 +128,11 @@ def load_data(max_words=10000, char_level=False, pre_process=False, use_nltk=Fal
     x_test = data[training_samples:]
     y_test = ready_y[training_samples:]
 
-    print('Average train sequence length: {}'.format(np.mean(list(map(len, x_train)), dtype=int)))
-    print('Average test sequence length: {}'.format(np.mean(list(map(len, x_test)), dtype=int)))
+    print('Average train sequence length: {} chars'.format(np.mean(list(map(len, x_train)), dtype=int)))
+    print('Average test sequence length: {} chars'.format(np.mean(list(map(len, x_test)), dtype=int)))
 
-    print('Max train sequence length: {}'.format(np.max(list(map(len, x_train)))))
-    print('Max test sequence length: {}'.format(np.max(list(map(len, x_test)))))
+    print('Max train sequence length: {} chars'.format(np.max(list(map(len, x_train)))))
+    print('Max test sequence length: {} chars'.format(np.max(list(map(len, x_test)))))
 
     return (ids_train, x_train, y_train), (ids_test, x_test, y_test)
 

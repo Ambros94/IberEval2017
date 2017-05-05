@@ -6,7 +6,7 @@ from sklearn.metrics import f1_score
 import data_loaders.coset as c
 
 
-class MyModel:
+class ToppeModel:
     __metaclass__ = abc.ABCMeta
 
     def __init__(self, data, verbose=2):

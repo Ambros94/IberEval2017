@@ -1,5 +1,4 @@
 import keras
-import numpy as np
 from keras.engine import Input, Model
 from keras.layers import Conv1D, Dense, LSTM
 from keras.layers import Embedding
@@ -7,50 +6,23 @@ from keras.layers import MaxPooling1D, Dropout
 from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 
-from models.mymodel import MyModel
+from models.toppemodel import ToppeModel
+from nlp_utils import word_vecors
 
 
-class CNNModelv2(MyModel):
+class KimModel(ToppeModel):
     def build(self, params):
         # Prepare data
-        tokenizer = Tokenizer(num_words=params['max_words'])
+        tokenizer = Tokenizer()
         tokenizer.fit_on_texts(self.x_train)
+        num_words = len(tokenizer.word_index) + 1
         x_train = tokenizer.texts_to_sequences(self.x_train)
         x_test = tokenizer.texts_to_sequences(self.x_test)
-        print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
+        print('Found {word_index} words'.format(word_index=num_words))
         self.x_train = sequence.pad_sequences(x_train, maxlen=params['maxlen'])
         self.x_test = sequence.pad_sequences(x_test, maxlen=params['maxlen'])
-        # Prepare embedding
-        print('Indexing word vectors.')
-        embeddings_index = {}
-        f = open("/Users/lambrosini/PycharmProjects/IberEval2017/resources/word2vec/es.vec")
-        for line in f:
-            values = line.split()
-            word = values[0]
-            coefs = np.asarray(values[1:], dtype='float32')
-            embeddings_index[word] = coefs
-        f.close()
-
-        print('Found %s word vectors.' % len(embeddings_index))
-        print('Preparing embedding matrix.')
-
-        # prepare embedding matrix
-        num_words = min(params['max_words'], len(tokenizer.word_index)) + 1
-        embedding_matrix = np.zeros((num_words, 300))
-        found, oob = 0, 0
-        for word, i in tokenizer.word_index.items():
-            if i >= params['max_words']:
-                continue
-            embedding_vector = embeddings_index.get(word)
-            if embedding_vector is not None:
-                # words not found in embedding index will be all-zeros.
-                embedding_matrix[i] = embedding_vector
-                found += 1
-            else:
-                oob += 1
-        print("Found", found)
-        print("OOB", oob)
-
+        embedding_matrix = word_vecors.load_vectors(tokenizer.word_index)
+        # Create real model
         x = Input(shape=(params['maxlen'],))
         emb = Embedding(num_words,
                         300, weights=[embedding_matrix], trainable=params['trainable'],

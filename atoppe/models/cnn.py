@@ -4,10 +4,10 @@ from keras.layers import Embedding
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.mymodel import MyModel
+from models.toppemodel import ToppeModel
 
 
-class CNNModel(MyModel):
+class CNNModel(ToppeModel):
     def build(self, params):
         self.x_train = sequence.pad_sequences(self.x_train, maxlen=params['maxlen'])
         self.x_test = sequence.pad_sequences(self.x_test, maxlen=params['maxlen'])

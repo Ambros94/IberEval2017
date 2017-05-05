@@ -5,7 +5,7 @@ from data_loaders import coset
 from models.bidirectional_lstm import BidirectionalLSTMModel
 from models.cnn import CNNModel
 from models.cnn_lstm import CnnLstmModel
-from models.cnnv2 import CNNModelv2
+from models.cnnv2 import KimModel
 from models.fasttext import FastTextModel
 from models.lstm import LSTMModel
 
@@ -15,7 +15,13 @@ data = coset.load_data(pre_process=False, use_nltk=False)
 max_features = 11000
 max_len = 20
 
-cnn2 = CNNModelv2(data=data)
+fast_text = FastTextModel(data=data)
+fast_text_f1_micro = fast_text.run(metrics=[coset.fbeta_score],
+                                   max_features=max_features, maxlen=max_len,
+                                   ngram_range=1, embedding_dims=300, hidden_dims=100,
+                                   batch_size=32, epochs=6)
+
+cnn2 = KimModel(data=data)
 cnn2_f1_micro = cnn2.run(metrics=[coset.fbeta_score], max_features=max_features, maxlen=max_len,
                          batch_size=32, strides=1,
                          embedding_dims=50, filters=100,
@@ -36,11 +42,6 @@ b_lstm_f1_micro = b_lstm.run(metrics=[coset.fbeta_score], max_features=max_featu
                              batch_size=32, embedding_dims=128, recurrent_units=64, dropout=0.1,
                              epochs=2)
 
-fast_text = FastTextModel(data=data)
-fast_text_f1_micro = fast_text.run(metrics=[coset.fbeta_score],
-                                   max_features=max_features, maxlen=max_len,
-                                   ngram_range=1, embedding_dims=300, hidden_dims=100,
-                                   batch_size=32, epochs=6)
 lstm = LSTMModel(data=data)
 lstm_f1_micro = lstm.run(metrics=[coset.fbeta_score], max_features=max_features, maxlen=max_len, embedding_dims=100,
                          batch_size=32,

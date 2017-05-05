@@ -3,10 +3,10 @@ from keras.layers import Dense, Embedding, LSTM, Bidirectional, Dropout
 from keras.models import Sequential
 from keras.preprocessing import sequence
 
-from models.mymodel import MyModel
+from models.toppemodel import ToppeModel
 
 
-class BidirectionalLSTMModel(MyModel):
+class BidirectionalLSTMModel(ToppeModel):
     def build(self, params):
         max_features = params['max_features']
         max_len = params['max_len']
