@@ -1,6 +1,6 @@
 from data_loaders import coset
-from models import metrics
-from models.kim import KimModel
+from deep_models import metrics
+from deep_models.kim import KimModel
 
 max_len = 30
 

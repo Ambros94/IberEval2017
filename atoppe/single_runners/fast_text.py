@@ -1,6 +1,6 @@
 from data_loaders import coset
-from models import metrics
-from models.fasttext import FastTextModel
+from deep_models import metrics
+from deep_models.fasttext import FastTextModel
 
 max_len = 30
 

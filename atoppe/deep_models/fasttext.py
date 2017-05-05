@@ -13,6 +13,7 @@ from nlp_utils.tweets_preprocessor import clean_tweets
 class FastTextModel(ToppeModel):
     def build(self, params):
         # Extract params
+        language = params['language']
         ngram_range = params['ngram_range']
         maxlen = params['maxlen']
         embedding_dims = params['embedding_dims']
@@ -30,7 +31,8 @@ class FastTextModel(ToppeModel):
                                                                        max_features=len(tokenizer.word_index),
                                                                        ngram_range=ngram_range)
         print('After {n}_grams we have {max_features} features'.format(n=ngram_range, max_features=max_features))
-        embedding_matrix = word_vecors.load_vectors(tokenizer.word_index, max_features)
+        embedding_matrix = word_vecors.load_vectors(tokenizer.word_index, language=language, num_words=max_features)
+
         self.x_train = sequence.pad_sequences(self.x_train, maxlen=maxlen)
         self.x_test = sequence.pad_sequences(self.x_test, maxlen=maxlen)
         # Model creation
