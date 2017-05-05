@@ -3,7 +3,6 @@ import csv
 import os
 from random import shuffle
 
-from keras.preprocessing.text import Tokenizer
 from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
 
@@ -44,12 +43,14 @@ def load_data(n_validation_samples=250):
     :param n_validation_samples: How many examples have to go from the data-set into the test set
     :return: (x_train, y_train), (x_test, y_test)
     """
+    ids = []
     data = []
     labels = []
     # Loading ca
     with open(abs_truth_ca_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
         for row in csv_reader:
+            ids.append(row[0])
             labels.append(row[1] + row[2])
     with open(abs_tweets_ca_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
@@ -62,6 +63,7 @@ def load_data(n_validation_samples=250):
     with open(abs_truth_es_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
         for row in csv_reader:
+            ids.append(row[0])
             labels.append(row[1] + row[2])
     with open(abs_tweets_es_path, 'rt', encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=';')
@@ -72,11 +74,6 @@ def load_data(n_validation_samples=250):
                 data.append(row[1])
 
     data, labels = unison_shuffled_copies(data, labels)
-    # Prepare data
-    tokenizer = Tokenizer()
-    tokenizer.fit_on_texts(data)
-    data = tokenizer.texts_to_sequences(data)
-    print('Found {word_index} unique tokens'.format(word_index=len(tokenizer.word_index)))
 
     # Prepare labels
     encoder = LabelEncoder()

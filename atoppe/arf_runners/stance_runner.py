@@ -14,7 +14,6 @@ from deep_models.lstm import LSTMModel
 data = stance.load_data()
 (ids_train, x_train, y_train), (ids_test, x_test, y_test) = data
 max_len = 30
-
 cnn = CNNModel(data=data)
 cnn_f1_micro = cnn.run(metrics=[metrics.fbeta_score], maxlen=max_len,
                        batch_size=32, strides=1,
