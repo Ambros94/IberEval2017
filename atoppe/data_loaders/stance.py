@@ -3,6 +3,7 @@ import csv
 import os
 from random import shuffle
 
+import numpy
 from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
 
@@ -113,11 +114,7 @@ def load_stance_es(n_validation_samples=250):
     assert len(data) == 4319
     assert len(labels) == 4319
     # Prepare labels
-    encoder = LabelEncoder()
-    encoder.fit(labels)
-    encoded_y = encoder.transform(labels)
-    ready_y = np_utils.to_categorical(encoded_y)
-
+    ready_y = [encode_stance(l) for l in labels]
     # Train
     ids_train = ids[:-n_validation_samples]
     x_train = data[:-n_validation_samples]
@@ -148,14 +145,7 @@ def load_stance_ca(n_validation_samples=250):
                 data.append(row[1])
 
     # Prepare labels
-    assert len(ids) == 4319
-    assert len(data) == 4319
-    assert len(labels) == 4319
-    encoder = LabelEncoder()
-    encoder.fit(labels)
-    encoded_y = encoder.transform(labels)
-    ready_y = np_utils.to_categorical(encoded_y)
-
+    ready_y = [encode_stance(l) for l in labels]
     # Train
     ids_train = ids[:-n_validation_samples]
     x_train = data[:-n_validation_samples]
@@ -184,15 +174,8 @@ def load_gender_es(n_validation_samples=250):
                 data.append(';'.join(row[1:]))
             else:
                 data.append(row[1])
-    assert len(ids) == 4319
-    assert len(data) == 4319
-    assert len(labels) == 4319
-
     # Prepare labels
-    encoder = LabelEncoder()
-    encoder.fit(labels)
-    encoded_y = encoder.transform(labels)
-    ready_y = np_utils.to_categorical(encoded_y)
+    ready_y = [encode_gender(l) for l in labels]
 
     # Train
     ids_train = ids[:-n_validation_samples]
@@ -205,7 +188,7 @@ def load_gender_es(n_validation_samples=250):
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
 
 
-def load_gender_ca(n_validation_samples=250):
+def load_gender_ca(n_validation_samples=400):
     ids = []
     data = []
     labels = []
@@ -223,14 +206,8 @@ def load_gender_ca(n_validation_samples=250):
             else:
                 data.append(row[1])
 
-                # Prepare labels
-    encoder = LabelEncoder()
-    encoder.fit(labels)
-    encoded_y = encoder.transform(labels)
-    ready_y = np_utils.to_categorical(encoded_y)
-    assert len(ids) == 4319
-    assert len(data) == 4319
-    assert len(labels) == 4319
+    # Prepare labels
+    ready_y = [encode_gender(l) for l in labels]
     # Train
     ids_train = ids[:-n_validation_samples]
     x_train = data[:-n_validation_samples]
@@ -239,6 +216,35 @@ def load_gender_ca(n_validation_samples=250):
     ids_val = ids[-n_validation_samples:]
     x_val = data[-n_validation_samples:]
     y_val = ready_y[-n_validation_samples:]
-    print(x_train)
-    print(y_train)
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
+
+
+def encode_stance(label):
+    return {'AGAINST': [1., 0., 0.],
+            'NEUTRAL': [0., 1., 0.],
+            'FAVOR': [0., 0., 1.]}.get(label, 'Error')
+
+
+def decode_stance(label):
+    return {0: 'AGAINST',
+            1: 'NEUTRAL',
+            2: 'FAVOR'}.get(numpy.array(label).argmax(), "Error")
+
+
+def encode_gender(label):
+    return {'FEMALE': [1., 0.],
+            'MALE': [0., 1.]}.get(label, 'Error')
+
+
+def decode_gender(label):
+    y = {0: 'FEMALE',
+         1: 'MALE', }.get(numpy.array(label).argmax(), "Error")
+    return y
+
+
+def persist_gender():
+    pass  # TODO Implement
+
+
+def persist_stance():
+    pass  # TODO Implement
