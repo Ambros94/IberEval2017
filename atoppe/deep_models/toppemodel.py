@@ -26,7 +26,6 @@ class ToppeModel:
     def run(self, batch_size, epochs, **params):
         self.build(params)
         self.train(batch_size=batch_size, epochs=epochs)
-        return self.test_f1_micro(), self.test_f1_macro()
 
     def load_model(self, name):
         self.keras_model = load_model(name)

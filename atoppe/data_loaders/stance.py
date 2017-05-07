@@ -90,3 +90,155 @@ def load_data(n_validation_samples=250):
     x_val = data[-n_validation_samples:]
     y_val = ready_y[-n_validation_samples:]
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
+
+
+def load_stance_es(n_validation_samples=250):
+    ids = []
+    data = []
+    labels = []
+    # Loading ca
+    with open(abs_truth_es_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            ids.append(row[0])
+            labels.append(row[1])
+    with open(abs_tweets_es_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            if len(row) > 2:
+                data.append(';'.join(row[1:]))
+            else:
+                data.append(row[1])
+    assert len(ids) == 4319
+    assert len(data) == 4319
+    assert len(labels) == 4319
+    # Prepare labels
+    encoder = LabelEncoder()
+    encoder.fit(labels)
+    encoded_y = encoder.transform(labels)
+    ready_y = np_utils.to_categorical(encoded_y)
+
+    # Train
+    ids_train = ids[:-n_validation_samples]
+    x_train = data[:-n_validation_samples]
+    y_train = ready_y[:-n_validation_samples]
+    # Validation
+    ids_val = ids[-n_validation_samples:]
+    x_val = data[-n_validation_samples:]
+    y_val = ready_y[-n_validation_samples:]
+    return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
+
+
+def load_stance_ca(n_validation_samples=250):
+    ids = []
+    data = []
+    labels = []
+    # Loading ca
+    with open(abs_truth_ca_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            ids.append(row[0])
+            labels.append(row[1])
+    with open(abs_tweets_ca_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            if len(row) > 2:
+                data.append(';'.join(row[1:]))
+            else:
+                data.append(row[1])
+
+    # Prepare labels
+    assert len(ids) == 4319
+    assert len(data) == 4319
+    assert len(labels) == 4319
+    encoder = LabelEncoder()
+    encoder.fit(labels)
+    encoded_y = encoder.transform(labels)
+    ready_y = np_utils.to_categorical(encoded_y)
+
+    # Train
+    ids_train = ids[:-n_validation_samples]
+    x_train = data[:-n_validation_samples]
+    y_train = ready_y[:-n_validation_samples]
+    # Validation
+    ids_val = ids[-n_validation_samples:]
+    x_val = data[-n_validation_samples:]
+    y_val = ready_y[-n_validation_samples:]
+    return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
+
+
+def load_gender_es(n_validation_samples=250):
+    ids = []
+    data = []
+    labels = []
+    # Loading ca
+    with open(abs_truth_es_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            ids.append(row[0])
+            labels.append(row[2])
+    with open(abs_tweets_es_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            if len(row) > 2:
+                data.append(';'.join(row[1:]))
+            else:
+                data.append(row[1])
+    assert len(ids) == 4319
+    assert len(data) == 4319
+    assert len(labels) == 4319
+
+    # Prepare labels
+    encoder = LabelEncoder()
+    encoder.fit(labels)
+    encoded_y = encoder.transform(labels)
+    ready_y = np_utils.to_categorical(encoded_y)
+
+    # Train
+    ids_train = ids[:-n_validation_samples]
+    x_train = data[:-n_validation_samples]
+    y_train = ready_y[:-n_validation_samples]
+    # Validation
+    ids_val = ids[-n_validation_samples:]
+    x_val = data[-n_validation_samples:]
+    y_val = ready_y[-n_validation_samples:]
+    return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
+
+
+def load_gender_ca(n_validation_samples=250):
+    ids = []
+    data = []
+    labels = []
+    # Loading ca
+    with open(abs_truth_ca_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            ids.append(row[0])
+            labels.append(row[2])
+    with open(abs_tweets_ca_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            if len(row) > 2:
+                data.append(';'.join(row[1:]))
+            else:
+                data.append(row[1])
+
+                # Prepare labels
+    encoder = LabelEncoder()
+    encoder.fit(labels)
+    encoded_y = encoder.transform(labels)
+    ready_y = np_utils.to_categorical(encoded_y)
+    assert len(ids) == 4319
+    assert len(data) == 4319
+    assert len(labels) == 4319
+    # Train
+    ids_train = ids[:-n_validation_samples]
+    x_train = data[:-n_validation_samples]
+    y_train = ready_y[:-n_validation_samples]
+    # Validation
+    ids_val = ids[-n_validation_samples:]
+    x_val = data[-n_validation_samples:]
+    y_val = ready_y[-n_validation_samples:]
+    print(x_train)
+    print(y_train)
+    return (ids_train, x_train, y_train), (ids_val, x_val, y_val)

@@ -39,7 +39,7 @@ class KimModel(ToppeModel):
                           kernel_size=kernel_size,
                           padding=params['padding'],
                           dilation_rate=params['dilation_rate'],
-                          activation='relu', input_shape=(params['maxlen'], params['embedding_dims']))(emb)
+                          activation='relu', input_shape=(params['maxlen'], 300))(emb)
             drop = Dropout(params['dropout'])(conv)
             max_pooling = MaxPooling1D(pool_size=params['pool_size'])(drop)
             flatten = Flatten()(max_pooling)
