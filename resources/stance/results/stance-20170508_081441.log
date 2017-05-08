@@ -1,10 +1,11 @@
-import preprocessor as p
-from nltk import TweetTokenizer
-from nltk.corpus import stopwords
-from nltk.stem.snowball import SpanishStemmer
-
-
-def _clean_tweet(tweet):
+model_name	test_f1_macro
+cnn	0.49286018105
+fast_text	0.494760952705
+cnn_lstm	0.486377313537
+b_lstm	0.474159236817
+lstm	0.510692165606
+kim	0.506993005513
+Pre-processing:def _clean_tweet(tweet):
     p.set_options(p.OPT.URL, p.OPT.RESERVED)
     tweet = p.clean(tweet)
     p.set_options(p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
@@ -16,8 +17,3 @@ def _clean_tweet(tweet):
     stemmed_words = [stemmer.stem(word=word) for word in filtered_words]
     tweet = " ".join([word for word in stemmed_words])
     return tweet
-
-
-def clean_tweets(tweets):
-    cleaned_tweets = [_clean_tweet(t) for t in tweets]
-    return cleaned_tweets

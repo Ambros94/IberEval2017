@@ -11,6 +11,7 @@ __author__ = "Ambrosini Luca (@Ambros94)"
 script_dir = os.path.dirname(__file__)
 abs_train_path = os.path.join(script_dir, '../../resources/coset/coset-train.csv')
 abs_dev_path = os.path.join(script_dir, '../../resources/coset/coset-dev.csv')
+abs_test_path = os.path.join(script_dir, '../../resources/coset/coset-test-text.csv')
 
 """
 1. Political issues Related to the most abstract electoral confrontation.
@@ -73,6 +74,18 @@ def load_data():
     return (ids_train, x_train, y_train), (ids_test, x_test, y_test)
 
 
+def load_test():
+    ids = []
+    data = []
+    # Loading test set
+    with open(abs_test_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
+        for row in csv_reader:
+            ids.append(row[0])
+            data.append(row[1])
+    return ids, data
+
+
 def decode_label(label):
     decoded = \
         {0: 1,
@@ -90,9 +103,9 @@ def decode_labels(labels):
     return decoded_labels
 
 
-def persist_solution(ids, labels):
+def persist_solution(ids, labels, filename="coset.txt"):
     decoded_labels = decode_labels(labels)
 
-    with open('results.txt', 'w') as out_file:
+    with open(filename, 'w') as out_file:
         for id, label in zip(ids, decoded_labels):
             out_file.write("{id}\t{label}\n".format(id=id, label=label))

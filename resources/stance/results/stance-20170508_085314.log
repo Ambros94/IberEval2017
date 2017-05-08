@@ -1,0 +1,19 @@
+model_name	test_f1_macro
+cnn	0.45005641524
+fast_text	0.418394215133
+cnn_lstm	0.429404776667
+b_lstm	0.441090446464
+lstm	0.418825803519
+kim	0.444448568212
+Pre-processing:def _clean_tweet(tweet):
+    # p.set_options(p.OPT.URL, p.OPT.RESERVED)
+    # tweet = p.clean(tweet)
+    # p.set_options(p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
+    tweet = p.tokenize(tweet)
+    # tokenizer = TweetTokenizer(reduce_len=True)
+    # word_list = tokenizer.tokenize(tweet)
+    # filtered_words = [word for word in word_list if word not in stopwords.words('spanish')]
+    # stemmer = SpanishStemmer()
+    # stemmed_words = [stemmer.stem(word=word) for word in filtered_words]
+    # tweet = " ".join([word for word in filtered_words])
+    return tweet

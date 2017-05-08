@@ -35,7 +35,7 @@ def add_ngram(sequences, token_indice, ngram_range=2):
     return new_sequences
 
 
-def augment_with_n_grams(x_train, x_test, max_features, ngram_range=2):
+def augment_with_n_grams(x_train, x_test, x_persist, max_features, ngram_range=2):
     if ngram_range > 1:
         print('Adding {}-gram features'.format(ngram_range))
         # Create set of unique n-gram from the training set.
@@ -58,9 +58,10 @@ def augment_with_n_grams(x_train, x_test, max_features, ngram_range=2):
         # Augmenting X_train and X_test with n-grams features
         x_train = add_ngram(x_train, token_indice, ngram_range)
         x_test = add_ngram(x_test, token_indice, ngram_range)
+        x_persist = add_ngram(x_persist, token_indice, ngram_range)
         print('Average train sequence length: {}'.format(np.mean(list(map(len, x_train)), dtype=int)))
         print('Average test sequence length: {}'.format(np.mean(list(map(len, x_test)), dtype=int)))
 
         print('Max train sequence length: {}'.format(np.max(list(map(len, x_train)))))
         print('Max test sequence length: {}'.format(np.max(list(map(len, x_test)))))
-    return x_train, x_test, max_features
+    return x_train, x_test, x_persist, max_features

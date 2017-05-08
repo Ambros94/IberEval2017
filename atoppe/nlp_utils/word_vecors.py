@@ -1,13 +1,15 @@
 import numpy as np
 
 
-def load_vectors(word_index, num_words=None):
+def load_vectors(word_index, language, num_words=None):
+    if language not in ['es', 'ca']:
+        raise Exception("This language is not valid")
     if num_words is None:
         num_words = len(word_index) + 1
     # Prepare embedding
     print('Indexing word vectors.')
     embeddings_index = {}
-    f = open("/Users/lambrosini/PycharmProjects/IberEval2017/resources/word2vec/es.vec")
+    f = open("/Users/lambrosini/PycharmProjects/IberEval2017/resources/word2vec/" + language + ".vec")
     for line in f:
         values = line.split()
         word = values[0]
