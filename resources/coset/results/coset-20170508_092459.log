@@ -1,9 +1,10 @@
-import preprocessor as p
-from nltk import TweetTokenizer
-from nltk.corpus import stopwords
-
-
-def _clean_tweet(tweet):
+model_name	test_f1_macro	test_f1_macro
+cnn	0.584815371446
+fast_text	0.577220626212
+b_lstm	0.545488089289
+lstm	0.609213749947
+kim	0.613882295761
+Pre-processing:def _clean_tweet(tweet):
     p.set_options(p.OPT.URL, p.OPT.RESERVED)
     tweet = p.clean(tweet)
     p.set_options(p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
@@ -15,8 +16,3 @@ def _clean_tweet(tweet):
     # stemmed_words = [stemmer.stem(word=word) for word in filtered_words]
     tweet = " ".join([word for word in filtered_words])
     return tweet
-
-
-def clean_tweets(tweets):
-    cleaned_tweets = [_clean_tweet(t) for t in tweets]
-    return cleaned_tweets

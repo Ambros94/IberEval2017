@@ -38,7 +38,7 @@ def unison_shuffled_copies(a, b):
     return list1_shuf, list2_shuf
 
 
-def load_data(n_validation_samples=250):
+def load_data(n_validation_samples=400):
     """
     Loads data form file, the train set contains also the dev
     :param n_validation_samples: How many examples have to go from the data-set into the test set
@@ -93,7 +93,7 @@ def load_data(n_validation_samples=250):
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
 
 
-def load_stance_es(n_validation_samples=250):
+def load_stance_es(n_validation_samples=400):
     ids = []
     data = []
     labels = []
@@ -126,7 +126,7 @@ def load_stance_es(n_validation_samples=250):
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
 
 
-def load_stance_ca(n_validation_samples=250):
+def load_stance_ca(n_validation_samples=400):
     ids = []
     data = []
     labels = []
@@ -157,7 +157,7 @@ def load_stance_ca(n_validation_samples=250):
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
 
 
-def load_gender_es(n_validation_samples=250):
+def load_gender_es(n_validation_samples=400):
     ids = []
     data = []
     labels = []

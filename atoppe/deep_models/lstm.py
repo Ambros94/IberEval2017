@@ -23,9 +23,11 @@ class LSTMModel(ToppeModel):
         num_words = len(tokenizer.word_index) + 1
         x_train = tokenizer.texts_to_sequences(self.x_train)
         x_test = tokenizer.texts_to_sequences(self.x_test)
+        x_persist = tokenizer.texts_to_sequences(self.x_persist)
         print('Found {word_index} words'.format(word_index=num_words))
         self.x_train = sequence.pad_sequences(x_train, maxlen=maxlen)
         self.x_test = sequence.pad_sequences(x_test, maxlen=maxlen)
+        self.x_persist = sequence.pad_sequences(x_persist, maxlen=maxlen)
 
         self.keras_model = Sequential()
         embedding_matrix = word_vecors.load_vectors(tokenizer.word_index, language=language)

@@ -7,9 +7,10 @@ from sklearn.metrics import f1_score, accuracy_score
 class ToppeModel:
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, data_function, persist_function, decode_function, verbose=2):
+    def __init__(self, data_function, persist_function, decode_function, test_function, verbose=2):
         (self.ids_train, self.x_train, self.y_train), (
             self.ids_test, self.x_test, self.y_test) = data_function()
+        (self.ids_persist, self.x_persist) = test_function()
         if len(self.y_train) == 0:
             raise Exception("You should provide at least one train label")
         self.output_size = len(self.y_train[0])
@@ -64,20 +65,8 @@ class ToppeModel:
         predictions = self.predict(data=self.x_test, batch_size=32)
         decoded_predictions = [self.decode_function(p) for p in predictions]
         decoded_ground_truth = [self.decode_function(p) for p in self.y_test]
-        correct, wrong = 0, 0
-        # for i, p in enumerate(predictions):
-        #    if decoded_predictions[i] != decoded_ground_truth[i]:
-        #        print("Prediction:", predictions[i])
-        #        print("Decoded prediction:", decoded_predictions[i])
-        #        print("Ground truth:", self.y_test[i])
-        #        print("Decoded Ground truth:", decoded_ground_truth[i])
-        #        wrong += 1
-        #    else:
-        #        correct += 1
-        # print(correct, wrong)
-
         return accuracy_score(decoded_ground_truth, decoded_predictions)
 
-    def persist_result(self):
-        predictions = self.predict(data=self.x_test, batch_size=32)
-        self.persist_function(self.ids_test, predictions)
+    def persist_result(self, filename=None):
+        predictions = self.predict(data=self.x_persist, batch_size=32)
+        self.persist_function(ids=self.ids_persist, labels=predictions, filename=filename)
