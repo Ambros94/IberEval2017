@@ -3,12 +3,12 @@ from deep_models import metrics
 from deep_models.cnn import CNNModel
 
 # Catalan stance
-ids, data = stance.load_test_ca()
+ids, data = stance.load_test_es()
 max_len = 35
 language = 'es'
 
-stance_model = CNNModel(data_function=stance.load_stance_ca, decode_function=stance.decode_stance,
-                        persist_function=None, test_function=stance.load_test_ca)
+stance_model = CNNModel(data_function=stance.load_stance_es, decode_function=stance.decode_stance,
+                        persist_function=None, test_function=stance.load_test_es)
 stance_model.run(metrics=[metrics.fbeta_score], maxlen=max_len,
                  batch_size=32, strides=1,
                  embedding_dims=50, filters=100,
@@ -20,8 +20,8 @@ stance_decoded_predictions = [stance.decode_stance(p) for p in stance_prediction
 
 # Catalan gender
 
-gender_model = CNNModel(data_function=stance.load_gender_ca, decode_function=stance.decode_gender,
-                        persist_function=None, test_function=stance.load_test_ca)
+gender_model = CNNModel(data_function=stance.load_gender_es, decode_function=stance.decode_gender,
+                        persist_function=None, test_function=stance.load_test_es)
 gender_model.run(metrics=[metrics.fbeta_score], maxlen=max_len,
                  batch_size=32, strides=1,
                  embedding_dims=50, filters=100,
