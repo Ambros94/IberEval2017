@@ -1,6 +1,5 @@
 import abc
 
-from keras.models import load_model
 from sklearn.metrics import f1_score, accuracy_score
 
 
@@ -27,12 +26,6 @@ class ToppeModel:
     def run(self, batch_size, epochs, **params):
         self.build(params)
         self.train(batch_size=batch_size, epochs=epochs)
-
-    def load_model(self, name):
-        self.keras_model = load_model(name)
-
-    def persist_model(self, name):
-        self.keras_model.save(name)
 
     def train(self, batch_size, epochs):
         if self.keras_model is None:

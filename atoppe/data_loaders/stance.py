@@ -16,6 +16,9 @@ abs_tweets_ca_path = os.path.join(script_dir, '../../resources/stance/training_t
 abs_truth_es_path = os.path.join(script_dir, '../../resources/stance/training_truth_es.txt')
 abs_tweets_es_path = os.path.join(script_dir, '../../resources/stance/training_tweets_es.txt')
 
+abs_test_es_path = os.path.join(script_dir, '../../resources/stance/test_tweets_es.txt')
+abs_test_ca_path = os.path.join(script_dir, '../../resources/stance/test_tweets_ca.txt')
+
 """
 1. Political issues Related to the most abstract electoral confrontation.
 2. Policy issues Tweets about sectorial policies.
@@ -219,6 +222,36 @@ def load_gender_ca(n_validation_samples=400):
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
 
 
+def load_test_ca():
+    ids = []
+    data = []
+    with open(abs_test_ca_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            ids.append(row[0])
+            if len(row) > 2:
+                data.append(';'.join(row[1:]))
+            else:
+                data.append(row[1])
+    assert len(ids) == len(data)
+    return ids, data
+
+
+def load_test_es():
+    ids = []
+    data = []
+    with open(abs_test_es_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        for row in csv_reader:
+            ids.append(row[0])
+            if len(row) > 2:
+                data.append(';'.join(row[1:]))
+            else:
+                data.append(row[1])
+    assert len(ids) == len(data)
+    return ids, data
+
+
 def encode_stance(label):
     return {'AGAINST': [1., 0., 0.],
             'NEUTRAL': [0., 1., 0.],
@@ -240,11 +273,3 @@ def decode_gender(label):
     y = {0: 'FEMALE',
          1: 'MALE', }.get(numpy.array(label).argmax(), "Error")
     return y
-
-
-def persist_gender():
-    pass  # TODO Implement
-
-
-def persist_stance():
-    pass  # TODO Implement

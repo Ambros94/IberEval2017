@@ -1,6 +1,7 @@
 import preprocessor as p
 from nltk import TweetTokenizer
 from nltk.corpus import stopwords
+from nltk.stem.snowball import SpanishStemmer
 
 
 def _clean_tweet(tweet):
@@ -11,9 +12,9 @@ def _clean_tweet(tweet):
     tokenizer = TweetTokenizer(reduce_len=True)
     word_list = tokenizer.tokenize(tweet)
     filtered_words = [word for word in word_list if word not in stopwords.words('spanish')]
-    # stemmer = SpanishStemmer()
-    # stemmed_words = [stemmer.stem(word=word) for word in filtered_words]
-    tweet = " ".join([word for word in filtered_words])
+    stemmer = SpanishStemmer()
+    stemmed_words = [stemmer.stem(word=word) for word in filtered_words]
+    tweet = " ".join([word for word in stemmed_words])
     return tweet
 
 
