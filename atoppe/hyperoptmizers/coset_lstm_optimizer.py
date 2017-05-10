@@ -11,7 +11,7 @@ from sklearn.metrics import f1_score
 
 from data_loaders import coset
 from deep_models import metrics
-from nlp_utils import word_vecors
+from nlp_utils import word_vectors
 from nlp_utils.tweets_preprocessor import clean_tweets
 
 
@@ -49,7 +49,7 @@ def model(x_train, y_train, x_test, y_test):
     x_test = sequence.pad_sequences(x_test, maxlen=30)
 
     model = Sequential()
-    embedding_matrix = word_vecors.load_vectors(tokenizer.word_index, language='en')
+    embedding_matrix = word_vectors.load_vectors(tokenizer.word_index, language='en')
     model.add(Embedding(num_words, 300, weights=[embedding_matrix], input_length=num_words, trainable=True))
     model.add(LSTM(units, dropout=dropout, recurrent_dropout=recurrent_dropout, return_sequences=True))
     model.add(LSTM(units_2, dropout=dropout, recurrent_dropout=recurrent_dropout, return_sequences=True))

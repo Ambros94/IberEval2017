@@ -31,3 +31,46 @@ Ambrosini Luca - luca.ambrosini@supsi.ch
 Giancarlo Nicolò - giani1@inf.upv.es
 
 Used wordvectors: https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.es.vec
+
+# Tweet representations:
+
+- Bag of words
+    - tf-idf normalization
+    
+- Bag of n-grams
+    - tf-idf normalization
+    
+- Word embeddings
+    - Leaned online
+    - fasttext es improved online
+    - fasttext es static
+    - fasttext ca improved online
+    - fasttext ca static
+- N-grams
+
+# Classifiers
+
+- Random forest
+- Support Vector Machines
+- Decision trees
+
+# Deep neural models
+
+- Multi Layer Perceptron
+- CNN
+- LSTM
+- CNN+LSTM
+- BI-LSTM
+- KIM
+- FAST-TEXT
+
+# Pre-processing
+
+- Stemming
+- Remove stop-words
+- Clean url
+- Clean numbers
+- Clean twitter reserved words
+- Tokenize mentions
+- Tokenize Smiley
+- Tokenize Emojies

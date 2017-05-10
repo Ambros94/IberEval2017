@@ -1,11 +1,11 @@
-from keras.layers import Dense, Embedding
+from keras.layers import Dense, Embedding, GaussianNoise
 from keras.layers import LSTM
 from keras.models import Sequential
 from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 
 from deep_models.toppemodel import ToppeModel
-from nlp_utils import word_vecors
+from nlp_utils import word_vectors
 from nlp_utils.tweets_preprocessor import clean_tweets
 
 
@@ -30,12 +30,13 @@ class LSTMModel(ToppeModel):
         self.x_persist = sequence.pad_sequences(x_persist, maxlen=maxlen)
 
         self.keras_model = Sequential()
-        embedding_matrix = word_vecors.load_vectors(tokenizer.word_index, language=language)
+        embedding_matrix = word_vectors.load_vectors(tokenizer.word_index, language=language)
         self.keras_model.add(Embedding(num_words, 300, weights=[embedding_matrix], input_length=maxlen, trainable=True))
+        self.keras_model.add(GaussianNoise(0.3))
         self.keras_model.add(
-            LSTM(params['lstm_units'], dropout=params['dropout'], recurrent_dropout=params['recurrent_dropout']))
+            LSTM(params['lstm_units']))
+        self.keras_model.add(GaussianNoise(0.3))
         self.keras_model.add(Dense(self.output_size, activation='softmax'))
-
         self.keras_model.compile(loss='categorical_crossentropy',
-                                 optimizer='adam',
+                                 optimizer='nadam',
                                  metrics=params['metrics'])

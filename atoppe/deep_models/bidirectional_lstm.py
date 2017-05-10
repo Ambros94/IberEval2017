@@ -4,7 +4,7 @@ from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 
 from deep_models.toppemodel import ToppeModel
-from nlp_utils import word_vecors
+from nlp_utils import word_vectors
 from nlp_utils.tweets_preprocessor import clean_tweets
 
 
@@ -31,7 +31,7 @@ class BidirectionalLSTMModel(ToppeModel):
         self.x_persist = sequence.pad_sequences(x_persist, maxlen=max_len)
         # Build model
         self.keras_model = Sequential()
-        embedding_matrix = word_vecors.load_vectors(tokenizer.word_index, language=language)
+        embedding_matrix = word_vectors.load_vectors(tokenizer.word_index, language=language)
         self.keras_model.add(
             Embedding(num_words, 300, weights=[embedding_matrix], input_length=max_len, trainable=True))
         self.keras_model.add(Bidirectional(LSTM(recurrent_units)))

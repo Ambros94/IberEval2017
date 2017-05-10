@@ -1,16 +1,14 @@
-model_name	test_f1_micro	test_f1_macro
-cnn	0.676	0.576131302627
-fast_text	0.68	0.57357442561
-cnn_lstm	0.524	0.445228214863
-b_lstm	0.664	0.592648840563
-lstm	0.676	0.604432292992
-kim	0.688	0.639277155131
-Preprocessing:def _clean_tweet(tweet):
-    p.set_options(p.OPT.URL, p.OPT.RESERVED)
+model_name	test_f1_macro	test_f1_macro
+cnn	0.587691004795
+fast_text	0.585130408004
+b_lstm	0.580055471564
+lstm	0.597047086991
+kim	0.600123276579
+Pre-processing:def _clean_tweet(tweet):
+    p.set_options(p.OPT.URL, p.OPT.RESERVED, p.OPT.NUMBER)
     tweet = p.clean(tweet)
-    p.set_options(p.OPT.EMOJI, p.OPT.SMILEY, p.OPT.NUMBER)
+    p.set_options(p.OPT.MENTION, p.OPT.SMILEY, p.OPT.EMOJI)
     tweet = p.tokenize(tweet)
-
     tokenizer = TweetTokenizer(reduce_len=True)
     word_list = tokenizer.tokenize(tweet)
     filtered_words = [word for word in word_list if word not in stopwords.words('spanish')]
