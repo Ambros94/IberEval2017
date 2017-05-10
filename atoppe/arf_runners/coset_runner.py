@@ -16,6 +16,21 @@ test_ids, test_data = coset.load_test()
 max_len = 30
 language = 'es'
 
+lstm = LSTMModel(data_function=data_function, decode_function=coset.decode_label,
+                 persist_function=coset.persist_solution,
+                 test_function=coset.load_test)
+lstm.run(metrics=[metrics.fbeta_score], maxlen=max_len, language=language, batch_size=32,
+         dropout=0.2, recurrent_dropout=0.4, lstm_units=128, epochs=3)
+lstm_f1_macro = lstm.test_f1_macro()
+print(lstm_f1_macro)
+
+kim = KimModel(data_function=data_function, decode_function=coset.decode_label, persist_function=coset.persist_solution,
+               test_function=coset.load_test)
+kim.run(metrics=[metrics.fbeta_score], maxlen=max_len,
+        batch_size=32, strides=1, filters=150, language=language,
+        dropout=0.5, trainable=True,
+        epochs=4, padding='same', dilation_rate=4, pool_size=8)
+kim_f1_macro = kim.test_f1_macro()
 b_lstm = BidirectionalLSTMModel(data_function=data_function, decode_function=coset.decode_label,
                                 persist_function=coset.persist_solution,
                                 test_function=coset.load_test)
@@ -36,13 +51,7 @@ cnn.run(metrics=[metrics.fbeta_score], maxlen=max_len,
 cnn_f1_macro = cnn.test_f1_macro()
 # cnn.persist_result(filename="cnn.atoppe.result.csv")
 
-lstm = LSTMModel(data_function=data_function, decode_function=coset.decode_label,
-                 persist_function=coset.persist_solution,
-                 test_function=coset.load_test)
-lstm.run(metrics=[metrics.fbeta_score], maxlen=max_len, embedding_dims=100, language=language,
-         batch_size=32,
-         dropout=0.2, recurrent_dropout=0.4, lstm_units=128, epochs=4)
-lstm_f1_macro = lstm.test_f1_macro()
+
 # lstm.persist_result(filename="lstm.atoppe.result.csv")
 
 # cnn_lstm = CnnLstmModel(data_function=data_function, decode_function=coset.decode_label,
@@ -65,7 +74,7 @@ fast_text_f1_macro = fast_text.test_f1_macro()
 kim = KimModel(data_function=data_function, decode_function=coset.decode_label, persist_function=coset.persist_solution,
                test_function=coset.load_test)
 kim.run(metrics=[metrics.fbeta_score], maxlen=max_len,
-        batch_size=32, strides=1, embedding_dims=150, filters=150, language=language,
+        batch_size=32, strides=1, filters=150, language=language,
         dropout=0.5, dropout_final=0.5, trainable=True,
         recurrent_units=128, epochs=3, padding='same', dilation_rate=3, pool_size=5)
 kim_f1_macro = kim.test_f1_macro()
