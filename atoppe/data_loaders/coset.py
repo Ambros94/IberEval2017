@@ -56,22 +56,9 @@ def load_data():
     encoded_y = encoder.transform(labels)
     ready_y = np_utils.to_categorical(encoded_y)
 
-    # Train
-    ids_train = ids[0:training_samples]
-    x_train = data[0:training_samples]
-    y_train = ready_y[0:training_samples]
-    # Test
-    ids_test = ids[training_samples:]
-    x_test = data[training_samples:]
-    y_test = ready_y[training_samples:]
-
-    print('Average train sequence length: {} chars'.format(np.mean(list(map(len, x_train)), dtype=int)))
-    print('Average test sequence length: {} chars'.format(np.mean(list(map(len, x_test)), dtype=int)))
-
-    print('Max train sequence length: {} chars'.format(np.max(list(map(len, x_train)))))
-    print('Max test sequence length: {} chars'.format(np.max(list(map(len, x_test)))))
-
-    return (ids_train, x_train, y_train), (ids_test, x_test, y_test)
+    print('Average sequence length: {} chars'.format(np.mean(list(map(len, data)), dtype=int)))
+    print('Max sequence length: {} chars'.format(np.max(list(map(len, data)))))
+    return ids, data, ready_y
 
 
 def load_test():

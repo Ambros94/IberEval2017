@@ -16,6 +16,14 @@ test_ids, test_data = coset.load_test()
 max_len = 30
 language = 'es'
 
+fast_text = FastTextModel(data_function=data_function, decode_function=coset.decode_label,
+                          persist_function=coset.persist_solution,
+                          test_function=coset.load_test)
+fast_text.run(metrics=[metrics.fbeta_score], maxlen=max_len,
+              ngram_range=2, embedding_dims=300, hidden_dims=100, language=language,
+              batch_size=32, epochs=6)
+fast_text_f1_macro = fast_text.test_f1_macro()
+print(fast_text_f1_macro)
 lstm = LSTMModel(data_function=data_function, decode_function=coset.decode_label,
                  persist_function=coset.persist_solution,
                  test_function=coset.load_test)
@@ -62,13 +70,7 @@ cnn_f1_macro = cnn.test_f1_macro()
 #             filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=2)
 # cnn_lstm_f1_macro = cnn_lstm.test_f1_macro()
 
-fast_text = FastTextModel(data_function=data_function, decode_function=coset.decode_label,
-                          persist_function=coset.persist_solution,
-                          test_function=coset.load_test)
-fast_text.run(metrics=[metrics.fbeta_score], maxlen=max_len,
-              ngram_range=2, embedding_dims=300, hidden_dims=100, language=language,
-              batch_size=32, epochs=6)
-fast_text_f1_macro = fast_text.test_f1_macro()
+
 # fast_text.persist_result(filename="fast_text.atoppe.result.csv")
 
 kim = KimModel(data_function=data_function, decode_function=coset.decode_label, persist_function=coset.persist_solution,

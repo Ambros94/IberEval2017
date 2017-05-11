@@ -1,4 +1,4 @@
-from keras.layers import Embedding, Dense
+from keras.layers import Embedding, Dense, GaussianNoise
 from keras.layers import GlobalAveragePooling1D
 from keras.models import Sequential
 from keras.preprocessing import sequence
@@ -46,7 +46,7 @@ class FastTextModel(ToppeModel):
                                        embedding_dims, trainable=True,
                                        weights=[embedding_matrix],
                                        input_length=maxlen))
-
+        self.keras_model.add(GaussianNoise(0.3))
         self.keras_model.add(GlobalAveragePooling1D())
         self.keras_model.add(Dense(hidden_dims, activation='relu'))
         self.keras_model.add(Dense(self.output_size, activation='softmax'))
