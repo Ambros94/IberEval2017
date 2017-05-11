@@ -1,6 +1,6 @@
 import keras
 from keras.engine import Input, Model
-from keras.layers import Conv1D, Dense, Flatten, GaussianNoise
+from keras.layers import Conv1D, Dense, Flatten, GaussianNoise, BatchNormalization
 from keras.layers import Embedding
 from keras.layers import MaxPooling1D
 from keras.preprocessing import sequence
@@ -35,7 +35,7 @@ class KimModel(ToppeModel):
         emb = Embedding(num_words,
                         300, weights=[embedding_matrix], trainable=params['trainable'],
                         input_length=params['maxlen'])(x)
-        noisy_embedding = GaussianNoise(0.2)(emb)
+        noisy_embedding = GaussianNoise(0.1)(emb)
         merge_input = []
         for kernel_size in [2, 3, 5, 7]:
             conv = Conv1D(filters=params['filters'],
@@ -43,12 +43,14 @@ class KimModel(ToppeModel):
                           padding=params['padding'],
                           dilation_rate=params['dilation_rate'],
                           activation='relu', input_shape=(params['maxlen'], 300))(noisy_embedding)
-            max_pooling = MaxPooling1D(pool_size=params['pool_size'])(conv)
+            normalization = BatchNormalization()(conv)
+            noise = GaussianNoise(0.1)(normalization)
+            max_pooling = MaxPooling1D(pool_size=params['pool_size'])(noise)
             flatten = Flatten()(max_pooling)
             merge_input.append(flatten)
 
         merged = keras.layers.concatenate(merge_input)
-        noisy_merge = GaussianNoise(0.2)(merged)
+        noisy_merge = GaussianNoise(0.1)(merged)
         y = Dense(self.output_size, activation='sigmoid')(noisy_merge)
         self.keras_model = Model(inputs=x, outputs=y)
 
