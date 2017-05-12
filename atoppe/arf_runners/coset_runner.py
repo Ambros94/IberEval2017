@@ -4,18 +4,14 @@ from time import gmtime, strftime
 
 from data_loaders import coset
 from deep_models import metrics
-from deep_models.bidirectional_lstm import BidirectionalLSTMModel
-from deep_models.cnn import CNNModel
 from deep_models.fasttext import FastTextModel
-from deep_models.kim import KimModel
-from deep_models.lstm import LSTMModel
 from nlp_utils import tweets_preprocessor
 
 data_function = coset.load_data
 test_ids, test_data = coset.load_test()
 max_len = 30
 language = 'es'
-
+"""
 lstm = LSTMModel(data_function=data_function, decode_function=coset.decode_label,
                  persist_function=coset.persist_solution,
                  test_function=coset.load_test)
@@ -62,14 +58,7 @@ cnn_f1_macro = cnn.test_f1_macro()
 #             filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=2)
 # cnn_lstm_f1_macro = cnn_lstm.test_f1_macro()
 
-fast_text = FastTextModel(data_function=data_function, decode_function=coset.decode_label,
-                          persist_function=coset.persist_solution,
-                          test_function=coset.load_test)
-fast_text.run(metrics=[metrics.fbeta_score], maxlen=max_len,
-              ngram_range=2, embedding_dims=300, hidden_dims=100, language=language,
-              batch_size=32, epochs=6)
-fast_text_f1_macro = fast_text.test_f1_macro()
-# fast_text.persist_result(filename="fast_text.atoppe.result.csv")
+
 
 kim = KimModel(data_function=data_function, decode_function=coset.decode_label, persist_function=coset.persist_solution,
                test_function=coset.load_test)
@@ -79,15 +68,27 @@ kim.run(metrics=[metrics.fbeta_score], maxlen=max_len,
         recurrent_units=128, epochs=3, padding='same', dilation_rate=3, pool_size=5)
 kim_f1_macro = kim.test_f1_macro()
 # kim.persist_result(filename="kim.atoppe.result.csv")
+"""
+
+fast_text = FastTextModel(data_function=data_function, decode_function=coset.decode_label,
+                          persist_function=coset.persist_solution,
+                          test_function=coset.load_test)
+fast_text.run(metrics=[metrics.fbeta_score], maxlen=max_len,
+              ngram_range=2, hidden_dims=128, language=language, noise=0.3,
+              batch_size=32, epochs=8)
+fast_text_f1_macro = fast_text.test_f1_macro()
+print(["fast_text", fast_text_f1_macro])
+
+fast_text.persist_result(filename="fast_text.atoppe.result.txt")
 
 with open("../coset-" + strftime("%Y%m%d_%H%M%S", gmtime()) + ".log", 'w') as outcsv:
     writer = csv.writer(outcsv, delimiter='\t')
     writer.writerow(["model_name", "test_f1_macro", "test_f1_macro"])
-    writer.writerow(["cnn", cnn_f1_macro])
+    # writer.writerow(["cnn", cnn_f1_macro])
     writer.writerow(["fast_text", fast_text_f1_macro])
     # writer.writerow(["cnn_lstm", cnn_lstm_f1_macro])
-    writer.writerow(["b_lstm", b_lstm_f1_macro])
-    writer.writerow(["lstm", lstm_f1_macro])
-    writer.writerow(["kim", kim_f1_macro])
+    # writer.writerow(["b_lstm", b_lstm_f1_macro])
+    # writer.writerow(["lstm", lstm_f1_macro])
+    # writer.writerow(["kim", kim_f1_macro])
     outcsv.write("Pre-processing:")
     outcsv.write(''.join(inspect.getsourcelines(tweets_preprocessor._clean_tweet)[0]))

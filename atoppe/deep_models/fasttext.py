@@ -1,9 +1,10 @@
-from keras.layers import Embedding, Dense
+from keras.layers import Embedding, Dense, GaussianNoise, BatchNormalization
 from keras.layers import GlobalAveragePooling1D
 from keras.models import Sequential
 from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 
+from deep_models import metrics
 from deep_models.toppemodel import ToppeModel
 from nlp_utils import word_vectors
 from nlp_utils.n_grams import augment_with_n_grams
@@ -16,8 +17,8 @@ class FastTextModel(ToppeModel):
         language = params['language']
         ngram_range = params['ngram_range']
         maxlen = params['maxlen']
-        embedding_dims = params['embedding_dims']
         hidden_dims = params['hidden_dims']
+        noise = params['noise']
         # Cleaning data
         self.x_train = clean_tweets(self.x_train)
         self.x_test = clean_tweets(self.x_test)
@@ -41,16 +42,17 @@ class FastTextModel(ToppeModel):
         self.x_persist = sequence.pad_sequences(self.x_persist, maxlen=maxlen)
         # Model creation
         self.keras_model = Sequential()
-
         self.keras_model.add(Embedding(max_features,
-                                       embedding_dims, trainable=True,
+                                       300, trainable=True,
                                        weights=[embedding_matrix],
                                        input_length=maxlen))
-
+        self.keras_model.add(GaussianNoise(noise))
         self.keras_model.add(GlobalAveragePooling1D())
         self.keras_model.add(Dense(hidden_dims, activation='relu'))
+        self.keras_model.add(BatchNormalization())
+        self.keras_model.add(GaussianNoise(noise))
         self.keras_model.add(Dense(self.output_size, activation='softmax'))
 
         self.keras_model.compile(loss='categorical_crossentropy',
                                  optimizer='adam',
-                                 metrics=params['metrics'])
+                                 metrics=[metrics.fbeta_score])
