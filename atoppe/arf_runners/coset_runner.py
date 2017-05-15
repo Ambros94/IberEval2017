@@ -9,7 +9,7 @@ from nlp_utils import tweets_preprocessor
 
 data_function = coset.load_data
 test_ids, test_data = coset.load_test()
-max_len = 30
+max_len = 40
 language = 'es'
 """
 lstm = LSTMModel(data_function=data_function, decode_function=coset.decode_label,
@@ -74,7 +74,7 @@ fast_text = FastTextModel(data_function=data_function, decode_function=coset.dec
                           persist_function=coset.persist_solution,
                           test_function=coset.load_test)
 fast_text.run(metrics=[metrics.fbeta_score], maxlen=max_len,
-              ngram_range=2, hidden_dims=128, language=language, noise=0.3,
+              ngram_range=2, hidden_dims=128, language=language, noise=0.2,
               batch_size=32, epochs=8)
 fast_text_f1_macro = fast_text.test_f1_macro()
 print(["fast_text", fast_text_f1_macro])
