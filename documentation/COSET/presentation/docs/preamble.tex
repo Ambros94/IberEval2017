@@ -1,0 +1,144 @@
+% This file contains your LaTeX preamble. A preamble is a part of your document where all required packages and macros can be defined. This needs to be done before the \begin{document} command.
+
+% Documentclass:
+% Standard LaTeX classes are: article, book, report, slides, and letter. These cover the basis, but are not best. More advanced users might want to try out the KOMA classes or the memoir class. Optional arguments: 10pt. The font size of the main content is set to 10pt with the option between [].
+%\documentclass[xcolor=table]{beamer}
+\documentclass[xcolor=table,handout]{beamer}
+
+\mode<presentation> {
+	
+	% The Beamer class comes with a number of default slide themes
+	% which change the colors and layouts of slides. Below this is a list
+	% of all the themes, uncomment each in turn to see what they look like.
+	
+	%\usetheme{default}
+	%\usetheme{AnnArbor}
+	%\usetheme{Antibes}
+	%\usetheme{Bergen}
+	%\usetheme{Berkeley}
+	%\usetheme{Berlin}
+	%\usetheme{Boadilla}
+	%\usetheme{CambridgeUS}
+	%\usetheme{Copenhagen}
+	%\usetheme{Darmstadt}
+	%\usetheme{Dresden}
+	%\usetheme{Frankfurt}
+	%\usetheme{Goettingen}
+	%\usetheme{Hannover}
+	%\usetheme{Ilmenau}
+	%\usetheme{JuanLesPins}
+	%\usetheme{Luebeck}
+	\usetheme{Madrid}
+	%\usetheme{Malmoe}
+	%\usetheme{Marburg}
+	%\usetheme{Montpellier}
+	%\usetheme{PaloAlto}
+	%\usetheme{Pittsburgh}
+	%\usetheme{Rochester}
+	%\usetheme{Singapore}
+	%\usetheme{Szeged}
+	%\usetheme{Warsaw}
+	
+	% As well as themes, the Beamer class has a number of color themes
+	% for any slide theme. Uncomment each of these in turn to see how it
+	% changes the colors of your current slide theme.
+	
+	%\usecolortheme{albatross}
+	%\usecolortheme{beaver}
+	%\usecolortheme{beetle}
+	%\usecolortheme{crane}
+	%\usecolortheme{dolphin}
+	%\usecolortheme{dove}
+	%\usecolortheme{fly}
+	%\usecolortheme{lily}
+	%\usecolortheme{orchid}
+	%\usecolortheme{rose}
+	%\usecolortheme{seagull}
+	%\usecolortheme{seahorse}
+	%\usecolortheme{whale}
+	%\usecolortheme{wolverine}
+	
+	%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+	%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+	
+	%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+% ADDED BY MYSELF
+\graphicspath{{figs/}}
+\usepackage{tikz} % for the logo management
+
+%Pseudo code package
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+% Table
+%\usepackage[table]{xcolor}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+% Diagram
+\usepackage{tikz}
+\usepackage{verbatim}
+%\usepackage[margin=15mm]{geometry}
+\usetikzlibrary{shapes,arrows,fit,calc,positioning}
+
+% Algorithm
+%\usepackage[ruled,dotocloa,algochapter]{algorithm2e}
+%\usepackage[boxruled,vlined,linesnumbered]{algorithm2e}
+%\usepackage[linesnumbered]{algorithmicx}
+%\usepackage{algpseudocode}
+\usepackage[]{algorithm2e}
+%\resetcounteronoverlays{algocf}
+
+% algorithm environment
+\newenvironment{agreement}[1][htb]
+{\renewcommand{\algorithmcfname}{Agreement}% Update algorithm name
+	\begin{algorithm}[#1]%
+	}{\end{algorithm}}
+
+% References
+\usepackage{cleveref}
+
+% Font 
+\usepackage{lmodern}	% textttt plus bold
+\usepackage{bm}			% math plus bold with \bm
+
+% Footnotes
+%\usepackage[perpage]{footmisc}	% reset the footnote counter after each slide
+
+% Slides command
+\AtBeginSection[]
+{
+	\begin{frame}
+	\frametitle{Table of Contents}
+	\tableofcontents[currentsection]
+\end{frame}
+}
+
+\AtBeginSubsection[]
+{
+\begin{frame}
+\frametitle{Table of Contents}
+\tableofcontents[currentsection,currentsubsection]
+\end{frame}
+}
+
+
+% SCRIPT
+
+% table color
+\newcommand{\win}{\cellcolor[gray]{0.9}}
+
+
+% Copyright
+\newcommand{\cmark}{$^{\tiny{\textcopyright}}$}
+
+% Registered trademark 
+\newcommand{\rmark}{$^{\tiny{\textregistered}}$}
+
+\newcommand{\bfttt}[1]{\textbf{\texttt{#1}}}
