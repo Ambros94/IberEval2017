@@ -8,6 +8,11 @@ Bag of words
 vedi citazioni su word embedding di mark e bag of word da maite
 
 
+
+si è ottimizzato il parametro del numero di parole da usare come input alla rete neurale, arrivando alla misura di 30
+
+numeri superiore risultano in un eccesso di padding e perdita di informazione della rete. Numeri inferiori perdono troppa informazione
+
 \subsection{Word embedding}
 
 ask paolo lexicon/terminology online vs learnign?
@@ -19,7 +24,7 @@ Representation was learn only online
 
 
 \section{Preprocessing}
-We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and #atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removeing elements as URLs, reserved words and numbers.
+We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and \#atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removeing elements as URLs, reserved words and numbers.
 We also measured the contribution of stemming, stopwords and punctuation removal.
 To address those pre-processing we used the following \cite{nltk} \cite{tweets-preprocessor}.
 
