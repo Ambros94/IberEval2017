@@ -35,7 +35,7 @@
 % The \input{} command reads and processes the indicated example.tex file. Note that docs/ locates the folder where the .tex file is stored.
 \input{docs/abstract}		% Abstract
 \input{docs/introduction}	% Introduction
-\input{docs/task}		% Task description
+\input{docs/task}			% Task description
 \input{docs/methods}		% Methods description
 \input{docs/evaluation}		% Methods evaluations
 \input{docs/conclusions}	% Conclusions
@@ -43,9 +43,10 @@
 
 
 % The bibliography is printed with \bibliography{}. With the command \bibliographystyle{} a style is picked.
-\bibliographystyle{plain}
+%\bibliographystyle{plain} 		% for [1] cite style
+%\bibliographystyle{plainnat}	% for [Surname et al] cite style
+\bibliographystyle{splncs}		% FOR LNCS
 \bibliography{refs/references}
-%\bibliography{refs/references_template} % Template
 
 % To close your document, add the \end{document} command. Everything after this command will not be processed.
 \end{document}

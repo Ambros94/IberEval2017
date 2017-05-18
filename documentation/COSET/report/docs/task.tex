@@ -29,3 +29,16 @@ The aim proposed by organizers of COSET shared task was to classify tweets from 
 \end{enumerate*}
 
  the personality traits of developers given a collection of their source code. The personality of a developer was determined following the Five Factor Theory or Big Five [5, 11, 3] which is the most widely accepted in psychology. Therefore, five traits define the personality of an author. Those traits are: agreeableness (A), conscientiousness (C), extroversion (E), openness to experience (O), and emotional stability / neuroticism (N). Each trait was labeled within a range between 20 and 80. The models were evaluated by the organizers using two metrics: the average Root Mean Squared Error (RMSE) as well as the Pearson Product-Moment Correlation (PC). For further information about the task, please review the overview paper of the task [16].
+ 
+\subsection{Copora statistics}
+
+Average train sequence length: 135 chars (in chars)
+
+Average train sequence length: 24 (in words)
+
+Max train sequence length: 49 (words)
+
+si è ottimizzato il parametro del numero di parole da usare come input alla rete neurale, arrivando alla misura di 30
+
+numeri superiore risultano in un eccesso di padding e perdita di informazione della rete. Numeri inferiori perdono troppa informazione
+
