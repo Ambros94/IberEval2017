@@ -31,7 +31,7 @@ class LSTMModel(ToppeModel):
 
         self.keras_model = Sequential()
         embedding_matrix = word_vectors.load_vectors(tokenizer.word_index, language=language)
-        self.keras_model.add(Embedding(num_words, 300, weights=[embedding_matrix], input_length=maxlen, trainable=True))
+        self.keras_model.add(Embedding(num_words, 300, weights=[embedding_matrix], input_length=maxlen, trainable=False))
         self.keras_model.add(GaussianNoise(0.3))
         self.keras_model.add(
             LSTM(params['lstm_units']))
