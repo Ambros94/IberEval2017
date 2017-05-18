@@ -1,18 +1,8 @@
 \section{Methods} \label{sec:methods}
 To address this text classification task we first tried the most widely used text representations and classifiers.
-We tried representations based on lexical features as Bag Of Words \cite{harris1954distributional} with TF-IDF normalization and basic semantic features as Bag Of N-Grams.
+We tried representations based on lexical features as Bag Of Words \cite{harris1954distributional},Bag Of N-Grams (bigrams and trigrams), both with and without with TF-IDF normalization.
 As classifiers we tried Random Forest, Decision Trees, Support Vector Machines and MultiLayer Perceptron, but since that results obtaines with the combination of those tecniques were outperformed by neural models, we decided not to report those in the paper.
 Bag of words
-
-Bag of n-gram
-
-
-Random forest
-Decision tree
-Support vecto machines
-Multilayer perceptron.
-
-
 \section{Representation}
 
 vedi citazioni su word embedding di mark e bag of word da maite
@@ -29,26 +19,9 @@ Representation was learn only online
 
 
 \section{Preprocessing}
-
-ref used tool opackage (put on a .bib)
-
-\subsection{Stemming}
-
-\subsection{Stop words}
-
-\subsection{Cleaning}
-
-\subsubsection{Url.}
-\subsubsection{R-W.}
-
-\subsection{Tokenizing}
-
-tokenizer options
-
-\subsubsection{Mentions.}
-\subsubsection{Smiles.}
-\subsubsection{Emoji.}
-\subsubsection{Numbers.}
+We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and #atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removeing elements as URLs, reserved words and numbers.
+We also measured the contribution of stemming, stopwords and punctuation removal.
+To address those pre-processing we used the following \cite{nltk} \cite{tweets-preprocessor}.
 
 
 \section{Models}
