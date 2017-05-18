@@ -1,0 +1,23 @@
+\frametitle{Ant colony system workflow}
+
+\begin{algorithm}[H]
+	\footnotesize
+	\caption{ACS workflow}
+	\label{alg:acoWorkflow}
+	Populate the paths with specified pheromone amounts $(\tau_{jk}^{I},\tau_{ij}^{II,k})$\;
+	\While{$not~StopCriteria$}{
+		Set $Step = 1$\;
+		\While{$Step \leq MaxSteps$}{
+			\For{$Ant \in Ants$}{
+				Solve $Step$ for Stage 1 (Assignment): find $S_1$ according to \cref{eq:acsTauStage1,eq:acsEta1Stage1,eq:acsEta2Stage1}\;
+				Solve $Step$ for Stage 2 (Sequencing): find $S_2$ according to \cref{eq:acsTauStage2,eq:acsEta1Stage2,eq:acsEta2Stage2}\;
+			}
+			Update pheromone amounts locally according to \cref{eq:acsTauStage1UpdateLocal,eq:acsTauStage2UpdateLocal}\;
+		}
+		Calculate $F(Ants)$ that are associated with $S_1$ and $S_2$\;
+		Execute local search procedure for all ants\;
+		Update pheromone amounts globally according to \cref{eq:acsTauStage1UpdateGlobal,eq:acsTauStage2UpdateGlobal}\;
+	}
+\end{algorithm}
+
+

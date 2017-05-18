@@ -2,7 +2,7 @@
 
 % Documentclass:
 % Standard LaTeX classes are: article, book, report, slides, and letter. These cover the basis, but are not best. More advanced users might want to try out the KOMA classes or the memoir class. Optional arguments: 10pt. The font size of the main content is set to 10pt with the option between [].
-\documentclass[10pt]{report}
+\documentclass[10pt]{llncs}
 
 % Geometry:
 % The papersize of the document is defined with the geometry package. Here, the size is set to A4 with a4paper. Other possibilities are a5paper, b5paper, letterpaper, legalpaper and executivepaper.
@@ -14,6 +14,10 @@
 %\usepackage{amsfont} create a conflict so it's not used
 \usepackage{amssymb}
 \usepackage{mathtools}
+% For case equation with nested label
+% \usepackage{cases} NOT USEFUL
+
+
 
 % Graphicx:
 % If you want to include graphics in your document, the graphicx package is required.
@@ -21,7 +25,6 @@
 
 % Graphic path declaration:
 \graphicspath{{figs/}}
-
 
 % Tabu:
 % To test if this package could be the latest package for my work
@@ -36,20 +39,14 @@
 \usepackage{multirow}
 %\usepackage{tabularx}
 
-% Drawing package
-% To note, this package is loaded here because generate a clash with the xcolor of table
-\usepackage{tikz}
-
-% Ploting 
-% 
-\usepackage{pgfplots}
-% (TOFIX)to externalize the rendering of the plots
-%\usepgfplotslibrary{external}
-%\tikzexternalize
+\newcommand{\win}{\cellcolor[gray]{0.9}}
 
 % Enumeration:
 % To manipulate the listing of object
-\usepackage{enumitem}
+\usepackage[inline]{enumitem}
+\setlist*[enumerate,1]{%
+	label=(\roman*),
+}
 % [Alternative]
 %\usepackage{easylist}
 
@@ -68,26 +65,26 @@
 % Hyperref:
 % This package makes all references within your document clickable. By default, these references will become boxed and colored. This is turned back to normal with the \hypersetup command below.
 \usepackage{hyperref}
-	\hypersetup{colorlinks=false,pdfborder=0 0 0}
+\hypersetup{colorlinks=false,pdfborder=0 0 0}
 
 % Cleveref:
 % This package automatically detects the type of reference (equation, table, etc.) when the \cref{} command is used. It then adds a word in front of the reference, i.e. Fig. in front of a reference to a figure. With the \crefname{}{}{} command, these words may be changed.
 \usepackage{cleveref}
-	\crefname{equation}{equation}{equations}
-	\crefname{figure}{figure}{figures}	
-	\crefname{table}{table}{tables}
-	
+\crefname{equation}{equation}{equations}
+\crefname{figure}{figure}{figures}	
+\crefname{table}{table}{tables}
+
 % Pseudo code packages:
-%\usepackage[]{algorithm}
-%\usepackage[linesnumbered,lined,boxed,commentsnumbered]{algorithm2e}
-\usepackage[ruled,dotocloa,algochapter]{algorithm2e}
-%\usepackage{algorithmicx}
-%\usepackage{algpseudocode}
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 
 % Verbatim:
 % Typewriter formatting and comment environment
 \usepackage{verbatim}
 
+% Bibliography style
+\usepackage{natbib}
 
 
 % Command
