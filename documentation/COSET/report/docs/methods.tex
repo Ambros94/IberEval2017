@@ -3,23 +3,16 @@ To address this text classification task we first tried the most widely used tex
 We tried representations based on lexical features as Bag Of Words \cite{harris1954distributional},Bag Of N-Grams (bigrams and trigrams), both with and without with TF-IDF normalization.
 As classifiers we tried Random Forest, Decision Trees, Support Vector Machines and MultiLayer Perceptron, but since that results obtaines with the combination of those tecniques were outperformed by neural models, we decided not to report those in the paper.
 Bag of words
+
 \section{Representation}
-
-vedi citazioni su word embedding di mark e bag of word da maite
-
-
-
-si è ottimizzato il parametro del numero di parole da usare come input alla rete neurale, arrivando alla misura di 30
-
-numeri superiore risultano in un eccesso di padding e perdita di informazione della rete. Numeri inferiori perdono troppa informazione
-
-\subsection{Word embedding}
-
-Word embedding is a tecnique where elements (in out case words and n-grams) are mapped into a vector of real numbers.
-The sentence is mapped into a matrix with dimension sentence lenght x embedding dimension.
+To represent to tweet fed into the classifier we decided to used word embeddings,which is a tecnique where elements (in out case words and n-grams) are mapped into a vector of real numbers.
+The whole sentence is mapped into a matrix with dimension sentence lenght x embedding dimension.
 We left the sentence length as a parameter and the best results were obtained with length=30, that's reasonable since the average tweet length in words in 24.
-We tried static pretrained vectors \cite{bojanowski2016enriching},learning them during training starting from a random matrix or from the pretrained embeddings.
-GIANCARLO DEVO DIRE CHE ESPLORIAMO TUTTE LE COMBINAZIONI?
+
+\subsection{Words vectors}
+Since the number of tweets is considered small to learn vector representation of words, we tried to initialize the embedding matrix with pretrained word vectors.
+In particular we used vectors trained on wikipedia using fastText \cite{bojanowski2016enriching}.
+We tried static pretrained vectors ,learning them during training starting from a random matrix or from the pretrained embeddings.
 
 \subsection{N-gram embedding}
 We also tried to learn an embedding for n-grams (bigrams and trigrams), but since the corpus is small n-grams frequencies are very low and the algorithm is not able to learn a valid embedding.
@@ -36,9 +29,11 @@ To address those pre-processing we used the following \cite{nltk} \cite{tweets-p
 
 \section{Models}
 
- 	
+In the following section we present different neural network models, each model has as first layer an embedding layer that maps words to the corresponding word vectors.
 
-\subsection{Neural models}
+
+\subsection{Convolutional Neural Network}
+Convolutional Neural Networks are considered state of the art in many text classification problem, this model is a
 
 Start whith the meaning reason behind this model (e.g. LSTM because in translation is a state of the art).
 
