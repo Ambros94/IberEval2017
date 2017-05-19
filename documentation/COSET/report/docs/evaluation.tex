@@ -26,7 +26,46 @@ Put an intro over the results that will be analyzed and then comments over them
 table of only the 5 models main models and 6 kind of preprocessing
 only the mean and say that is 10 fold CV
 
-table of word representation
+table of word representation+
+
+
+HERE legend of notation
+in bf the winner about the preprocessing configuration and in shared grey box the best preprocessing configuration for a model.
+
+\begin{table}
+\caption{Average multi-objective values reached in the different classes of instances. Stop criteria set to 600 seconds.}
+\label{tab:acsEvaluation}
+\centering
+\begin{tabular}{lrrrrr}
+\toprule
+\multirow{2}{*}{Preprocessing}		& \multicolumn{5}{ c }{Models}       \\ 
+								& cnn		& lstm		& b-lstm	& fast-text	& kim	\\ 
+\hline 
+Nothing							& 0,505     & 0,556		& 0,511		& 0,530 	& 0,558	\\ 
+\hline 
+Stemmer							& 0,496		& 0,499		& 0,475		& 0,531		& 0,531	\\ 
+Stemmer+StopWords				& 0,476		& 0,553		& 0,476		& 0,529		& 0,511	\\ 
+Stemmer+StopWords+Cleaning		& 0,519		& 0,578		& 0,522		& 0,560		& 0,508	\\ 
+Stemmer+StopWords+Cleaning+Mentions
+								& 0,546		& 0,571		& 0,477		& 0,546		& 0,536	\\ 
+Stemmer+StopWords+Cleaning+Mentions+Numbers
+								& 0,532		& 0,555		& 0,510		& 0,534		& 0,515 \\ 
+Stemmer+StopWords+Cleaning+Mentions+Numbers+Emoji
+								& 0,527		& 0,564		& 0,537		& 0,542		& 0,518 \\ 
+Stemmer+StopWords+Cleaning+Mentions+Numbers+Emoji+Hashtags
+								& 0,551		& 0,540		& 0,529		& 0,567		& 0,511 \\ 
+\hline
+StopWords+Cleaning+Mentions+Numbers+Emoji
+								& 0,545		& 0,548		& 0,539		& 0,570		& 0,548 \\ 
+\hline
+Cleaning						& 0,559		& 0,434		& 0,485		& 0,565		& 0,577 \\ 
+Cleaning+Emoji					& 0,571		& 0,521		& 0,499		& 0,548		& 0,589 \\
+Cleaning+Mentions+Numbers+Emoji
+								& 0,543		& 0,546		& 0,555		& 0,568		& 0,548 \\ 
+
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 

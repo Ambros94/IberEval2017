@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  18 MAY 2017 16:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  19 MAY 2017 14:31
 entering extended mode
 **./master.tex
 (master.tex
@@ -1069,7 +1069,12 @@ LaTeX Warning: Citation `harris1954distributional' on page 1 undefined on input
 Missing character: There is no Ã in font cmr9!
 Missing character: There is no ¨ in font cmr9!
 ) (docs/evaluation.tex
-[2]) (docs/conclusions.tex) (refs/references_llncs.tex
+[2]
+Overfull \hbox (14.84477pt too wide) in paragraph at lines 38--67
+ [][] 
+ []
+
+) (docs/conclusions.tex) (refs/references_llncs.tex [3]
 Underfull \hbox (badness 4467) in paragraph at lines 13--14
 []\OT1/cmr/m/n/9 Preprocessor is a pre-pro-cess-ing li-brary for tweet data wri
 t-ten in Python,
@@ -1077,7 +1082,7 @@ t-ten in Python,
 
 )
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 53.
- [3]
+ [4]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 53.
  (master.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 53.
@@ -1091,13 +1096,13 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 53.
 ### simple group (level 1) entered at line 1061 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 22323 strings out of 493334
- 417514 string characters out of 3139253
- 507590 words of memory out of 3000000
- 25598 multiletter control sequences out of 15000+200000
+ 22332 strings out of 493334
+ 417655 string characters out of 3139253
+ 509590 words of memory out of 3000000
+ 25605 multiletter control sequences out of 15000+200000
  12962 words of font info for 51 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,6n,38p,10381b,4200s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 43i,11n,39p,10381b,4328s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
 x10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Progr
@@ -1109,9 +1114,9 @@ nts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
 sfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
 cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb
 ><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on master.pdf (3 pages, 155965 bytes).
+Output written on master.pdf (4 pages, 160883 bytes).
 PDF statistics:
- 114 PDF objects out of 1000 (max. 8388607)
- 35 named destinations out of 1000 (max. 500000)
+ 122 PDF objects out of 1000 (max. 8388607)
+ 37 named destinations out of 1000 (max. 500000)
  9 words of extra memory for PDF output out of 10000 (max. 10000000)
 
