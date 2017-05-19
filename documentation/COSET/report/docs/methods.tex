@@ -15,12 +15,17 @@ numeri superiore risultano in un eccesso di padding e perdita di informazione de
 
 \subsection{Word embedding}
 
-ask paolo lexicon/terminology online vs learnign?
-
+Word embedding is a tecnique where elements (in out case words and n-grams) are mapped into a vector of real numbers.
+The sentence is mapped into a matrix with dimension sentence lenght x embedding dimension.
+We left the sentence length as a parameter and the best results were obtained with length=30, that's reasonable since the average tweet length in words in 24.
+We tried static pretrained vectors \cite{bojanowski2016enriching},learning them during training starting from a random matrix or from the pretrained embeddings.
+GIANCARLO DEVO DIRE CHE ESPLORIAMO TUTTE LE COMBINAZIONI?
 
 \subsection{N-gram embedding}
+We also tried to learn an embedding for n-grams (bigrams and trigrams), but since the corpus is small n-grams frequencies are very low and the algorithm is not able to learn a valid embedding.
+Also there are no pre-trained n-grams available.
+Bigrams brought a small improvement, bigger n-grams result in performance decrease.
 
-Representation was learn only online 
 
 
 \section{Preprocessing}
