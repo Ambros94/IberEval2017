@@ -1,41 +1,64 @@
-\section{Methods} \label{sec:methods}
-To address this text classification task we first tried the most widely used text representations and classifiers.
-We tried representations based on lexical features as Bag Of Words \cite{harris1954distributional},Bag Of N-Grams (bigrams and trigrams), both with and without with TF-IDF normalization.
-As classifiers we tried Random Forest, Decision Trees, Support Vector Machines and MultiLayer Perceptron, but since that results obtaines with the combination of those tecniques were outperformed by neural models, we decided not to report those in the paper.
-Bag of words
+\section{Systems description} \label{sec:methods}
 
-\section{Representation}
-To represent to tweet fed into the classifier we decided to used word embeddings,which is a tecnique where elements (in out case words and n-grams) are mapped into a vector of real numbers.
-The whole sentence is mapped into a matrix with dimension sentence lenght x embedding dimension.
+\textbf{giancarlo modifications: I've changed a little bit the structure to create a kind of flux over the contents. The main idea is to switch the mind set from METHOD $\rightarrow$ (CLASSIFICATION) SYSTEM, in this way we can report our work from a software engineer point of view, analysing each part/process as a module. It seams stupid, but in this way I have a name fro each step of the METHOD/SYSTEM and I suppose can help the readers to better understand what we have done.}
+
+
+In this section we are going to describe the tweets classification systems built, from a module perspective we can describe our systems as composed of three main blocks: text pre-preprocessor (\cref{subsec:preprocessing}),  text representation (\cref{subsec:representation}) and classification model (\cref{subsec:classificationModel}). 
+
+
+\subsection{Initial investigation} \label{subsec:boh}
+To address the tweets classification problem we began our investigation analysing some of the most widely used text representations and classifiers.
+We began analysing possible text representation focusing our attention on lexical features based: \emph{Bag Of Words} \cite{harris1954distributional},\emph{Bag Of N-Grams} (bigrams and trigrams), both with and without \emph{term frequency-inverse document frequency} normalization (i.e. TF-IDF norm).
+Regarding possible classifiers exploiting above representations,  we analysed \emph{Random Forest, Decision Trees, Support Vector Machines} and \emph{Multi Layer Perceptron}, but since the results obtained with the combination of those \emph{model + representation} were outperformed by neural network based models, we decided not to report their analysis in this paper, but rather focus the modules description in relation to neural models.
+
+
+\subsection{Text Preprocessor} \label{subsec:preprocessing}
+
+\textbf{old}
+
+We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and \#atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removeing elements as URLs, reserved words and numbers.
+We also measured the contribution of stemming, stopwords and punctuation removal.
+To address those pre-processing we used the following \cite{nltk} \cite{tweets-preprocessor}.
+
+\textbf{giancarlo modifications}
+
+
+For the We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and \#atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removeing elements as URLs, reserved words and numbers.
+We also measured the contribution of stemming, stopwords and punctuation removal.
+To address those pre-processing we used the following \cite{nltk} \cite{tweets-preprocessor}.
+
+\subsection{Text representation} \label{subsec:representation}
+As a tweet representation used as first layer
+
+To represent to tweet fed into the classifier we decided to used word embeddings,which is a tecnique where elements (in our case words and n-grams) are mapped into a vector of real numbers.
+The whole sentence is mapped into a matrix with dimension \emph{sentence lenght} $\times$ \emph{embedding dimension}.
 We left the sentence length as a parameter and the best results were obtained with length=30, that's reasonable since the average tweet length in words in 24.
 
-\subsection{Words vectors}
+\textbf{@ Luca: explain what happens when sentence dimension is lower or bigger than 30. I suppose padding or cutting, right?}
+
+\subsubsection{Words vectors}
 Since the number of tweets is considered small to learn vector representation of words, we tried to initialize the embedding matrix with pretrained word vectors.
 In particular we used vectors trained on wikipedia using fastText \cite{bojanowski2016enriching}.
-We tried static pretrained vectors ,learning them during training starting from a random matrix or from the pretrained embeddings.
+We tried static pretrained vectors, learning them during training starting from a random matrix or from the pretrained embeddings.
 
-\subsection{N-gram embedding}
+\subsubsection{N-gram embedding}
 We also tried to learn an embedding for n-grams (bigrams and trigrams), but since the corpus is small n-grams frequencies are very low and the algorithm is not able to learn a valid embedding.
 Also there are no pre-trained n-grams available.
 Bigrams brought a small improvement, bigger n-grams result in performance decrease.
 
 
 
-\section{Preprocessing}
-We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and \#atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removeing elements as URLs, reserved words and numbers.
-We also measured the contribution of stemming, stopwords and punctuation removal.
-To address those pre-processing we used the following \cite{nltk} \cite{tweets-preprocessor}.
 
 
-\section{Models}
+\subsection{Classification models} \label{subsec:classificationModel}
 In the following section we present different neural network models, each model has as first layer an embedding layer that maps words to the corresponding word vectors.
 
 
-\subsection{Convolutional Neural Network}
+\subsubsection{Convolutional Neural Network}
 Convolutional Neural Networks are considered state of the art in many text classification problem. (GIANCARLO, citazioni?)
 This model is composed by a convolutional layer, followed by a global max pooling layer and two fully conncted layers.
 
-\subsection{Long short-term memory}
+\subsubsection{Long short-term memory}
 LSTM is a type of Recurrent Neural Network that is relatively insensitive to gap length, compared to others RNN, they are considered state of the art in many NLP topics, like machine translation.
 In this model the classical embedding layer is followed by an LSTM layer with 128 units, terminated by a fully connected layer.
 We also tried Bidirectional LSTM, since they are bringing an improvement in different tasks, but they are performing worst on our use case.
@@ -44,8 +67,21 @@ We also tried Bidirectional LSTM, since they are bringing an improvement in diff
 This model is based on this paper \cite{joulin2016bag}. It this model the embedding output is directly fed into a GlobalAveragePooling layer, that transofrms the whole sentece in a single vector computed as the average of the word vectors.
 This vector is then projected into 2 fully connceted layers. In the paper the number of hidden layers is fixed to 10, but we measured better performance using just 2 layers.
 
+\textbf{@ Luca: a simple image of fast text?}
+
 
 \subsubsection{KIM.}
-\figure{GIANCARLO QUI CI VA LA FIGURA DEL MODELLO KIM}
+
+\textbf{@ Luca: TOP work bro for the draw? I suppose you made from scratch ;) if not,we have to cite the image in the caption, if we don't want to be fucked XD}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=.75\columnwidth]{kim_cnn}
+\caption{BRO just put some kind of explanation about the figs \#aTOPPE}
+\label{fig:ants_example}
+\end{figure}
+
+
 This model is based on this paper \cite{kim2014convolutional}. It is based on different filter region size convolutions, that are used to build a sentence representation that is finally projected into a dense layer for the classification.
 Smaller filter region size should be able to capture short sentence patterns (similar to ngrams), while bigger sizes should capture sentence level features. We reached the best performance using [2, 3, 5, 7] as filter sizes.
