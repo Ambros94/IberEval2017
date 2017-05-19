@@ -28,29 +28,24 @@ To address those pre-processing we used the following \cite{nltk} \cite{tweets-p
 
 
 \section{Models}
-
 In the following section we present different neural network models, each model has as first layer an embedding layer that maps words to the corresponding word vectors.
 
 
 \subsection{Convolutional Neural Network}
-Convolutional Neural Networks are considered state of the art in many text classification problem, this model is a
+Convolutional Neural Networks are considered state of the art in many text classification problem. (GIANCARLO, citazioni?)
+This model is composed by a convolutional layer, followed by a global max pooling layer and two fully conncted layers.
 
-Start whith the meaning reason behind this model (e.g. LSTM because in translation is a state of the art).
+\subsection{Long short-term memory}
+LSTM is a type of Recurrent Neural Network that is relatively insensitive to gap length, compared to others RNN, they are considered state of the art in many NLP topics, like machine translation.
+In this model the classical embedding layer is followed by an LSTM layer with 128 units, terminated by a fully connected layer.
+We also tried Bidirectional LSTM, since they are bringing an improvement in different tasks, but they are performing worst on our use case.
 
-Long short term memory.
-Bidirectional long short term memory.
+\subsubsection{Fast text}
+This model is based on this paper \cite{joulin2016bag}. It this model the embedding output is directly fed into a GlobalAveragePooling layer, that transofrms the whole sentece in a single vector computed as the average of the word vectors.
+This vector is then projected into 2 fully connceted layers. In the paper the number of hidden layers is fixed to 10, but we measured better performance using just 2 layers.
 
-Convolutional neural network.
-Hybrid convolutional neural network.
-
-\subsubsection{Fast text.}
-
-same and equal of original but changing the number of layer  (worstening in increasing the number of layer) + adding of the gaussian noise and batch normalization
 
 \subsubsection{KIM.}
-
-Pippo \cite{kim2014convolutional}
-
-
-
-from kim model we optimize ttill the following net configuration/topology: description of the net
+\figure{GIANCARLO QUI CI VA LA FIGURA DEL MODELLO KIM}
+This model is based on this paper \cite{kim2014convolutional}. It is based on different filter region size convolutions, that are used to build a sentence representation that is finally projected into a dense layer for the classification.
+Smaller filter region size should be able to capture short sentence patterns (similar to ngrams), while bigger sizes should capture sentence level features. We reached the best performance using [2, 3, 5, 7] as filter sizes.
