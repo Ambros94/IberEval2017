@@ -1,5 +1,7 @@
 \section{Evaluation} \label{sec:evaluation}
 
+
+
 \subsection{Metrics}
 
 \begin{equation}
@@ -32,37 +34,34 @@ table of word representation+
 HERE legend of notation
 in bf the winner about the preprocessing configuration and in shared grey box the best preprocessing configuration for a model.
 
+\begin{itemize}
+\item 
+\end{itemize}
+
 \begin{table}
-\caption{Average multi-objective values reached in the different classes of instances. Stop criteria set to 600 seconds.}
+\caption{Available test set result over the $F_{1-macro}$ score [\%]. }
 \label{tab:acsEvaluation}
 \centering
-\begin{tabular}{lrrrrr}
+\begin{tabular}{l|rrrrr}
 \toprule
-\multirow{2}{*}{Preprocessing}		& \multicolumn{5}{ c }{Models}       \\ 
-								& cnn		& lstm		& b-lstm	& fast-text	& kim	\\ 
+\multirow{2}{*}{Preprocessing}	& \multicolumn{5}{ c }{Models}       \\ 
+						& CNN		& LSTM		& B-LSTM	& FAST-TEXT	& KIM	\\ 
 \hline 
-Nothing							& 0,505     & 0,556		& 0,511		& 0,530 	& 0,558	\\ 
+Nothing					& 50,5     & 55,6		& 51,1		& 53,0 		& \textbf{55,8}	\\ 
 \hline 
-Stemmer							& 0,496		& 0,499		& 0,475		& 0,531		& 0,531	\\ 
-Stemmer+StopWords				& 0,476		& 0,553		& 0,476		& 0,529		& 0,511	\\ 
-Stemmer+StopWords+Cleaning		& 0,519		& 0,578		& 0,522		& 0,560		& 0,508	\\ 
-Stemmer+StopWords+Cleaning+Mentions
-								& 0,546		& 0,571		& 0,477		& 0,546		& 0,536	\\ 
-Stemmer+StopWords+Cleaning+Mentions+Numbers
-								& 0,532		& 0,555		& 0,510		& 0,534		& 0,515 \\ 
-Stemmer+StopWords+Cleaning+Mentions+Numbers+Emoji
-								& 0,527		& 0,564		& 0,537		& 0,542		& 0,518 \\ 
-Stemmer+StopWords+Cleaning+Mentions+Numbers+Emoji+Hashtags
-								& 0,551		& 0,540		& 0,529		& 0,567		& 0,511 \\ 
+ST						& 49,6		& 49,9		& 47,5		& \textbf{53,1}	& \textbf{53,1}	\\ 
+ST+SW					& 47,6		& \textbf{55,3}	& 47,6		& 52,9		& 51,1	\\ 
+ST+SW+CL				& 51,9		& \win\textbf{56,8}		& 52,2		& 56,0		& 50,8	\\ 
+ST+SW+CL+MT				& 54,6		& \textbf{56,1}		& 47,7		& 54,6		& 53,6	\\ 
+ST+SW+CL+MT+NUM			& 53,2		& \textbf{55,5}		& 51,0		& 53,4		& 51,5 \\ 
+ST+SW+CL+MT+NUM+EM		& 52,7		& \textbf{56,4}		& 53,7		& 54,2		& 51,8 \\ 
+ST+SW+CL+MT+NUM+EM+HT	& 55,1		& 54,0		& 52,9		& \textbf{56,7}		& 51,1 \\ 
 \hline
-StopWords+Cleaning+Mentions+Numbers+Emoji
-								& 0,545		& 0,548		& 0,539		& 0,570		& 0,548 \\ 
+SW+CL+MT+NUM+EM			& 54,5		& 54,8		& 53,9		& \win\textbf{57,0}		& 54,8 \\ 
 \hline
-Cleaning						& 0,559		& 0,434		& 0,485		& 0,565		& 0,577 \\ 
-Cleaning+Emoji					& 0,571		& 0,521		& 0,499		& 0,548		& 0,589 \\
-Cleaning+Mentions+Numbers+Emoji
-								& 0,543		& 0,546		& 0,555		& 0,568		& 0,548 \\ 
-
+CL						& 55,9		& 43,4		& 48,5		& 56,5		& \textbf{57,7} \\ 
+CL+EM					& \win57,1		& 52,1		& 49,9		& 54,8		& \win\textbf{58,9} \\
+CL+MT+NUM+EM			& 54,3		& 54,6		& \win55,5		& \textbf{56,8}		& 54,8 \\ 
 \bottomrule
 \end{tabular}
 \end{table}
