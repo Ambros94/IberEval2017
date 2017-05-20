@@ -12,7 +12,7 @@ We began analysing possible text representations focusing our attention on lexic
 Regarding possible classifiers exploiting above representations,  we analysed \emph{Random Forest, Decision Trees, Support Vector Machines} and \emph{Multi Layer Perceptron}, but since the results obtained with the combination of those \emph{model + representation} were outperformed by neural network based models, we decided not to report their analysis in this paper, but rather focus the modules description in relation to neural models.
 
 
-\subsection{Text Preprocessor} \label{subsec:preprocessing}
+\subsection{Text preprocessing} \label{subsec:preprocessing}
 
 
 We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and \#atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removeing elements as URLs, reserved words and numbers.
@@ -45,7 +45,7 @@ In the following section we present different neural network models, each model 
 
 \subsubsection{Convolutional Neural Network}
 Convolutional Neural Networks are considered state of the art in many text classification problem. (GIANCARLO, citazioni?)
-This model is composed by a convolutional layer, followed by a global max pooling layer and two fully conncted layers.
+This model is composed by a convolutional layer, followed by a global max pooling layer and two fully connected layers.
 
 \subsubsection{Long short-term memory}
 LSTM is a type of Recurrent Neural Network that is relatively insensitive to gap length, compared to others RNN, they are considered state of the art in many NLP topics, like machine translation.
@@ -54,30 +54,30 @@ We also tried Bidirectional LSTM, since they are bringing an improvement in diff
 
 \subsubsection{Fast text}
 This model is based on this paper \cite{joulin2016bag}.
-Differently to the other models where just words are used, here Bag of n-grams are added to the imput as  additional features to capture some partial information about the local word order.
-It this model the embedding output is directly fed into a GlobalAveragePooling layer, that transofrms the whole sentece in a single vector computed as the average of the word vectors.
-This vector is then projected into 2 fully connceted layers. In the paper the number of hidden layers is fixed to 10, but we measured better performance using just 2 layers.
+Differently to the other models where just words are used, here Bag of n-grams are added to the input as  additional features to capture some partial information about the local word order.
+It this model the embedding output is directly fed into a \emph{GlobalAveragePooling} layer, that transofrms the whole sentece in a single vector computed as the average of the word vectors.
+This vector is then projected into 2 fully connected layers. In the paper the number of hidden layers is fixed to 10, but we measured better performance using just 2 layers.
 \begin{figure}[h]
 \centering
 \includegraphics[width=.75\columnwidth]{fast_text}
-\caption{Model architecture of fastText for a sentence with N ngram features x1 , . . . , xN . The features are embedded and averaged to form the hidden variable.}
-\label{fig:ants_example}
+\caption{\cite{joulin2016bag} Model architecture of \emph{fastText} for a sentence with $N$ n-gram features $x_1,\dots,x_N$. The features are embedded and averaged to form the hidden variable.}
+\label{fig:fastText}
 \end{figure}
-\textbf{@ Luca: Source: \cite{joulin2016bag }
+\textbf{@ Luca: Source:  }
 
 
 \subsubsection{KIM.}
 
-\textbf{@ Luca: Source: Zhang, Y., & Wallace, B. (2015). A Sensitivity Analysis of (and Practitioners’ Guide to) Convolutional Neural Networks for Sentence Classification.}
+\textbf{@ Luca: Source: Zhang, Y., \& Wallace, B. (2015). A Sensitivity Analysis of (and Practitioners’ Guide to) Convolutional Neural Networks for Sentence Classification.}
 \textbf{http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=.75\columnwidth]{kim_cnn}
 \caption{Illustration of a Convolutional Neural Network (CNN) architecture for sentence classification}
-\label{fig:ants_example}
+\label{fig:kim}
 \end{figure}
-\textbf{@giancarlo: Non penso che ants_example vada esattamente qui :D}
+\textbf{@giancarlo: Non penso che ants\_example vada esattamente qui :D}
 
 
 This model is based on this paper \cite{kim2014convolutional}. It is based on different filter region size convolutions, followed by maxpooling layers.

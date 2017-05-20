@@ -38,9 +38,9 @@ in bf the winner about the preprocessing configuration and in shared grey box th
 \item 
 \end{itemize}
 
-\begin{table}
+\begin{table}[h]
 \caption{Available test set result over the $F_{1-macro}$ score [\%]. }
-\label{tab:acsEvaluation}
+\label{tab:preprocessing}
 \centering
 \begin{tabular}{l|rrrrr}
 \toprule
@@ -65,6 +65,28 @@ CL+MT+NUM+EM			& 54,3		& 54,6		& \win55,5		& \textbf{56,8}		& 54,8 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{table}[h]
+\caption{Available test set result over the $F_{1-macro}$ score [\%]. }
+\label{tab:embedding}
+\centering
+\begin{tabular}{l|rrrrr}
+\toprule
+\multirow{2}{*}{Embedding}	& \multicolumn{5}{ c }{Models}       \\ 
+					& CNN		& LSTM		& B-LSTM	& FAST-TEXT	& KIM	\\ 
+\hline 
+ES					& \textbf{48,10}		& 36,13		& 38,90		& 36,37		& 43,57\\
+ES+Online			& \win57,10		& 52,10		& 49,93		& 54,80		& \win\textbf{58,87}\\
+\hline
+CA					& \textbf{45,07}		& 30,57		& 38,53		& 30,13		& 39,60\\ 
+CA+Online			& 53,57		& \win53,63		& 46,27		& 55,13		& \textbf{56,23}\\
+\hline
+Online				& 52,63		& 47,33		& \win51,80		& \win53,30		& \textbf{54,70}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{we don't add an average column}
 
 Eleven teams have presented their respective systems. In total, 48 systems were submitted for evaluation. All the systems we have submitted have performed better than the mean of the systems proposed using the RMSE
 
