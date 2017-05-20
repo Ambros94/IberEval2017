@@ -4,7 +4,6 @@ from keras.models import Sequential
 from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 
-from deep_models import metrics
 from deep_models.toppemodel import ToppeModel
 from nlp_utils import word_vectors
 from nlp_utils.n_grams import augment_with_n_grams
@@ -55,4 +54,4 @@ class FastTextModel(ToppeModel):
 
         self.keras_model.compile(loss='categorical_crossentropy',
                                  optimizer='adam',
-                                 metrics=[metrics.fbeta_score])
+                                 metrics=params['metrics'])

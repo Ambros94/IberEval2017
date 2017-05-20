@@ -41,7 +41,7 @@ def unison_shuffled_copies(a, b):
     return list1_shuf, list2_shuf
 
 
-def load_data(n_validation_samples=400):
+def load_data(n_validation_samples=600):
     """
     Loads data form file, the train set contains also the dev
     :param n_validation_samples: How many examples have to go from the data-set into the test set
@@ -96,7 +96,7 @@ def load_data(n_validation_samples=400):
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
 
 
-def load_stance_es(n_validation_samples=400):
+def load_stance_es(n_validation_samples=600):
     ids = []
     data = []
     labels = []
@@ -113,9 +113,8 @@ def load_stance_es(n_validation_samples=400):
                 data.append(';'.join(row[1:]))
             else:
                 data.append(row[1])
-    assert len(ids) == 4319
-    assert len(data) == 4319
-    assert len(labels) == 4319
+    data, labels = unison_shuffled_copies(data, labels)
+
     # Prepare labels
     ready_y = [encode_stance(l) for l in labels]
     # Train
@@ -129,7 +128,7 @@ def load_stance_es(n_validation_samples=400):
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
 
 
-def load_stance_ca(n_validation_samples=400):
+def load_stance_ca(n_validation_samples=600):
     ids = []
     data = []
     labels = []
@@ -146,7 +145,7 @@ def load_stance_ca(n_validation_samples=400):
                 data.append(';'.join(row[1:]))
             else:
                 data.append(row[1])
-
+    data, labels = unison_shuffled_copies(data, labels)
     # Prepare labels
     ready_y = [encode_stance(l) for l in labels]
     # Train
@@ -160,7 +159,7 @@ def load_stance_ca(n_validation_samples=400):
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
 
 
-def load_gender_es(n_validation_samples=400):
+def load_gender_es(n_validation_samples=600):
     ids = []
     data = []
     labels = []
@@ -177,6 +176,7 @@ def load_gender_es(n_validation_samples=400):
                 data.append(';'.join(row[1:]))
             else:
                 data.append(row[1])
+    data, labels = unison_shuffled_copies(data, labels)
     # Prepare labels
     ready_y = [encode_gender(l) for l in labels]
 
@@ -191,7 +191,7 @@ def load_gender_es(n_validation_samples=400):
     return (ids_train, x_train, y_train), (ids_val, x_val, y_val)
 
 
-def load_gender_ca(n_validation_samples=400):
+def load_gender_ca(n_validation_samples=600):
     ids = []
     data = []
     labels = []
@@ -208,7 +208,7 @@ def load_gender_ca(n_validation_samples=400):
                 data.append(';'.join(row[1:]))
             else:
                 data.append(row[1])
-
+    data, labels = unison_shuffled_copies(data, labels)
     # Prepare labels
     ready_y = [encode_gender(l) for l in labels]
     # Train
