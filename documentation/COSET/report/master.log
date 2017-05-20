@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  20 MAY 2017 14:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  20 MAY 2017 20:13
 entering extended mode
 **./master.tex
 (master.tex
@@ -1032,11 +1032,11 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  (docs/abstract.tex)
 (docs/introduction.tex) (docs/task.tex [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]) (docs/methods.tex [2]
-<figs/fast_text.png, id=52, 373.395pt x 188.705pt>
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]) (docs/system.tex [2]
+<figs/fast_text.png, id=53, 373.395pt x 188.705pt>
 File: figs/fast_text.png Graphic file (type png)
  <use figs/fast_text.png>
-Package pdftex.def Info: figs/fast_text.png used on input line 62.
+Package pdftex.def Info: figs/fast_text.png used on input line 59.
 (pdftex.def)             Requested size: 313.69025pt x 158.53702pt.
 
 
@@ -1046,15 +1046,15 @@ Missing character: There is no â in font cmbx9!
 Missing character: There is no € in font cmbx9!
 Missing character: There is no ™ in font cmbx9!
 
-Overfull \hbox (1.01826pt too wide) in paragraph at lines 71--73
+Overfull \hbox (1.01826pt too wide) in paragraph at lines 68--70
 \OT1/cmr/bx/n/9 Clas-si-fi-ca-tion. http://www.wildml.com/2015/11/understanding
 -convolutional-
  []
 
-<figs/kim_cnn.png, id=58, 754.82pt x 690.58pt>
+<figs/kim_cnn.png, id=59, 754.82pt x 690.58pt>
 File: figs/kim_cnn.png Graphic file (type png)
  <use figs/kim_cnn.png>
-Package pdftex.def Info: figs/kim_cnn.png used on input line 76.
+Package pdftex.def Info: figs/kim_cnn.png used on input line 73.
 (pdftex.def)             Requested size: 313.69025pt x 286.98578pt.
 
 
@@ -1067,14 +1067,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[4 <./figs/fast_text.png>]) (docs/conclusions.tex) (refs/references_llncs.tex
-[5 <./figs/kim_cnn.png>]
+) (docs/conclusions.tex [4 <./figs/fast_text.png>]) (refs/references_llncs.tex
 Underfull \hbox (badness 4467) in paragraph at lines 13--14
 []\OT1/cmr/m/n/9 Preprocessor is a pre-pro-cess-ing li-brary for tweet data wri
 t-ten in Python,
  []
 
-)
+[5 <./figs/kim_cnn.png>])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 53.
  [6]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 53.
@@ -1090,10 +1089,10 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 53.
 ### simple group (level 1) entered at line 1061 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 22323 strings out of 493334
- 417733 string characters out of 3139253
- 512382 words of memory out of 3000000
- 25586 multiletter control sequences out of 15000+200000
+ 22335 strings out of 493334
+ 417908 string characters out of 3139253
+ 515382 words of memory out of 3000000
+ 25598 multiletter control sequences out of 15000+200000
  13308 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,11n,43p,10381b,4332s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1113,9 +1112,9 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files
 .9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/
 type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmti9.pfb>
-Output written on master.pdf (6 pages, 373933 bytes).
+Output written on master.pdf (6 pages, 374835 bytes).
 PDF statistics:
- 176 PDF objects out of 1000 (max. 8388607)
+ 181 PDF objects out of 1000 (max. 8388607)
  46 named destinations out of 1000 (max. 500000)
  19 words of extra memory for PDF output out of 10000 (max. 10000000)
 

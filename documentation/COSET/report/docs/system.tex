@@ -1,7 +1,4 @@
-\section{Systems description} \label{sec:methods}
-
-\textbf{giancarlo modifications: I've changed a little bit the structure to create a kind of flux over the contents. The main idea is to switch the mind set from METHOD $\rightarrow$ (CLASSIFICATION) SYSTEM, in this way we can report our work from a software engineer point of view, analysing each part/process as a module. It seams stupid, but in this way I have a name fro each step of the METHOD/SYSTEM and I suppose can help the readers to better understand what we have done.}
-
+\section{Systems description} \label{sec:system}
 
 In this section we are going to describe the tweets classification systems built, from a module perspective we can describe our systems as composed of three main blocks: text pre-preprocessor (\cref{subsec:preprocessing}),  text representation (\cref{subsec:representation}) and classification model (\cref{subsec:classificationModel}). 
 
@@ -12,10 +9,10 @@ We began analysing possible text representations focusing our attention on lexic
 Regarding possible classifiers exploiting above representations,  we analysed \emph{Random Forest, Decision Trees, Support Vector Machines} and \emph{Multi Layer Perceptron}, but since the results obtained with the combination of those \emph{model + representation} were outperformed by neural network based models, we decided not to report their analysis in this paper, but rather focus the modules description in relation to neural models.
 
 
-\subsection{Text preprocessing} \label{subsec:preprocessing}
+\subsection{Text pre-processor} \label{subsec:preprocessing}
 
 
-We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and \#atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removeing elements as URLs, reserved words and numbers.
+We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and \#atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removing elements as URLs, reserved words and numbers.
 We also measured the contribution of stemming, stopwords and punctuation removal.
 To address those pre-processing we used the following \cite{nltk} \cite{tweets-preprocessor}.
 

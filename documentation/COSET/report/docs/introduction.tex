@@ -1,26 +1,20 @@
 \section{Introduction} \label{sec:introduction}
 
-Intro over nlp and text classification: motivation why this field is important and the actual challenge and open problems (will be top just to list some problem and their way to be solved, for example citing the different workshop that we had during the course)
+Nowadays the pervasive use of social network as a mean of communication helps researcher to found useful insight over open problems in the field of Natural Language Processing (put the cite of other work that use social network). In this context, the \emph{Twitter} social network has a huge role in text classification problems, because thanks to its \emph{API} is possible to retrieve specific formatted text (i.e. a sentence of maximium 140 characters called tweet) from a huge realtime text database, where different users publish their statement.
+
+This huge availability of data gives raise to the investigation of new text classification problem, with special interest in classification problem related to temporal event that can influence statements published by social network user (). An example of this problem category is the text classification related to general election (find some cite from google scholar), where the  \emph{Classification Of Spanish Election Tweets (COSET)} task at IberEval 2017 is a concrete example. 
+
+In COSET, the aim is to classify a corpus of political tweets in five categories related to specific political topics. This task can be analysed as a domain-dependent (i.e. political domain) constrained-text (i.e. tweet sentence) classification problem.
+
+To tackle the above problem we built a classification system that can be decomposed in three main modules, each representing specific approach widely used in the nlp literature: text preprocessing, text representation and statistical classification model.
+During the modules design we explore different design combinations leading the system development to a comparative study over the possible modules implementations.
+Analysing the produced study interesting insight can be drawn to create system baseline for their work.
+
+In the following sections we firstly describe the COSET task (\cref{sec:task}), then attention over the system
 
 
-Text classification is an important task in Natural Language Processing with many applications, such as web search, information retrieval, ranking and document classification (Deerwester et al., 1990; Pang and Lee, 2008). Recently, models based on neural networks have become increasingly popular (Kim, 2014; Zhang and LeCun, 2015; Conneau et al., 2016). While these models achieve very good performance in practice, they tend to be relatively slow both at train and test time, limiting their use on very large datasets.
+handcrafted features
 
-The 
-
-vedi citazioni su word embedding di mark e bag of word da maite
-
-Introduce informally our task and list some way of tackling this problem from the different perspectives, maybe say that we de-construct tthe actual approach and cathegorized their inner process in: representation, preprocessing, model and post processing (that we haven't done).
-
-Finally explain how we structured this report
-
-In the following we firstly describe the 
-
-In this paper we describe our participation for addressing
-the PR-SOCO task. The rest of the paper is organized as
-follows. Next section is devoted to dene the Personality
-Recognition task. In Section 4 the model proposed is described.
-Following, in Section 5, the results achieved are
-presented. Finally, in Section 6 our results are discussed,
-and future work is proposed.
+explain that we haven't put a proper module for handcrafted features, but our modular approach to solve the classification problem lead to an easy customization and integration of a proper module for these handcrafted features.
 
 
