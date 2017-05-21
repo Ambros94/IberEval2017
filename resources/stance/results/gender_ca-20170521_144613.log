@@ -1,0 +1,11 @@
+model_name	test_accuracy
+cnn	0.804444444444
+fast_text	0.715555555556
+cnn_lstm	0.708888888889
+b_lstm	0.733333333333
+lstm	0.617777777778
+kim	0.66
+Pre-processing:def cl(tweet):
+    p.set_options(p.OPT.URL, p.OPT.RESERVED)
+    tweet = p.clean(tweet)
+    return tweet
