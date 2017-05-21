@@ -1,9 +1,0 @@
-model_name	test_accuracy
-cnn	0.773333333333
-fast_text	0.711111111111
-cnn_lstm	0.764444444444
-b_lstm	0.768888888889
-lstm	0.653333333333
-kim	0.684444444444
-Pre-processing:def nothing(tweet):
-    return tweet
