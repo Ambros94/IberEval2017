@@ -1,10 +1,10 @@
 \section{Evaluation} \label{sec:evaluation}
 
-In this section we are going to illustrate results of the comparative studies (maybe change), first we illustrate the metric used to evaluate the system (\cref{subsec:metric}) and then we report the results produced by a 10-fold cross validation over the development data set (\cref{subsec:results}).
+In this section we are going to illustrate results of the comparative study drawn during the system development, first we illustrate the metric used to evaluate the system (\cref{subsec:metric}) and then we report the results produced by a 10-fold cross validation over the development data set (\cref{subsec:results}).
 
 \subsection{Metrics} \label{subsec:metric}
 
-System evaluation metric were given by organizers and reported here in the following \cref{eq:f1macro,eq:f1,eq:precision,eq:recall}. Their choise was to use an $F_{1-macro}$ measure due to the unbalance of train set.
+System evaluation metric were given by organizers and reported here in the following \cref{eq:f1macro,eq:f1,eq:precision,eq:recall}, their choice was to use an $F_{1-macro}$ measure due to class unbalance in the corpus.
 
 \begin{multicols}{2}
 \begin{equation} \label{eq:f1macro}
@@ -28,22 +28,12 @@ recall = \frac{1}{|L|} \displaystyle\sum_{l\in L} R(y_l, \hat{y}_l)
 
 \subsection{Results} \label{subsec:results}
 
-In the continuation we present results 
-
-
-The following list describe the notation used to report the possible preprocessing functions:
-\begin{itemize}
-\item[\textbf{ST:}] Steemer reduction of all the words
-\item[\textbf{SW:}] Removing of all the stop words 
-\item[\textbf{CL:}] Removing of all the URL and Tweeter reserve-word (i.e. RT, FAV)
-\item[\textbf{MT:}] Substitution of the tweet's mention with \emph{constant mention wild card}
-\item[\textbf{NUM:}] Substitution of any number inside the tweet with \emph{constant number wild card}
-\item[\textbf{EM:}] Substitution of any emoji inside the tweet with \emph{constant emoji wild card}
-\item[\textbf{HT:}] Substitution of any hashtaged words inside the tweet with a \emph{constant hashtag wild card}
-\end{itemize}
+In the continuation we present a comparative study over possible combination of pre-processing (\cref{tab:preprocessing}) and text representation (\cref{tab:representation}), in both case results are calculated from averaging three runs of a 10-fold cross validation over the development set (\textbf{LUCA put in your word the explanation of training/development set evaluation}).
+Notations used in \cref{tab:preprocessing} refers to the one introduced in \cref{subsec:preprocessing} (the listing of a notation means its use for the reported result, where SW and PR were merged as SR), regarding the tweet specific pre-processing all the items have been substituted, exception for the URL and RW that have been removed (in the table reported as RM). From all the possible combinations (i.e. $2^3\cdot3^{7}+1$) we report only the most relevant ones.
 
 \begin{table}[h]
-\caption{Available test set result over the $F_{1-macro}$ score [\%]. }
+\footnotesize
+\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
 \label{tab:preprocessing}
 \centering
 \begin{tabular}{l|ccccc}
@@ -54,43 +44,43 @@ The following list describe the notation used to report the possible preprocessi
 Nothing					& 50,5     & 55,6		& 51,1		& 53,0 		& \textbf{55,8}	\\ 
 \hline 
 ST						& 49,6		& 49,9		& 47,5		& \textbf{53,1}	& \textbf{53,1}	\\ 
-ST+SW					& 47,6		& \textbf{55,3}	& 47,6		& 52,9		& 51,1	\\ 
-ST+SW+CL				& 51,9		& \win\textbf{56,8}		& 52,2		& 56,0		& 50,8	\\ 
-ST+SW+CL+MT				& 54,6		& \textbf{56,1}		& 47,7		& 54,6		& 53,6	\\ 
-ST+SW+CL+MT+NUM			& 53,2		& \textbf{55,5}		& 51,0		& 53,4		& 51,5 \\ 
-ST+SW+CL+MT+NUM+EM		& 52,7		& \textbf{56,4}		& 53,7		& 54,2		& 51,8 \\ 
-ST+SW+CL+MT+NUM+EM+HT	& 55,1		& 54,0		& 52,9		& \textbf{56,7}		& 51,1 \\ 
+ST+SR					& 47,6		& \textbf{55,3}	& 47,6		& 52,9		& 51,1	\\ 
+ST+SR+RM				& 51,9		& \win\textbf{56,8}		& 52,2		& 56,0		& 50,8	\\ 
+ST+SR+RM+MT				& 54,6		& \textbf{56,1}		& 47,7		& 54,6		& 53,6	\\ 
+ST+SR+RM+MT+NUM			& 53,2		& \textbf{55,5}		& 51,0		& 53,4		& 51,5 \\ 
+ST+SR+RM+MT+NUM+EM+SM	& 52,7		& \textbf{56,4}		& 53,7		& 54,2		& 51,8 \\ 
+ST+SR+RM+MT+NUM+EM+SM+HT& 55,1		& 54,0		& 52,9		& \textbf{56,7}		& 51,1 \\ 
 \hline
-SW+CL+MT+NUM+EM			& 54,5		& 54,8		& 53,9		& \win\textbf{57,0}		& 54,8 \\ 
+SR+RM+MT+NUM+EM+SM		& 54,5		& 54,8		& 53,9		& \win\textbf{57,0}		& 54,8 \\ 
 \hline
-CL						& 55,9		& 43,4		& 48,5		& 56,5		& \textbf{57,7} \\ 
-CL+EM					& \win57,1		& 52,1		& 49,9		& 54,8		& \win\textbf{58,9} \\
-CL+MT+NUM+EM			& 54,3		& 54,6		& \win55,5		& \textbf{56,8}		& 54,8 \\ 
+RM						& 55,9		& 43,4		& 48,5		& 56,5		& \textbf{57,7} \\ 
+RM+EM+SM				& \win57,1		& 52,1		& 49,9		& 54,8		& \win\textbf{58,9} \\
+RM+MT+NUM+EM+SM			& 54,3		& 54,6		& \win55,5		& \textbf{56,8}		& 54,8 \\ 
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[h]
-\caption{Available test set result over the $F_{1-macro}$ score [\%]. }
-\label{tab:embedding}
+\footnotesize
+\caption{Text representation study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. The pre-processing setting was fixed at RM+EM.}
+\label{tab:representation}
 \centering
 \begin{tabular}{l|ccccc}
 \toprule
 \multirow{2}{*}{Embedding}	& \multicolumn{5}{ c }{Models}       \\ 
 					& CNN		& LSTM		& B-LSTM	& FAST-TEXT	& KIM	\\ 
 \hline 
-ES static			& \textbf{48,10}		& 36,13		& 38,90		& 36,37		& 43,57\\
-ES non-static		& \win57,10		& 52,10		& 49,93		& \win54,80		& \win\textbf{58,87}\\
+ES static			& \textbf{48,1}		& 36,1		& 38,9		& 36,4		& 43,6\\
+ES non-static		& \win57,1		& 52,1		& 49,9		& \win54,8		& \win\textbf{58,9}\\
 \hline
-CA static			& \textbf{45,07}		& 30,57		& 38,53		& 30,13		& 39,60\\ 
-CA non-static		& 53,57		& \win53,63		& 46,27		& 54,13		& \textbf{56,23}\\
+CA static			& \textbf{45,1}		& 30,6		& 38,5		& 30,1		& 39,6\\ 
+CA non-static		& 53,5		& \win53,6		& 46,3		& 54,1		& \textbf{56,2}\\
 \hline
-Online				& 52,63		& 47,33		& \win51,80		& 53,30		& \textbf{54,70}\\
+Online				& 52,6		& 47,3		& \win51,8		& 53,3		& \textbf{54,7}\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{we don't add an average column}
 
 Eleven teams have presented their respective systems. In total, 48 systems were submitted for evaluation. All the systems we have submitted have performed better than the mean of the systems proposed using the RMSE
 

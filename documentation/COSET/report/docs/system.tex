@@ -1,28 +1,73 @@
 \section{Systems description} \label{sec:system}
 
-In this section we are going to describe the tweets classification systems built, from a module perspective we can describe our systems as composed of three main blocks: text pre-preprocessor (\cref{subsec:preprocessing}),  text representation (\cref{subsec:representation}) and classification model (\cref{subsec:classificationModel}). 
+In this section we are going to describe the tweet classification systems built, from a module perspective we can describe our systems as composed of three main blocks: text pre-preprocessing (\cref{subsec:preprocessing}),  text representation (\cref{subsec:representation}) and classification model (\cref{subsec:classificationModel}). 
 
 
 \subsection{Initial investigation} \label{subsec:boh}
 To address the tweets classification problem we began our investigation analysing some of the most widely used text representations and classifiers.
-We began analysing possible text representations focusing our attention on lexical features based: \emph{Bag Of Words} \cite{harris1954distributional},\emph{Bag Of N-Grams} (bigrams and trigrams), both with and without \emph{term frequency-inverse document frequency} normalization (i.e. TF-IDF norm).
-Regarding possible classifiers exploiting above representations,  we analysed \emph{Random Forest, Decision Trees, Support Vector Machines} and \emph{Multi Layer Perceptron}, but since the results obtained with the combination of those \emph{model + representation} were outperformed by neural network based models, we decided not to report their analysis in this paper, but rather focus the modules description in relation to neural models.
+In the analysing for possible text representations we began focusing our attention on lexical features based: \emph{Bag Of Words} \cite{harris1954distributional},\emph{Bag Of N-Grams} (bigrams and trigrams), both with and without \emph{term frequency-inverse document frequency} normalization (i.e. TF-IDF norm).
+In relation to classification model that can exploit above representations,  we analysed \emph{Random Forest, Decision Trees, Support Vector Machines} and \emph{Multi Layer Perceptron}, but since the results obtained with the combination of those \emph{model + representation} were outperformed by neural network based models, we decided not to report their analysis in this paper, but rather focus the module description in relation to neural models.
 
 
-\subsection{Text pre-processor} \label{subsec:preprocessing}
+\subsection{Text pre-processing} \label{subsec:preprocessing}
 
+\textbf{OLD LUCA}
 
 We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and \#atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removing elements as URLs, reserved words and numbers.
 We also measured the contribution of stemming, stopwords and punctuation removal.
 To address those pre-processing we used the following \cite{nltk} \cite{tweets-preprocessor}.
 
+\textbf{Giancarlo}
+
+Regarding the text pre-preprocessing, has to be mentioned that the corpus under observation can not be treated as proper written language, because computer-mediated communication (CMC) is highly informal, affecting diamesic\footnote{The variation in a language across medium of communication (e.g. Spanish over the phone versus Spanish over email)} variation with creation of new items supposed to pertain lexicon and graphematic domains \cite{bazzanella2011oscillazioni,cerruti2013netspeak}.
+Therefore, in addition to well know pre-processing approach, as stemming (i.e. ST), stopwords (i.e. SW) and punctuation removal (i.e. PR), specific tweets pre-processing techniques has to be taken in consideration.
+
+From previous consideration, we define a set of specific tweet pre-processing approach that take into consideration the following items:
+\begin{enumerate*}
+\item mentions (i.e. MT),
+\item smiley (i.e. SM),
+\item emoji (i.e. EM),
+\item hashtags (i.e. HT),
+\item numbers (i.e. NUM),
+\item URL (i.e. URL)
+\item and Tweeter reserve-word as RT and FAV (i.e. RW).
+\end{enumerate*}
+
+For each of these items we leave the possibility to be removed or substituted by constant string (e.g.
+\begin{enumerate*}
+\item \emph{Pre-processing of @Ambros and \#atoppe :)} $\xrightarrow{substitution} $ \emph{Pre-processing of \$MENTION and \$HASHTAG \$SMILEY},
+\item \emph{Pre-processing of @Ambros and \#atoppe :)} $\xrightarrow{removing} $ \emph{Pre-processing of and}
+\end{enumerate*}
+).
+
+To implement above pre-processing tecnique we take advantage of the following tools:
+\begin{enumerate*}
+\item NLTK \cite{nltk} and 
+\item Preprocessor \cite{tweets-preprocessor}.
+\end{enumerate*}
+
+
+
 \subsection{Text representation} \label{subsec:representation}
+
+\textbf{TO FINISH}
+
+\textbf{OLD LUCA}
+
+To represent to tweet fed into the classifier we decided to used word embeddings,which is a tecnique where elements (in our case words and n-grams) are mapped into a vector of real numbers.
+The whole sentence is mapped into a matrix with dimension \emph{sentence lenght} $\times$ \emph{embedding dimension}.
+We left the sentence length as a parameter and the best results were obtained with length=30, that's reasonable since the average tweet length in words in 24.
+If the sentence dimension is bigger than the selected window we used the first length words, if the sentence is smaller than the windwos we used 0-right padding.
+
+\textbf{Giancarlo}
+
 As a tweet representation used as first layer
 
 To represent to tweet fed into the classifier we decided to used word embeddings,which is a tecnique where elements (in our case words and n-grams) are mapped into a vector of real numbers.
 The whole sentence is mapped into a matrix with dimension \emph{sentence lenght} $\times$ \emph{embedding dimension}.
 We left the sentence length as a parameter and the best results were obtained with length=30, that's reasonable since the average tweet length in words in 24.
 If the sentence dimension is bigger than the selected window we used the first length words, if the sentence is smaller than the windwos we used 0-right padding.
+
 
 \subsubsection{Words vectors}
 Since the number of tweets is considered small to learn vector representation of words, we tried to initialize the embedding matrix with pretrained word vectors.
@@ -56,7 +101,7 @@ It this model the embedding output is directly fed into a \emph{GlobalAveragePoo
 This vector is then projected into 2 fully connected layers. In the paper the number of hidden layers is fixed to 10, but we measured better performance using just 2 layers.
 \begin{figure}[h]
 \centering
-\includegraphics[width=.75\columnwidth]{fast_text}
+\includegraphics[width=.5\columnwidth]{fast_text}
 \caption{\cite{joulin2016bag} Model architecture of \emph{fastText} for a sentence with $N$ n-gram features $x_1,\dots,x_N$. The features are embedded and averaged to form the hidden variable.}
 \label{fig:fastText}
 \end{figure}
@@ -70,7 +115,7 @@ This vector is then projected into 2 fully connected layers. In the paper the nu
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=.75\columnwidth]{kim_cnn}
+\includegraphics[width=.5\columnwidth]{kim_cnn}
 \caption{Illustration of a Convolutional Neural Network (CNN) architecture for sentence classification}
 \label{fig:kim}
 \end{figure}

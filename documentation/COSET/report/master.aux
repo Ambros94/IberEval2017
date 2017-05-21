@@ -28,20 +28,19 @@
 \citation{harris1954distributional}
 \citation{nltk}
 \citation{tweets-preprocessor}
+\citation{bazzanella2011oscillazioni,cerruti2013netspeak}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Systems description}{2}{section.1.3}}
 \newlabel{sec:system}{{3}{2}{Systems description}{section.1.3}{}}
 \newlabel{sec:system@cref}{{[section][3][]3}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Initial investigation}{2}{subsection.1.3.1}}
 \newlabel{subsec:boh}{{3.1}{2}{Initial investigation}{subsection.1.3.1}{}}
 \newlabel{subsec:boh@cref}{{[subsection][1][3]3.1}{2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Text pre-processor}{2}{subsection.1.3.2}}
-\newlabel{subsec:preprocessing}{{3.2}{2}{Text pre-processor}{subsection.1.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Text pre-processing}{2}{subsection.1.3.2}}
+\newlabel{subsec:preprocessing}{{3.2}{2}{Text pre-processing}{subsection.1.3.2}{}}
 \newlabel{subsec:preprocessing@cref}{{[subsection][2][3]3.2}{2}}
+\citation{nltk}
+\citation{tweets-preprocessor}
 \citation{bojanowski2016enriching}
-\citation{joulin2016bag}
-\citation{joulin2016bag}
-\citation{joulin2016bag}
-\citation{kim2014convolutional}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Text representation}{3}{subsection.1.3.3}}
 \newlabel{subsec:representation}{{3.3}{3}{Text representation}{subsection.1.3.3}{}}
 \newlabel{subsec:representation@cref}{{[subsection][3][3]3.3}{3}}
@@ -50,9 +49,13 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Classification models}{3}{subsection.1.3.4}}
 \newlabel{subsec:classificationModel}{{3.4}{3}{Classification models}{subsection.1.3.4}{}}
 \newlabel{subsec:classificationModel@cref}{{[subsection][4][3]3.4}{3}}
-\@writefile{toc}{\contentsline {subsubsection}{Convolutional Neural Network}{3}{section*.4}}
-\@writefile{toc}{\contentsline {subsubsection}{Long short-term memory}{3}{section*.5}}
-\@writefile{toc}{\contentsline {subsubsection}{Fast text}{3}{section*.6}}
+\citation{joulin2016bag}
+\citation{joulin2016bag}
+\citation{joulin2016bag}
+\citation{kim2014convolutional}
+\@writefile{toc}{\contentsline {subsubsection}{Convolutional Neural Network}{4}{section*.4}}
+\@writefile{toc}{\contentsline {subsubsection}{Long short-term memory}{4}{section*.5}}
+\@writefile{toc}{\contentsline {subsubsection}{Fast text}{4}{section*.6}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \cite  {joulin2016bag} Model architecture of \emph  {fastText} for a sentence with $N$ n-gram features $x_1,\dots  ,x_N$. The features are embedded and averaged to form the hidden variable.\relax }}{4}{figure.caption.7}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:fastText}{{1}{4}{\cite {joulin2016bag} Model architecture of \emph {fastText} for a sentence with $N$ n-gram features $x_1,\dots ,x_N$. The features are embedded and averaged to form the hidden variable.\relax }{figure.caption.7}{}}
@@ -61,36 +64,37 @@
 \@writefile{toc}{\contentsline {section}{\numberline {4}Evaluation}{4}{section.1.4}}
 \newlabel{sec:evaluation}{{4}{4}{Evaluation}{section.1.4}{}}
 \newlabel{sec:evaluation@cref}{{[section][4][]4}{4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Metrics}{4}{subsection.1.4.1}}
-\newlabel{subsec:metric}{{4.1}{4}{Metrics}{subsection.1.4.1}{}}
-\newlabel{subsec:metric@cref}{{[subsection][1][4]4.1}{4}}
-\newlabel{eq:f1macro}{{1}{4}{Metrics}{equation.1.4.1}{}}
-\newlabel{eq:f1macro@cref}{{[equation][1][]1}{4}}
-\newlabel{eq:f1}{{2}{4}{Metrics}{equation.1.4.2}{}}
-\newlabel{eq:f1@cref}{{[equation][2][]2}{4}}
-\newlabel{eq:precision}{{3}{4}{Metrics}{equation.1.4.3}{}}
-\newlabel{eq:precision@cref}{{[equation][3][]3}{4}}
-\newlabel{eq:recall}{{4}{4}{Metrics}{equation.1.4.4}{}}
-\newlabel{eq:recall@cref}{{[equation][4][]4}{4}}
-\bibstyle{splncs}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Illustration of a Convolutional Neural Network (CNN) architecture for sentence classification\relax }}{5}{figure.caption.9}}
 \newlabel{fig:kim}{{2}{5}{Illustration of a Convolutional Neural Network (CNN) architecture for sentence classification\relax }{figure.caption.9}{}}
 \newlabel{fig:kim@cref}{{[figure][2][]2}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Metrics}{5}{subsection.1.4.1}}
+\newlabel{subsec:metric}{{4.1}{5}{Metrics}{subsection.1.4.1}{}}
+\newlabel{subsec:metric@cref}{{[subsection][1][4]4.1}{5}}
+\newlabel{eq:f1macro}{{1}{5}{Metrics}{equation.1.4.1}{}}
+\newlabel{eq:f1macro@cref}{{[equation][1][]1}{5}}
+\newlabel{eq:f1}{{2}{5}{Metrics}{equation.1.4.2}{}}
+\newlabel{eq:f1@cref}{{[equation][2][]2}{5}}
+\newlabel{eq:precision}{{3}{5}{Metrics}{equation.1.4.3}{}}
+\newlabel{eq:precision@cref}{{[equation][3][]3}{5}}
+\newlabel{eq:recall}{{4}{5}{Metrics}{equation.1.4.4}{}}
+\newlabel{eq:recall@cref}{{[equation][4][]4}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Results}{5}{subsection.1.4.2}}
 \newlabel{subsec:results}{{4.2}{5}{Results}{subsection.1.4.2}{}}
 \newlabel{subsec:results@cref}{{[subsection][2][4]4.2}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{5}{section.1.5}}
-\newlabel{sec:conclusion}{{5}{5}{Conclusions}{section.1.5}{}}
-\newlabel{sec:conclusion@cref}{{[section][5][]5}{5}}
+\bibstyle{splncs}
 \bibcite{kim2014convolutional}{1}
 \bibcite{joulin2016bag}{2}
 \bibcite{nltk}{3}
 \bibcite{tweets-preprocessor}{4}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. \relax }}{6}{table.caption.10}}
+\newlabel{tab:preprocessing}{{1}{6}{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. \relax }{table.caption.10}{}}
+\newlabel{tab:preprocessing@cref}{{[table][1][]1}{6}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Text representation study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. The pre-processing setting was fixed at RM+EM.\relax }}{6}{table.caption.11}}
+\newlabel{tab:representation}{{2}{6}{Text representation study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. The pre-processing setting was fixed at RM+EM.\relax }{table.caption.11}{}}
+\newlabel{tab:representation@cref}{{[table][2][]2}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{6}{section.1.5}}
+\newlabel{sec:conclusion}{{5}{6}{Conclusions}{section.1.5}{}}
+\newlabel{sec:conclusion@cref}{{[section][5][]5}{6}}
 \bibcite{bojanowski2016enriching}{5}
 \bibcite{harris1954distributional}{6}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Available test set result over the $F_{1-macro}$ score [\%]. \relax }}{6}{table.caption.10}}
-\newlabel{tab:preprocessing}{{1}{6}{Available test set result over the $F_{1-macro}$ score [\%]. \relax }{table.caption.10}{}}
-\newlabel{tab:preprocessing@cref}{{[table][1][]1}{6}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Available test set result over the $F_{1-macro}$ score [\%]. \relax }}{6}{table.caption.11}}
-\newlabel{tab:embedding}{{2}{6}{Available test set result over the $F_{1-macro}$ score [\%]. \relax }{table.caption.11}{}}
-\newlabel{tab:embedding@cref}{{[table][2][]2}{6}}
+\bibcite{bazzanella2011oscillazioni}{7}
