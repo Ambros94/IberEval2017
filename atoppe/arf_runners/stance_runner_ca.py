@@ -80,4 +80,4 @@ with open("../stance_ca-" + strftime("%Y%m%d_%H%M%S", gmtime()) + ".log", 'w') a
     print(["lstm", lstm_metric])
     print(["kim", kim_accuracy])
     outcsv.write("Pre-processing:")
-    outcsv.write(''.join(inspect.getsourcelines(tweets_preprocessor._clean_tweet)[0]))
+    outcsv.write(''.join(inspect.getsourcelines(tweets_preprocessor.cleaning_v1)[0]))

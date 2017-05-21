@@ -19,8 +19,9 @@ class FastTextModel(ToppeModel):
         hidden_dims = params['hidden_dims']
         noise = params['noise']
         # Cleaning data
-        self.x_train = clean_tweets(self.x_train)
-        self.x_test = clean_tweets(self.x_test)
+        clean_function = params['clean_tweets']
+        self.x_train = clean_tweets(cleaning_function=clean_function, tweets=self.x_train)
+        self.x_test = clean_tweets(cleaning_function=clean_function, tweets=self.x_test)
         # Prepare data
         tokenizer = Tokenizer()
         tokenizer.fit_on_texts(self.x_train)

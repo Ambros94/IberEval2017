@@ -1,0 +1,19 @@
+model_name	test_accuracy
+cnn	0.788888888889
+fast_text	0.677777777778
+cnn_lstm	0.735555555556
+b_lstm	0.682222222222
+lstm	0.604444444444
+kim	0.666666666667
+Pre-processing:def st_sw_cl_mt(tweet):
+    p.set_options(p.OPT.URL, p.OPT.RESERVED)
+    tweet = p.clean(tweet)
+    p.set_options(p.OPT.MENTION)
+    tweet = p.tokenize(tweet)
+    tokenizer = TweetTokenizer(reduce_len=True)
+    word_list = tokenizer.tokenize(tweet)
+    filtered_words = [word for word in word_list if word not in stopwords.words('spanish')]
+    stemmer = SpanishStemmer()
+    stemmed_words = [stemmer.stem(word=word) for word in filtered_words]
+    tweet = " ".join([word for word in stemmed_words])
+    return tweet

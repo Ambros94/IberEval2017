@@ -71,7 +71,7 @@ def run():
         writer.writerow(["lstm", ('%.3f' % lstm_f1_macro).replace('.', ',')])
         writer.writerow(["kim", ('%.3f' % kim_f1_macro).replace('.', ',')])
         outcsv.write("Pre-processing:")
-        outcsv.write(''.join(inspect.getsourcelines(tweets_preprocessor._clean_tweet)[0]))
+        outcsv.write(''.join(inspect.getsourcelines(tweets_preprocessor.cleaning_v1)[0]))
 
 
 run()

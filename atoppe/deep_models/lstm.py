@@ -15,8 +15,9 @@ class LSTMModel(ToppeModel):
         language = params['language']
         maxlen = params['maxlen']
         # Cleaning data
-        self.x_train = clean_tweets(self.x_train)
-        self.x_test = clean_tweets(self.x_test)
+        clean_function = params['clean_tweets']
+        self.x_train = clean_tweets(cleaning_function=clean_function, tweets=self.x_train)
+        self.x_test = clean_tweets(cleaning_function=clean_function, tweets=self.x_test)
         # Prepare data
         tokenizer = Tokenizer()
         tokenizer.fit_on_texts(self.x_train)
@@ -31,7 +32,8 @@ class LSTMModel(ToppeModel):
 
         self.keras_model = Sequential()
         embedding_matrix = word_vectors.load_vectors(tokenizer.word_index, language=language)
-        self.keras_model.add(Embedding(num_words, 300, weights=[embedding_matrix], input_length=maxlen, trainable=False))
+        self.keras_model.add(
+            Embedding(num_words, 300, weights=[embedding_matrix], input_length=maxlen, trainable=False))
         self.keras_model.add(GaussianNoise(0.3))
         self.keras_model.add(
             LSTM(params['lstm_units']))
