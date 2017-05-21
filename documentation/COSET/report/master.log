@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  21 MAY 2017 14:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  22 MAY 2017 00:59
 entering extended mode
 **./master.tex
 (master.tex
@@ -1035,27 +1035,27 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]) (docs/system.tex
 
 LaTeX Warning: Citation `cerruti2013netspeak' on page 2 undefined on input line
- 22.
+ 14.
 
-[2] [3] <figs/fast_text.png, id=89, 373.395pt x 188.705pt>
+[2] [3] <figs/fast_text.png, id=86, 373.395pt x 188.705pt>
 File: figs/fast_text.png Graphic file (type png)
 
 <use figs/fast_text.png>
-Package pdftex.def Info: figs/fast_text.png used on input line 104.
+Package pdftex.def Info: figs/fast_text.png used on input line 101.
 (pdftex.def)             Requested size: 209.12683pt x 105.68846pt.
 Missing character: There is no â in font cmbx9!
 Missing character: There is no € in font cmbx9!
 Missing character: There is no ™ in font cmbx9!
 
-Overfull \hbox (1.01826pt too wide) in paragraph at lines 113--115
-\OT1/cmr/bx/n/9 Clas-si-fi-ca-tion. http://www.wildml.com/2015/11/understanding
--convolutional-
+Overfull \hbox (12.5819pt too wide) in paragraph at lines 110--112
+\OT1/cmr/bx/n/9 http://www.wildml.com/2015/11/understanding-convolutional-neura
+l-networks-
  []
 
-<figs/kim_cnn.png, id=95, 754.82pt x 690.58pt>
+<figs/kim_cnn.png, id=92, 754.82pt x 690.58pt>
 File: figs/kim_cnn.png Graphic file (type png)
  <use figs/kim_cnn.png>
-Package pdftex.def Info: figs/kim_cnn.png used on input line 118.
+Package pdftex.def Info: figs/kim_cnn.png used on input line 115.
 (pdftex.def)             Requested size: 209.12683pt x 191.32736pt.
 
 
@@ -1095,10 +1095,10 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 53.
 ### simple group (level 1) entered at line 1061 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 22353 strings out of 493334
- 418107 string characters out of 3139253
+ 22352 strings out of 493334
+ 418089 string characters out of 3139253
  514382 words of memory out of 3000000
- 25601 multiletter control sequences out of 15000+200000
+ 25600 multiletter control sequences out of 15000+200000
  13660 words of font info for 53 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,13n,43p,10381b,4331s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1119,9 +1119,9 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsl9.pfb><C:/Program Files
 type1/public/amsfonts/cm/cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
 lic/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmti9.pfb>
-Output written on master.pdf (7 pages, 394662 bytes).
+Output written on master.pdf (7 pages, 395192 bytes).
 PDF statistics:
- 220 PDF objects out of 1000 (max. 8388607)
+ 217 PDF objects out of 1000 (max. 8388607)
  60 named destinations out of 1000 (max. 500000)
  19 words of extra memory for PDF output out of 10000 (max. 10000000)
 
