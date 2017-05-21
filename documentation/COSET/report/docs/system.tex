@@ -11,11 +11,6 @@ In relation to classification model that can exploit above representations,  we 
 
 \subsection{Text pre-processing} \label{subsec:preprocessing}
 
-\textbf{OLD LUCA}
-
-We explored different combinations of twitter pre-processing, as converting some elements such mentions, emoji, smiley, hashtags into constant string (i.e. Tokenize @Ambros and \#atoppe :) $\rightarrow $ Tokenize \$MENTION and \$HASHTAG \$SMILEY ); removing elements as URLs, reserved words and numbers.
-We also measured the contribution of stemming, stopwords and punctuation removal.
-To address those pre-processing we used the following \cite{nltk} \cite{tweets-preprocessor}.
 
 \textbf{Giancarlo}
 
@@ -51,14 +46,6 @@ To implement above pre-processing tecnique we take advantage of the following to
 \subsection{Text representation} \label{subsec:representation}
 
 \textbf{TO FINISH}
-
-\textbf{OLD LUCA}
-
-To represent to tweet fed into the classifier we decided to used word embeddings,which is a tecnique where elements (in our case words and n-grams) are mapped into a vector of real numbers.
-The whole sentence is mapped into a matrix with dimension \emph{sentence lenght} $\times$ \emph{embedding dimension}.
-We left the sentence length as a parameter and the best results were obtained with length=30, that's reasonable since the average tweet length in words in 24.
-If the sentence dimension is bigger than the selected window we used the first length words, if the sentence is smaller than the windwos we used 0-right padding.
-
 \textbf{Giancarlo}
 
 As a tweet representation used as first layer
@@ -93,12 +80,14 @@ This model is composed by a convolutional layer, followed by a global max poolin
 LSTM is a type of Recurrent Neural Network that is relatively insensitive to gap length, compared to others RNN, they are considered state of the art in many NLP topics, like machine translation.
 In this model the classical embedding layer is followed by an LSTM layer with 128 units, terminated by a fully connected layer.
 We also tried Bidirectional LSTM, since they are bringing an improvement in different tasks, but they are performing worst on our use case.
+To avoid overfitting we used droput and recurrent dropout, best results were obtained with a droput value of 0.4 and recurrent dropout value of 0.3.
 
 \subsubsection{Fast text}
 This model is based on this paper \cite{joulin2016bag}.
 Differently to the other models where just words are used, here Bag of n-grams are added to the input as  additional features to capture some partial information about the local word order.
 It this model the embedding output is directly fed into a \emph{GlobalAveragePooling} layer, that transofrms the whole sentece in a single vector computed as the average of the word vectors.
 This vector is then projected into 2 fully connected layers. In the paper the number of hidden layers is fixed to 10, but we measured better performance using just 2 layers.
+We explored both dropout and gaussian noise + batch normalization and best results were given by the latter, introducing a 0.2 noise after the embedding layer and after the first dense layer.
 \begin{figure}[h]
 \centering
 \includegraphics[width=.5\columnwidth]{fast_text}
@@ -110,7 +99,7 @@ This vector is then projected into 2 fully connected layers. In the paper the nu
 
 \subsubsection{KIM.}
 
-\textbf{@ Luca: Source: Zhang, Y., \& Wallace, B. (2015). A Sensitivity Analysis of (and Practitioners’ Guide to) Convolutional Neural Networks for Sentence Classification.}
+\textbf{Zhang, Y., \& Wallace, B. (2015). A Sensitivity Analysis of (and Practitioners’ Guide to) Convolutional Neural Networks for Sentence Classification.}
 \textbf{http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/}
 
 \begin{figure}[h]
@@ -119,8 +108,6 @@ This vector is then projected into 2 fully connected layers. In the paper the nu
 \caption{Illustration of a Convolutional Neural Network (CNN) architecture for sentence classification}
 \label{fig:kim}
 \end{figure}
-\textbf{@giancarlo: Non penso che ants\_example vada esattamente qui :D}
-
 
 This model is based on this paper \cite{kim2014convolutional}. It is based on different filter region size convolutions, followed by maxpooling layers.
 All those outputs are concatenated to build sentence representation that is finally projected into a dense layer for the classification.
