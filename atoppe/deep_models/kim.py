@@ -18,6 +18,7 @@ class KimModel(ToppeModel):
         clean_function = params['clean_tweets']
         self.x_train = clean_tweets(cleaning_function=clean_function, tweets=self.x_train)
         self.x_test = clean_tweets(cleaning_function=clean_function, tweets=self.x_test)
+        self.x_persist = clean_tweets(cleaning_function=clean_function, tweets=self.x_persist)
         # Prepare data
         tokenizer = Tokenizer()
         tokenizer.fit_on_texts(self.x_train)
