@@ -42,22 +42,19 @@ To implement above pre-processing tecnique we take advantage of the following to
 
 \subsection{Text representation} \label{subsec:representation}
 
-The use of neural model suggest us to exploit recent trend over text representation, in particular we decided to use embedding vector as representation following the approach described by \cite{bojanowski2016enriching}, where tweet elements like \emph{words} and \emph{word n-grams} are represented as vectors of real number with fixed dimension $|v|$.
-In this way a whole sentence $s$, with length $|s|$ its number of word, is represented as a matrix of dimension $|s| \times |v|$.
+The use of neural model suggest us to exploit recent trend over text representation, in particular we decided to use embedding vectors as representation following the approach described by \cite{bojanowski2016enriching}, where tweet elements like \emph{words} and \emph{word n-grams} are represented as vectors of real number with fixed dimension $|v|$.
+In this way a whole sentence $s$, with length $|s|$ its number of word, is represented as a \emph{sentence matrix} $M$ of dimension $|M| = |s| \times |v|$. $|M|$ has to be fixed a priori, therefore $|s|$ and $|v|$ have to be estimated. $|v|$ was fixed to 300 following \cite{bojanowski2016enriching}. $|s|$ was left as a system parameter that after optimization was fixed to $|s| = 30$, with this choice 
+input sentences longer than $|s|$ are truncated, while shorter ones are padded with null vectors (i.e. a vector of all zeros).
+Depending of chosen tweets elements a different embedding function has to be learnt, in the continuation we are going to analyse the possible choices.
 
+\subsubsection{Word embedding}
+Choosing words as element to be mapped by the embedding function, raise some challenge over the function estimation related to data availability, in our case the available corpus is very small and embeddings estimated could lead to low performance.
+To solve this problem, we decided to used a pre-trained embeddings estimated over wikipedia using a particular approach called \emph{fastText} \cite{bojanowski2016enriching}.
 
-We left the sentence length as a parameter and the best results were obtained with length=30, that's reasonable since the average tweet length in words in 24.
-If the sentence dimension is bigger than the selected window we used the first length words, if the sentence is smaller than the windwos we used 0-right padding.
+TO add the differences between static and 
 
-\textbf{@LUCA: sorry bro for me it's not so clear XD if i got it: if bigger than windows, just cut; if smaller padding it from the last word till the 30th (aka 0-right padding... is it the formal terminology?)}
+present in the tweet as 
 
-Transform a list of num\_samples sequences (lists of scalars) into a 2D Numpy array of shape  (num\_samples, num\_timesteps). num\_timesteps is either the maxlen argument if provided, or the length of the longest sequence otherwise. Sequences that are shorter than num\_timesteps are padded with value at the end. Sequences longer than num\_timesteps are truncated so that it fits the desired length. Position where padding or truncation happens is determined by padding or truncating, respectively.
-
-
-\textbf{@LUCA: Do you know any TOP/primary reference over word embeddings to cite it properly and then refrase the paper to explain it formally?}
-
-
-\subsubsection{Words embedding}
 Since the number of tweets is considered small to learn vector representation of words, we tried to initialize the embedding matrix with pretrained word vectors.
 In particular we used vectors trained on wikipedia using fastText \cite{bojanowski2016enriching}.
 \textbf{@LUCA: "We tried static pretrained vectors, learning them during training starting from a random matrix or from the pretrained embeddings." what do you mean? the non-static case? or that out of vocabolary are randomly initialized? Sorry bro I don't get it. }
@@ -79,20 +76,30 @@ scriuvi che questo viene utilizzato solo da fast-text nella parte di modello
 \subsection{Classification models} \label{subsec:classificationModel}
 
 
-In the following, we describe the neural models used for the classification module, where for each of them the input layer uses text representations described in \cref{subsec:representation} (i.e. matrix sentence representation).
+In the following, we describe the neural models used for the classification module, where for each of them the input layer uses text representations described in \cref{subsec:representation} (i.e. sentence matrix).
 
 
 \subsubsection{Fast text}
+
+This model was introduced in \cite{joulin2016bag}, where its main difference from our neural model is the use of a particular input layer, in details rather than use just words as element of the embedding, \emph{bag of n-grams} are added to the input as additional features to capture partial information about words order.
+The complete architecture is illustrated in \cref{fig:fastText}, here the input layer is directly fed into a \emph{Global Average Pooling} layer, that transforms the sentence matrix 
+
+in a single vector computed as the average of the word vectors.
+This vector is then projected into 2 fully connected layers. In the paper the number of hidden layers is fixed to 10, but we measured better performance using just 2 layers.
+We explored both dropout and gaussian noise + batch normalization and best results were given by the latter, introducing a 0.2 noise after the embedding layer and after the first dense layer.
+
+
 This model is based on this paper \cite{joulin2016bag}.
-Differently to the other models where just words are used, here Bag of n-grams are added to the input as  additional features to capture some partial information about the local word order.
-It this model the \textbf{embedding output (should it be input layer, that in our case is a word embedding vector?)} is directly fed into a \emph{Global Average Pooling} layer, that transforms the whole sentence in a single vector computed as the average of the word vectors.
+Differently to the other models where just words are used, here Bag of n-grams are added to the input as additional features to capture some partial information about the local word order.
+This particular input layer is directly fed into a \emph{Global Average Pooling} layer, that transforms the whole sentence in a single vector computed as the average of the word vectors.
 This vector is then projected into 2 fully connected layers. In the paper the number of hidden layers is fixed to 10, but we measured better performance using just 2 layers.
 We explored both dropout and gaussian noise + batch normalization and best results were given by the latter, introducing a 0.2 noise after the embedding layer and after the first dense layer.
 \begin{figure}[h]
-	\centering
-	\includegraphics[width=.5\columnwidth]{fast_text}
-	\caption{\cite{joulin2016bag} Model architecture of \emph{fastText} for a sentence with $N$ n-gram features $x_1,\dots,x_N$. The features are embedded and averaged to form the hidden variable.}
-	\label{fig:fastText}
+\footnotesize
+\centering
+\includegraphics[width=.5\columnwidth]{fast_text}
+\caption{\cite{joulin2016bag} Model architecture of \emph{fastText} for a sentence with $N$ n-gram features $x_1,\dots,x_N$. The features are embedded and averaged to form the hidden variable.}
+\label{fig:fastText}
 \end{figure}
 
 
@@ -102,15 +109,13 @@ This model is composed by a convolutional layer, followed by a global max poolin
 
 \subsubsection{KIM.}
 
-Cita direttamente questo paper e scaricalo add it to refs
-\textbf{Zhang, Y., \& Wallace, B. (2015). A Sensitivity Analysis of (and Practitioners’ Guide to) Convolutional Neural Networks for Sentence Classification.}
-\textbf{http://www.wildml.com/2015/11/understanding-convolutional-neural-networks-for-nlp/}
 
 \begin{figure}[h]
-	\centering
-	\includegraphics[width=.5\columnwidth]{kim_cnn}
-	\caption{Illustration of a Convolutional Neural Network (CNN) architecture for sentence classification}
-	\label{fig:kim}
+\footnotesize
+\centering
+\includegraphics[width=.5\columnwidth]{kim_cnn}
+\caption{\cite{zhang2015sensitivity} Illustration of a Convolutional Neural Network (CNN) architecture for sentence classification}
+\label{fig:kim}
 \end{figure}
 
 This model is based on this paper \cite{kim2014convolutional}. It is based on different filter region size convolutions, followed by maxpooling layers.
