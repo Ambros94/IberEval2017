@@ -1,6 +1,6 @@
 \section{Evaluation} \label{sec:evaluation}
 
-In this section we are going to illustrate results from the comparative study elaborated during the system development, first we illustrate the metric used to evaluate the system (\cref{subsec:metric}) and then we report results produced by a 10-fold cross validation over the given corpus data set (\cref{subsec:results}).
+In this section we are going to illustrate results from the comparative study elaborated during the system development, first we illustrate the metric used to evaluate the system (\cref{subsec:metric}) and then we report results produced by a 10-fold cross validation over the given data set (\cref{subsec:results}).
 
 \subsection{Metrics} \label{subsec:metric}
 
@@ -28,8 +28,9 @@ recall = \frac{1}{|L|} \displaystyle\sum_{l\in L} R(y_l, \hat{y}_l)
 
 \subsection{Results} \label{subsec:results}
 
-In the continuation we present a comparative study over possible combination of pre-processing (\cref{tab:preprocessing}) and text representation (\cref{tab:representation}), in both case results are calculated from averaging three runs of a 10-fold cross validation over the development set (\textbf{LUCA put in your word the explanation of training/development set evaluation}).
-Notations used in \cref{tab:preprocessing} refers to the one introduced in \cref{subsec:preprocessing} (the listing of a notation means its use for the reported result, where SW and PR were merged as SR), regarding the tweet specific pre-processing all the items have been substituted, exception for the URL and RW that have been removed (in the table reported as RM). From all the possible combinations (i.e. $2^3\cdot3^{7}+1$) we report only the most relevant ones.
+In the continuation we present a comparative study over possible combination of pre-processing (\cref{tab:preprocessing}) and text representation (\cref{tab:representation}), in both case results are calculated from averaging three runs of a 10-fold cross validation over the complete data set.
+Notations used in \cref{tab:preprocessing} refers to the one introduced in \cref{subsec:preprocessing}, where the listing of a notation means its use for the reported result, to simplify notation SW and PR were merged as SR.
+Regarding the tweet specific pre-processing all the items have been substituted, exception for the URL and RW that have been removed (in the table reported as RM). From all the possible combinations (i.e. $2^3\cdot3^{7}+1$) we report only the most relevant ones.
 
 \begin{table}[h]
 \footnotesize
@@ -60,15 +61,20 @@ RM+MT+NUM+EM+SM			& 54,3		& 54,6		& \win55,5		& \textbf{56,8}		& 54,8 \\
 \end{tabular}
 \end{table}
 
-conclusion over pre-processing
+From the analysis of \cref{tab:preprocessing} no absolute conclusion can drawn, meaning that it wasn't possible to find a combination of pre-processing that gives the best performance for all the model, meaning that each model is highly sensible to the performed combination. Nevertheless, some relative observation can be made:
 \begin{itemize}
-\item CL serve a tutti (URL e RW rumore)
-\item recurrent model perform better with ST+SW, while other peggiorano
-\item fast text just cl improve performance a lot
+\item The RM preprocessing (i.e. removing of the URL and RW) leads to performance improvement to all the model respect to no pre-processing at all,
+\item Kim model is the only one having a significant decrease in the performance when stemming is applied alone or with other preprocessing.
 \end{itemize}
 
 
-Intro su text representation
+Analysing results in \cref{tab:representation}, here the used notation refers to the one introduced in \cref{subsec:representation}, where the listing of a notation means its use as embedded input layer for the reported result. From its analysis following interpretation can be drawn:
+\begin{itemize}
+\item Setting as \emph{static} the sentence matrix weights has the worst performance (independently of the used language)
+\item As opposite to the previous point, the set to \emph{non-static} lead to better performance, where this insight can be deduced by corpus characteristic (i.e. a good example of Computer Mediated Communication)
+\item The use of pre-trained embedding is useful in combination with \emph{non-static} weights (i.e. best performances with ES non-static)
+\item Even if is not available a pre-trained embedding for the task language the use of a similar language with non-static weight (i.e. CA non-static) can increase the performance respect only non-static, this can be interpreted as a case of transfer learning.
+\end{itemize}
 
 \begin{table}[h]
 \footnotesize
@@ -90,12 +96,3 @@ non-static			& 52,6		& 47,3		& \win51,8		& 53,3		& \textbf{54,7}\\
 \bottomrule
 \end{tabular}
 \end{table}
-
-conclusion over text representation, introduction over the use of catal pre-trained vector
-
-\begin{itemize}
-\item static always worse, CMC  learnt over wikipedia
-\item no-static always improve
-\item if no-static + pretrained improve respect just no-static, even if used a pre-trained of a similar language
-\item best result when non-static es
-\end{itemize}
