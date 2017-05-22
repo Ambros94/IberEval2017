@@ -4,7 +4,6 @@ from keras.models import Sequential
 from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 
-from deep_models import metrics
 from deep_models.toppemodel import ToppeModel
 from nlp_utils import word_vectors
 from nlp_utils.n_grams import augment_with_n_grams
@@ -20,8 +19,11 @@ class FastTextModel(ToppeModel):
         hidden_dims = params['hidden_dims']
         noise = params['noise']
         # Cleaning data
-        self.x_train = clean_tweets(self.x_train)
-        self.x_test = clean_tweets(self.x_test)
+        clean_function = params['clean_tweets']
+        self.x_train = clean_tweets(cleaning_function=clean_function, tweets=self.x_train)
+        self.x_test = clean_tweets(cleaning_function=clean_function, tweets=self.x_test)
+        self.x_persist = clean_tweets(cleaning_function=clean_function, tweets=self.x_persist)
+
         # Prepare data
         tokenizer = Tokenizer()
         tokenizer.fit_on_texts(self.x_train)
@@ -55,4 +57,4 @@ class FastTextModel(ToppeModel):
 
         self.keras_model.compile(loss='categorical_crossentropy',
                                  optimizer='adam',
-                                 metrics=[metrics.fbeta_score])
+                                 metrics=params['metrics'])
