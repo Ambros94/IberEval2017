@@ -1,6 +1,6 @@
 \section{Evaluation} \label{sec:evaluation}
 
-In this section we are going to illustrate results of the comparative study drawn during the system development, first we illustrate the metric used to evaluate the system (\cref{subsec:metric}) and then we report the results produced by a 10-fold cross validation over the development data set (\cref{subsec:results}).
+In this section we are going to illustrate results from the comparative study elaborated during the system development, first we illustrate the metric used to evaluate the system (\cref{subsec:metric}) and then we report results produced by a 10-fold cross validation over the given corpus data set (\cref{subsec:results}).
 
 \subsection{Metrics} \label{subsec:metric}
 
@@ -81,12 +81,12 @@ Intro su text representation
 					& CNN		& LSTM		& B-LSTM	& FAST-TEXT	& KIM	\\ 
 \hline 
 ES static			& \textbf{48,1}		& 36,1		& 38,9		& 36,4		& 43,6\\
-ES non-static		& \win57,1		& 52,1		& 49,9		& \win54,8		& \win\textbf{58,9}\\
-\hline
 CA static			& \textbf{45,1}		& 30,6		& 38,5		& 30,1		& 39,6\\ 
+\hline
+ES non-static		& \win57,1		& 52,1		& 49,9		& \win54,8		& \win\textbf{58,9}\\
 CA non-static		& 53,5		& \win53,6		& 46,3		& 54,1		& \textbf{56,2}\\
 \hline
-Online				& 52,6		& 47,3		& \win51,8		& 53,3		& \textbf{54,7}\\
+non-static			& 52,6		& 47,3		& \win51,8		& 53,3		& \textbf{54,7}\\
 \bottomrule
 \end{tabular}
 \end{table}
