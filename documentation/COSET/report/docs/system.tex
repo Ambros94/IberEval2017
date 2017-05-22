@@ -51,7 +51,7 @@ Depending of chosen tweets elements a different embedding function has to be lea
 Choosing words as element to be mapped by the embedding function, raise some challenge over the function estimation related to data availability, in our case the available corpus is very small and embeddings estimated could lead to low performance.
 To solve this problem, we decided to used a pre-trained embeddings estimated over wikipedia using a particular approach called \emph{fastText} \cite{bojanowski2016enriching}.
 
-TO add the differences between static and 
+TO add the differences between static and no-static
 
 present in the tweet as 
 
@@ -116,10 +116,8 @@ Regarding the architectural references in \cite{kim2014convolutional}, the numbe
 
 \subsubsection{Long short-term memory.}
 LSTM is a type of Recurrent Neural Network that is relatively insensitive to gap length, thanks to this behaviour, they are considered state of the art in some NLP problems like machine translation.
-In this model the classical embedding layer is followed by an LSTM layer with 128 units, terminated by a dense layer.
+Our architecture was made of embedding layer followed by an LSTM layer of 128 units, terminated by a dense layer, moreover to avoid overfitting we used dropout and recurrent dropout.
 
-\subsubsection{Bidirectional LSTM.} Similar to previous model, bidirectional LSTM is a variation of LSTM where two LSTM receive two different input, the original and the inverted one, and their results are averaged.
-
-% since they are bringing an improvement in different tasks, but they are performing worst on our use case.
-To avoid overfitting we used droput and recurrent dropout, best results were obtained with a droput value of 0.4 and recurrent dropout value of 0.3.
+\subsubsection{Bidirectional LSTM.} Similar to previous model, bidirectional LSTM is a variation of LSTM where the two RNN receive different inputs, the original and the original in inverted order, and their results are connected through the recurrent layers.
+Our architecture follow the previous one with LSTM layer of 128 units terminating with a dense layer, where all the layer used dropout and recurrent dropout.
 

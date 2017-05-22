@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  22 MAY 2017 17:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  22 MAY 2017 17:38
 entering extended mode
 **./master.tex
 (master.tex
@@ -1039,10 +1039,10 @@ File: figs/fast_text.png Graphic file (type png)
 Package pdftex.def Info: figs/fast_text.png used on input line 91.
 (pdftex.def)             Requested size: 209.12683pt x 105.68846pt.
 
-[3] <figs/kim_cnn.png, id=114, 754.82pt x 690.58pt>
+[3] <figs/kim_cnn.png, id=112, 754.82pt x 690.58pt>
 File: figs/kim_cnn.png Graphic file (type png)
  <use figs/kim_cnn.png>
-Package pdftex.def Info: figs/kim_cnn.png used on input line 117.
+Package pdftex.def Info: figs/kim_cnn.png used on input line 110.
 (pdftex.def)             Requested size: 209.12683pt x 191.32736pt.
 
 
@@ -1089,8 +1089,8 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 53.
 ### simple group (level 1) entered at line 1061 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 22355 strings out of 493334
- 418160 string characters out of 3139253
+ 22356 strings out of 493334
+ 418171 string characters out of 3139253
  511452 words of memory out of 3000000
  25601 multiletter control sequences out of 15000+200000
  13660 words of font info for 53 fonts, out of 3000000 for 9000
@@ -1113,9 +1113,9 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsl9.pfb><C:/Program Files
 type1/public/amsfonts/cm/cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
 lic/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmti9.pfb>
-Output written on master.pdf (7 pages, 400109 bytes).
+Output written on master.pdf (7 pages, 400102 bytes).
 PDF statistics:
- 240 PDF objects out of 1000 (max. 8388607)
- 62 named destinations out of 1000 (max. 500000)
+ 239 PDF objects out of 1000 (max. 8388607)
+ 63 named destinations out of 1000 (max. 500000)
  19 words of extra memory for PDF output out of 10000 (max. 10000000)
 
