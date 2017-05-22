@@ -60,6 +60,16 @@ RM+MT+NUM+EM+SM			& 54,3		& 54,6		& \win55,5		& \textbf{56,8}		& 54,8 \\
 \end{tabular}
 \end{table}
 
+conclusion over pre-processing
+\begin{itemize}
+\item CL serve a tutti (URL e RW rumore)
+\item recurrent model perform better with ST+SW, while other peggiorano
+\item fast text just cl improve performance a lot
+\end{itemize}
+
+
+Intro su text representation
+
 \begin{table}[h]
 \footnotesize
 \caption{Text representation study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. The pre-processing setting was fixed at RM+EM.}
@@ -81,9 +91,11 @@ Online				& 52,6		& 47,3		& \win51,8		& 53,3		& \textbf{54,7}\\
 \end{tabular}
 \end{table}
 
+conclusion over text representation, introduction over the use of catal pre-trained vector
 
-Eleven teams have presented their respective systems. In total, 48 systems were submitted for evaluation. All the systems we have submitted have performed better than the mean of the systems proposed using the RMSE
-
-
-
-
+\begin{itemize}
+\item static always worse, CMC  learnt over wikipedia
+\item no-static always improve
+\item if no-static + pretrained improve respect just no-static, even if used a pre-trained of a similar language
+\item best result when non-static es
+\end{itemize}
