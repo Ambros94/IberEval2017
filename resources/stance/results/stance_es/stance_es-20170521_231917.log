@@ -1,0 +1,14 @@
+model_name	test_accuracy
+cnn	0.496180290298
+fast_text	0.394679396335
+cnn_lstm	0.443092528619
+b_lstm	0.549846104503
+lstm	0.385368338947
+kim	0.260149473923
+Pre-processing:def st(tweet):
+    tokenizer = TweetTokenizer(reduce_len=True)
+    word_list = tokenizer.tokenize(tweet)
+    stemmer = SpanishStemmer()
+    stemmed_words = [stemmer.stem(word=word) for word in word_list]
+    tweet = " ".join([word for word in stemmed_words])
+    return tweet

@@ -96,9 +96,9 @@ def st_sw_cl_mt_num_em_ht(tweet):
 
 
 def sw_cl_mt_num_em_ht(tweet):
-    p.set_options(p.OPT.URL, p.OPT.RESERVED, p.OPT.NUMBER)
+    p.set_options(p.OPT.URL, p.OPT.RESERVED)
     tweet = p.clean(tweet)
-    p.set_options(p.OPT.MENTION, p.OPT.SMILEY, p.OPT.EMOJI, p.OPT.NUMBER)
+    p.set_options(p.OPT.MENTION, p.OPT.SMILEY, p.OPT.EMOJI, p.OPT.NUMBER,p.OPT.HASHTAG)
     tweet = p.tokenize(tweet)
     tokenizer = TweetTokenizer(reduce_len=True)
     word_list = tokenizer.tokenize(tweet)

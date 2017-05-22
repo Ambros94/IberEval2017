@@ -1,0 +1,13 @@
+model_name	test_accuracy
+cnn	0.542671199177
+fast_text	0.453146258503
+cnn_lstm	0.482950033416
+b_lstm	0.535589372866
+lstm	0.472427057729
+kim	0.567763047639
+Pre-processing:def cl_mt_num_em(tweet):
+    p.set_options(p.OPT.URL, p.OPT.RESERVED, p.OPT.NUMBER)
+    tweet = p.clean(tweet)
+    p.set_options(p.OPT.MENTION, p.OPT.SMILEY, p.OPT.EMOJI)
+    tweet = p.tokenize(tweet)
+    return tweet
