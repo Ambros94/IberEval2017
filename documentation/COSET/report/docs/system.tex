@@ -1,12 +1,12 @@
 \section{Systems description} \label{sec:system}
 
-In this section we are going to describe the tweet classification systems built, from a module perspective we can describe our systems as composed of three main blocks: text pre-preprocessing (\cref{subsec:preprocessing}),  text representation (\cref{subsec:representation}) and classification model (\cref{subsec:classificationModel}). 
+In this section we describe the tweet classification systems we built. From a module perspective we can describe our systems as composed of three main blocks: text pre-preprocessing (\Cref{subsec:preprocessing}),  text representation (\Cref{subsec:representation}) and classification model (\Cref{subsec:classificationModel}). 
 
 
 \subsection{Initial investigation} \label{subsec:boh}
 To address the tweets classification problem we began our investigation analysing some of the most widely used text representations and classifiers.
-In the analysing for possible text representations we began focusing our attention on lexical features based: \emph{Bag Of Words} \cite{harris1954distributional},\emph{Bag Of N-Grams} (bigrams and trigrams), both with and without \emph{term frequency-inverse document frequency} normalization (i.e. TF-IDF norm).
-In relation to classification model that can exploit above representations,  we analysed \emph{Random Forest, Decision Trees, Support Vector Machines} and \emph{Multi Layer Perceptron}, but since the results obtained with the combination of those \emph{model + representation} were outperformed by neural network based models, we decided not to report their analysis in this paper, but rather focus the module description in relation to neural models.
+In the analysing for possible text representations we began focusing our attention on lexical features based on: \emph{Bag Of Words} \cite{harris1954distributional},\emph{Bag Of N-Grams} (bigrams and trigrams), both with and without \emph{term frequency-inverse document frequency} normalization (i.e. TF-IDF norm).
+In relation to classification models that can exploit the above representations,  we analysed \emph{Random Forest, Decision Trees, Support Vector Machines} and \emph{Multi Layer Perceptron}. Since the results obtained with the combination of those \emph{model + representation} were outperformed by neural network based models, we decided not to report their analysis in this paper, but rather focus on the module description of the neural models.
 
 
 \subsection{Text pre-processing} \label{subsec:preprocessing}
@@ -72,12 +72,12 @@ Our insight was empirically validated by very low performance, nevertheless, as 
 
 
 \subsection{Classification models} \label{subsec:classificationModel}
-In the following, we describe the neural models used for the classification module, where for each of them the input layer uses text representations described in \cref{subsec:representation} (i.e. sentence matrix).
+In the following, we describe the neural models used for the classification module, where for each of them the input layer uses text representations described in \Cref{subsec:representation} (i.e. sentence matrix).
 
 
 \subsubsection{Fast text.}
 This model was introduced in \cite{joulin2016bag}, where its main difference from our neural model is the use of a particular input layer, in details, rather than use only words or only n-gram as element for the embedding, both elements are embedded with the aim of capture partial information about words order.
-The complete architecture is illustrated in \cref{fig:fastText}, here the input layer is directly fed into a \emph{Global Average Pooling} layer, that transforms the sentence matrix in a single vector, who is projected into two dense layers.
+The complete architecture is illustrated in \Cref{fig:fastText}, here the input layer is directly fed into a \emph{Global Average Pooling} layer, that transforms the sentence matrix in a single vector, who is projected into two dense layers.
 Regarding the architectural references in \cite{joulin2016bag}, they used a number of hidden layers fixed to ten, but we measured better performance using just two layers, moreover we integrate both dropout, gaussian noise and batch normalization.
 
 \begin{figure}[h]
@@ -94,7 +94,7 @@ Convolutional Neural Networks (i.e. CNN) are considered state of the art in many
 
 \subsubsection{KIM.}
 This model was introduced in \cite{kim2014convolutional}, it can be seen as a particular CNN where the convolutional layer has multiple filter widths and feature maps.
-The complete architecture is illustrated in \cref{fig:kim}, here the input layer (i.e. sentence matrix) is processed in a convolutional layer of multiple filters with different width, each of these results are fed into \emph{Max Pooling} layers and finally the concatenation of them (previously flatten to be dimensional coherent) is projected into a dense layer.
+The complete architecture is illustrated in \Cref{fig:kim}, here the input layer (i.e. sentence matrix) is processed in a convolutional layer of multiple filters with different width, each of these results are fed into \emph{Max Pooling} layers and finally the concatenation of them (previously flatten to be dimensional coherent) is projected into a dense layer.
 The intuition behind this model is that smaller filter should be able to capture short sentence patterns similar to n-grams, while bigger ones should capture sentence level features.
 Regarding the architectural references in \cite{kim2014convolutional}, the number filter $|f|$ and their size was optimized leading to the following results: $|f| = 4, f_1 = 2\times2, f_2 = 3\times3, f_3 = 5\times5, f_4 = 7\times7$.
 
