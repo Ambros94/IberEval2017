@@ -10,7 +10,6 @@ In relation to classification model that can exploit above representations,  we 
 
 
 \subsection{Text pre-processing} \label{subsec:preprocessing}
-
 Regarding the text pre-preprocessing, has to be mentioned that the corpus under observation can not be treated as proper written language, because computer-mediated communication (CMC) is highly informal, affecting diamesic\footnote{The variation in a language across medium of communication (e.g. Spanish over the phone versus Spanish over email)} variation with creation of new items supposed to pertain lexicon and graphematic domains \cite{bazzanella2011oscillazioni,cerruti2013netspeak}.
 Therefore, in addition to well know pre-processing approach, as stemming (i.e. ST), stopwords (i.e. SW) and punctuation removal (i.e. PR), specific tweets pre-processing techniques has to be taken in consideration.
 
@@ -41,59 +40,46 @@ To implement above pre-processing tecnique we take advantage of the following to
 
 
 \subsection{Text representation} \label{subsec:representation}
-
 The use of neural model suggest us to exploit recent trend over text representation, in particular we decided to use embedding vectors as representation following the approach described by \cite{bojanowski2016enriching}, where tweet elements like \emph{words} and \emph{word n-grams} are represented as vectors of real number with fixed dimension $|v|$.
 In this way a whole sentence $s$, with length $|s|$ its number of word, is represented as a \emph{sentence matrix} $M$ of dimension $|M| = |s| \times |v|$. $|M|$ has to be fixed a priori, therefore $|s|$ and $|v|$ have to be estimated. $|v|$ was fixed to 300 following \cite{bojanowski2016enriching}. $|s|$ was left as a system parameter that after optimization was fixed to $|s| = 30$, with this choice 
 input sentences longer than $|s|$ are truncated, while shorter ones are padded with null vectors (i.e. a vector of all zeros).
-Depending of chosen tweets elements a different embedding function has to be learnt, in the continuation we are going to analyse the possible choices.
+Depending of chosen tweets elements a different embedding function has to be estimated (i.e. learnt), in the continuation we are going to analyse the possible choices.
 
-\subsubsection{Word embedding}
-Choosing words as element to be mapped by the embedding function, raise some challenge over the function estimation related to data availability, in our case the available corpus is very small and embeddings estimated could lead to low performance.
-To solve this problem, we decided to used a pre-trained embeddings estimated over wikipedia using a particular approach called \emph{fastText} \cite{bojanowski2016enriching}.
+\subsubsection{Word embedding.}
+Choosing words as element to be mapped by the embedding function, raise some challenge over the function estimation related to data availability, in our case the available corpus is very small and estimated embeddings could lead to low performance.
+To solve this problem, we decided to used a pre-trained embeddings estimated over Wikipedia data base using a particular approach called \emph{fastText} \cite{bojanowski2016enriching}.
 
-TO add the differences between static and 
+Using this approach, after the sentence matrix embedding is calculated, its weights can be \emph{static} or \emph{non-static}, in the latter case backward propagation will be able to adjust their values otherwise they will stay fixed as initially calculated by the embedding function.
 
-present in the tweet as 
+In this way four possible combination of sentence matrix embedding can be formulated: 
+\begin{enumerate*}
+\item the use of a pre-trained embedding function (i.e. fastText from Wikipedia) and
+\item static or non-static weights.
+\end{enumerate*}
+From this combination the one composed of static weight without pre-trained embeddings won't be take in consideration for obvious reason, while we decided to use two pre-trained function from Spanish (i.e. ES) and Catalan (i.e. CA) to see how the use of pre-trained embeddings of a similar language will perform in relation to static/non-static weights.
+Meaning that the case in consideration will be five:
+\begin{enumerate*}
+\item ES static,
+\item CA static,
+\item ES non-static,
+\item CA non-static,
+\item (no pre-trained embeddings) non-static.
+\end{enumerate*}
 
-Since the number of tweets is considered small to learn vector representation of words, we tried to initialize the embedding matrix with pretrained word vectors.
-In particular we used vectors trained on wikipedia using fastText \cite{bojanowski2016enriching}.
-\textbf{@LUCA: "We tried static pretrained vectors, learning them during training starting from a random matrix or from the pretrained embeddings." what do you mean? the non-static case? or that out of vocabolary are randomly initialized? Sorry bro I don't get it. }
-
-matrix initialization (if not inside fast text the vector is all zero)
-static (3) vs non-static (1, 2)
-
-
-\subsubsection{N-gram embedding}
-We also tried to learn an embedding for n-grams (bigrams and trigrams), but, since the corpus is small, n-grams frequencies are very low and the algorithm is not able to learn a valid embedding.
-Also there are no pre-trained n-grams embeddings available.
-Bigrams brought a small improvement, bigger n-grams result in performance decrease.
-
-\textbf{Bigrams brought a small improvement, in which case? IMHO Here we should just explain it and then in the evaluation explain the use or not. because otherwise doesn't make so much sense to talk about it here and also saying that has poor results. This same comment is related to the B-LSTM comment in the following. Feedback?}
-
-scriuvi che questo viene utilizzato solo da fast-text nella parte di modello
+\subsubsection{N-gram embedding.}
+Choosing n-gram as element to be mapped by the embedding function, raise more challenges respect simple words, because no pre-trained embeddings are available and in this case the corpus has to be significantly big, otherwise n-gram frequencies will be really low and the estimation algorithm is not able to learn a valid embedding.
+Our insight was empirically validated by very low performance, nevertheless, as explained in the following, this embedding will be used in a particular model that won't rely its performance just over n-gram embeddings.
 
 
 \subsection{Classification models} \label{subsec:classificationModel}
-
-
 In the following, we describe the neural models used for the classification module, where for each of them the input layer uses text representations described in \cref{subsec:representation} (i.e. sentence matrix).
 
 
-\subsubsection{Fast text}
+\subsubsection{Fast text.}
+This model was introduced in \cite{joulin2016bag}, where its main difference from our neural model is the use of a particular input layer, in details, rather than use only words or only n-gram as element for the embedding, both elements are embedded with the aim of capture partial information about words order.
+The complete architecture is illustrated in \cref{fig:fastText}, here the input layer is directly fed into a \emph{Global Average Pooling} layer, that transforms the sentence matrix in a single vector, who is projected into two dense layers.
+Regarding the architectural references in \cite{joulin2016bag}, they used a number of hidden layers fixed to ten, but we measured better performance using just two layers, moreover we integrate both dropout, gaussian noise and batch normalization.
 
-This model was introduced in \cite{joulin2016bag}, where its main difference from our neural model is the use of a particular input layer, in details rather than use just words as element of the embedding, \emph{bag of n-grams} are added to the input as additional features to capture partial information about words order.
-The complete architecture is illustrated in \cref{fig:fastText}, here the input layer is directly fed into a \emph{Global Average Pooling} layer, that transforms the sentence matrix 
-
-in a single vector computed as the average of the word vectors.
-This vector is then projected into 2 fully connected layers. In the paper the number of hidden layers is fixed to 10, but we measured better performance using just 2 layers.
-We explored both dropout and gaussian noise + batch normalization and best results were given by the latter, introducing a 0.2 noise after the embedding layer and after the first dense layer.
-
-
-This model is based on this paper \cite{joulin2016bag}.
-Differently to the other models where just words are used, here Bag of n-grams are added to the input as additional features to capture some partial information about the local word order.
-This particular input layer is directly fed into a \emph{Global Average Pooling} layer, that transforms the whole sentence in a single vector computed as the average of the word vectors.
-This vector is then projected into 2 fully connected layers. In the paper the number of hidden layers is fixed to 10, but we measured better performance using just 2 layers.
-We explored both dropout and gaussian noise + batch normalization and best results were given by the latter, introducing a 0.2 noise after the embedding layer and after the first dense layer.
 \begin{figure}[h]
 \footnotesize
 \centering
@@ -103,12 +89,14 @@ We explored both dropout and gaussian noise + batch normalization and best resul
 \end{figure}
 
 
-\subsubsection{Convolutional Neural Network}
-Convolutional Neural Networks are considered state of the art in many text classification problem.
-This model is composed by a convolutional layer, followed by a global max pooling layer and two fully connected layers.
+\subsubsection{Convolutional Neural Network.}
+Convolutional Neural Networks (i.e. CNN) are considered state of the art in many text classification problem, therefore we decide to use them in a simple architecture composed by a convolutional layer, followed by a \emph{Global Max Pooling} layer and two dense layers.
 
 \subsubsection{KIM.}
-
+This model was introduced in \cite{kim2014convolutional}, it can be seen as a particular CNN where the convolutional layer has multiple filter widths and feature maps.
+The complete architecture is illustrated in \cref{fig:kim}, here the input layer (i.e. sentence matrix) is processed in a convolutional layer of multiple filters with different width, each of these results are fed into \emph{Max Pooling} layers and finally the concatenation of them (previously flatten to be dimensional coherent) is projected into a dense layer.
+The intuition behind this model is that smaller filter should be able to capture short sentence patterns similar to n-grams, while bigger ones should capture sentence level features.
+Regarding the architectural references in \cite{kim2014convolutional}, the number filter $|f|$ and their size was optimized leading to the following results: $|f| = 4, f_1 = 2\times2, f_2 = 3\times3, f_3 = 5\times5, f_4 = 7\times7$.
 
 \begin{figure}[h]
 \footnotesize
@@ -118,15 +106,10 @@ This model is composed by a convolutional layer, followed by a global max poolin
 \label{fig:kim}
 \end{figure}
 
-This model is based on this paper \cite{kim2014convolutional}. It is based on different filter region size convolutions, followed by maxpooling layers.
-All those outputs are concatenated to build sentence representation that is finally projected into a dense layer for the classification.
-The intuition behind this model is that smaller filter region size should be able to capture short sentence patterns (similar to ngrams), while bigger sizes should capture sentence level features. We reached the best performance using [2, 3, 5, 7] as filter sizes.
+\subsubsection{Long short-term memory.}
+LSTM is a type of Recurrent Neural Network that is relatively insensitive to gap length, thanks to this behaviour, they are considered state of the art in some NLP problems (e.g. machine translation).
+Our architecture was made of an embedded input layer followed by an LSTM layer of 128 units, terminated by a dense layer, moreover to avoid overfitting we used dropout and recurrent dropout.
 
-
-\subsubsection{Long short-term memory}
-LSTM is a type of Recurrent Neural Network (i.e. RNN) that is relatively insensitive to gap length, compared to others RNN, they are considered state of the art in machine translation.
-In this model the classical embedding layer is followed by an LSTM layer with 128 units, terminated by a fully connected layer.
-We also tried Bidirectional LSTM, 
-% since they are bringing an improvement in different tasks, but they are performing worst on our use case.
-To avoid overfitting we used droput and recurrent dropout, best results were obtained with a droput value of 0.4 and recurrent dropout value of 0.3.
+\subsubsection{Bidirectional LSTM.} Similar to previous model, bidirectional LSTM is a variation of LSTM where the two RNN receive different inputs, the original and its reverse order, and their results are connected through the recurrent layers.
+Our architecture follow the previous one with LSTM layer of 128 units terminating with a dense layer, where all the layer used dropout and recurrent dropout.
 
