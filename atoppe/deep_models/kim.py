@@ -35,7 +35,7 @@ class KimModel(ToppeModel):
         # Create real model
         x = Input(shape=(params['maxlen'],))
         emb = Embedding(num_words,
-                        300, weights=[embedding_matrix], trainable=False,
+                        300, weights=[embedding_matrix], trainable=True,
                         input_length=params['maxlen'])(x)
         noisy_embedding = GaussianNoise(0.2)(emb)
         merge_input = []

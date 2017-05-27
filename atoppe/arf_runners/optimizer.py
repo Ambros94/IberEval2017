@@ -1,60 +1,6 @@
-from arf_runners.stance_runner_ca import run as run_stance_ca
-from arf_runners.stance_runner_es import run as run_stance_es
+from arf_runners.coset_runner import run as run_coset
 from nlp_utils.tweets_preprocessor import *
 
-run_stance_ca(st_sw_cl_mt)
-run_stance_ca(st_sw_cl)
-run_stance_ca(st_sw_cl)
-run_stance_ca(st_sw)
-run_stance_ca(st_sw)
-run_stance_ca(sw_cl_mt_num_em_ht)
-run_stance_ca(sw_cl_mt_num_em_ht)
-run_stance_ca(st_sw_cl_mt_num_em_ht)
-run_stance_ca(st_sw_cl_mt_num_em_ht)
-run_stance_ca(st_sw_cl_mt_num_em)
-run_stance_ca(st_sw_cl_mt_num_em)
-run_stance_ca(st_sw_cl_mt_num)
-run_stance_ca(st_sw_cl_mt_num)
-
-
-run_stance_es(nothing)
-run_stance_es(st)
-run_stance_es(st_sw)
-run_stance_es(st_sw_cl)
-run_stance_es(st_sw_cl_mt)
-run_stance_es(st_sw_cl_mt_num)
-run_stance_es(st_sw_cl_mt_num_em)
-run_stance_es(st_sw_cl_mt_num_em_ht)
-run_stance_es(sw_cl_mt_num_em_ht)
-run_stance_es(cl)
-run_stance_es(cl_em)
-run_stance_es(cl_mt_num_em)
-
-run_stance_es(nothing)
-run_stance_es(st)
-run_stance_es(st_sw)
-run_stance_es(st_sw_cl)
-run_stance_es(st_sw_cl_mt)
-run_stance_es(st_sw_cl_mt_num)
-run_stance_es(st_sw_cl_mt_num_em)
-run_stance_es(st_sw_cl_mt_num_em_ht)
-run_stance_es(sw_cl_mt_num_em_ht)
-run_stance_es(cl)
-run_stance_es(cl_em)
-run_stance_es(cl_mt_num_em)
-
-run_stance_es(nothing)
-run_stance_es(st)
-run_stance_es(st_sw)
-run_stance_es(st_sw_cl)
-run_stance_es(st_sw_cl_mt)
-run_stance_es(st_sw_cl_mt_num)
-run_stance_es(st_sw_cl_mt_num_em)
-run_stance_es(st_sw_cl_mt_num_em_ht)
-run_stance_es(sw_cl_mt_num_em_ht)
-run_stance_es(cl)
-run_stance_es(cl_em)
-run_stance_es(cl_mt_num_em)
-
-
-
+run_coset(fast_text)
+run_coset(fast_text)
+run_coset(fast_text)
