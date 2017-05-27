@@ -11,17 +11,17 @@ In relation to classification models that can exploit the above representations,
 
 \subsection{Text pre-processing} \label{subsec:preprocessing}
 Regarding the text pre-preprocessing, has to be mentioned that the corpus under observation can not be treated as proper written language, because computer-mediated communication (CMC) is highly informal, affecting diamesic\footnote{The variation in a language across medium of communication (e.g. Spanish over the phone versus Spanish over email)} variation with creation of new items supposed to pertain lexicon and graphematic domains \cite{bazzanella2011oscillazioni,cerruti2013netspeak}.
-Therefore, in addition to well know pre-processing approach, as stemming (i.e. ST), stopwords (i.e. SW) and punctuation removal (i.e. PR), specific tweets pre-processing techniques has to be taken in consideration.
+Therefore, in addition to well know pre-processing approaches such as stemming (ST), stopwords (SW) and punctuation removal (PR), specific tweets pre-processing techniques have to be taken in consideration.
 
-From previous consideration, we define a set of specific tweet pre-processing approach that take into consideration the following items:
+From the previous consideration, we define a set of specific tweet pre-processing approaches that take into consideration the following items:
 \begin{enumerate*}
-\item mentions (i.e. MT),
-\item smiley (i.e. SM),
-\item emoji (i.e. EM),
-\item hashtags (i.e. HT),
-\item numbers (i.e. NUM),
-\item URL (i.e. URL)
-\item and Tweeter reserve-word as RT and FAV (i.e. RW).
+\item mentions (MT),
+\item smiley (SM),
+\item emoji (EM),
+\item hashtags (HT),
+\item numbers (NUM),
+\item URL (URL)
+\item and Tweeter reserve-word as RT and FAV (RW).
 \end{enumerate*}
 
 For each of these items we leave the possibility to be removed or substituted by constant string (e.g.
@@ -31,7 +31,7 @@ For each of these items we leave the possibility to be removed or substituted by
 \end{enumerate*}
 ).
 
-To implement above pre-processing tecnique we take advantage of the following tools:
+To implement the above pre-processing technique we take advantage of the following tools:
 \begin{enumerate*}
 \item NLTK \cite{nltk} and 
 \item Preprocessor \cite{tweets-preprocessor}.
@@ -40,14 +40,14 @@ To implement above pre-processing tecnique we take advantage of the following to
 
 
 \subsection{Text representation} \label{subsec:representation}
-The use of neural model suggest us to exploit recent trend over text representation, in particular we decided to use embedding vectors as representation following the approach described by \cite{bojanowski2016enriching}, where tweet elements like \emph{words} and \emph{word n-grams} are represented as vectors of real number with fixed dimension $|v|$.
+The use of neural model suggest us to exploit recent trend over text representation. In particular we decided to use embedding vectors as representation following the approach described by \cite{bojanowski2016enriching}, where tweet elements like \emph{words} and \emph{word n-grams} are represented as vectors of real number with fixed dimension $|v|$.
 In this way a whole sentence $s$, with length $|s|$ its number of word, is represented as a \emph{sentence matrix} $M$ of dimension $|M| = |s| \times |v|$. $|M|$ has to be fixed a priori, therefore $|s|$ and $|v|$ have to be estimated. $|v|$ was fixed to 300 following \cite{bojanowski2016enriching}. $|s|$ was left as a system parameter that after optimization was fixed to $|s| = 30$, with this choice 
 input sentences longer than $|s|$ are truncated, while shorter ones are padded with null vectors (i.e. a vector of all zeros).
-Depending of chosen tweets elements a different embedding function has to be estimated (i.e. learnt), in the continuation we are going to analyse the possible choices.
+Depending of the chosen tweets a different embedding function has to be estimated (i.e. learnt), following we analyse the possible choices.
 
 \subsubsection{Word embedding.}
-Choosing words as element to be mapped by the embedding function, raise some challenge over the function estimation related to data availability, in our case the available corpus is very small and estimated embeddings could lead to low performance.
-To solve this problem, we decided to used a pre-trained embeddings estimated over Wikipedia data base using a particular approach called \emph{fastText} \cite{bojanowski2016enriching}.
+Choosing words as elementa to be mapped by the embedding function, raise some challenge over the function estimation related to data availability. In our case the available corpus is very small and estimated embeddings could lead to low performance.
+To solve this problem, we decided to used a pre-trained embeddings estimated over Wikipedia using a particular approach called \emph{fastText} \cite{bojanowski2016enriching}.
 
 Using this approach, after the sentence matrix embedding is calculated, its weights can be \emph{static} or \emph{non-static}, in the latter case backward propagation will be able to adjust their values otherwise they will stay fixed as initially calculated by the embedding function.
 
