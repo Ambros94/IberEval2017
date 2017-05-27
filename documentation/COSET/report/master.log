@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  27 MAY 2017 16:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  27 MAY 2017 19:20
 entering extended mode
 **./master.tex
 (master.tex
@@ -913,20 +913,20 @@ Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
 )) (master.aux)
 \openout1 = `master.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -999,7 +999,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box94
-Package hyperref Info: Link coloring OFF on input line 25.
+Package hyperref Info: Link coloring OFF on input line 23.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
@@ -1009,21 +1009,21 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count287
 )
-LaTeX Info: Redefining \ref on input line 25.
-LaTeX Info: Redefining \pageref on input line 25.
-LaTeX Info: Redefining \nameref on input line 25.
+LaTeX Info: Redefining \ref on input line 23.
+LaTeX Info: Redefining \pageref on input line 23.
+LaTeX Info: Redefining \nameref on input line 23.
 
 (master.out) (master.out)
 \@outlinefile=\write3
 \openout3 = `master.out'.
 
 \c__siunitx_mathsf_int=\count288
-LaTeX Font Info:    Try loading font information for U+msa on input line 25.
+LaTeX Font Info:    Try loading font information for U+msa on input line 23.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 25.
+LaTeX Font Info:    Try loading font information for U+msb on input line 23.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1032,33 +1032,36 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  (docs/abstract.tex)
 (docs/introduction.tex) (docs/task.tex [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]) (docs/system.tex [2] [3]
-
-<figs/fast_text.png, id=107, 373.395pt x 188.705pt>
-File: figs/fast_text.png Graphic file (type png)
- <use figs/fast_text.png>
-Package pdftex.def Info: figs/fast_text.png used on input line 86.
-(pdftex.def)             Requested size: 209.12683pt x 105.68846pt.
-
-<figs/kim_cnn.png, id=118, 754.82pt x 690.58pt>
-File: figs/kim_cnn.png Graphic file (type png)
- <use figs/kim_cnn.png>
-Package pdftex.def Info: figs/kim_cnn.png used on input line 104.
-(pdftex.def)             Requested size: 209.12683pt x 191.32736pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) (docs/evaluation.tex [4 <./figs/fast_text.png>] [5 <./figs/kim_cnn.png>]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-) (docs/conclusions.tex) [6] (refs/references_llncs.tex
-Underfull \hbox (badness 4467) in paragraph at lines 13--14
-[]\OT1/cmr/m/n/9 Preprocessor is a pre-pro-cess-ing li-brary for tweet data wri
-t-ten in Python,
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]) (docs/system.tex [2]
+Underfull \hbox (badness 10000) in paragraph at lines 37--37
+ [][][]\OT1/cmr/m/n/9 Preprocessor is a pre-pro-cess-ing li-brary for tweet dat
+a writ-ten in Python,
  []
 
+
+Overfull \hbox (0.80142pt too wide) in paragraph at lines 54--68
+[][]\OT1/cmr/m/n/9 (i)[]  the use of a pre--trained em-bed-ding func-tion (i.e.
+ Fast-Text from Wikipedia) and[] [](ii)[]  static
+ []
+
+[3] <figs/fast_text.png, id=106, 373.395pt x 188.705pt>
+File: figs/fast_text.png Graphic file (type png)
+
+<use figs/fast_text.png>
+Package pdftex.def Info: figs/fast_text.png used on input line 86.
+(pdftex.def)             Requested size: 209.12683pt x 105.68846pt.
+ <figs/kim_cnn.png, id=117, 754.82pt x 690.58pt>
+File: figs/kim_cnn.png Graphic file (type png)
+
+<use figs/kim_cnn.png>
+Package pdftex.def Info: figs/kim_cnn.png used on input line 104.
+(pdftex.def)             Requested size: 313.69025pt x 286.98578pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[4 <./figs/fast_text.png>]) (docs/evaluation.tex [5 <./figs/kim_cnn.png>]
+[6]) (docs/conclusions.tex) (refs/references_llncs.tex [7]
 Missing character: There is no Ã in font cmr9!
 Missing character: There is no   in font cmr9!
 Missing character: There is no Ã in font cmr9!
@@ -1070,28 +1073,28 @@ f (and prac-ti-tion-ers'
  []
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 60.
- [7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 60.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 58.
+ [8]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 58.
  (master.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 60.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 60.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 58.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 58.
 Package rerunfilecheck Info: File `master.out' has not changed.
-(rerunfilecheck)             Checksum: 91E4119A5361A265BFD128A0BF459334;97.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 60.
+(rerunfilecheck)             Checksum: B6EF63EABC419DFC498CBC0BD286AA47;113.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 58.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 1061 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 22364 strings out of 493334
- 418240 string characters out of 3139253
- 513555 words of memory out of 3000000
- 25601 multiletter control sequences out of 15000+200000
+ 22367 strings out of 493334
+ 418261 string characters out of 3139253
+ 509571 words of memory out of 3000000
+ 25602 multiletter control sequences out of 15000+200000
  13660 words of font info for 53 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,13n,43p,10381b,4228s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 43i,13n,43p,10381b,4330s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
 x10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Progr
@@ -1110,9 +1113,9 @@ type1/public/amsfonts/cm/cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
 lic/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmti9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mtt9.pfb>
-Output written on master.pdf (7 pages, 406241 bytes).
+Output written on master.pdf (8 pages, 405866 bytes).
 PDF statistics:
- 254 PDF objects out of 1000 (max. 8388607)
- 71 named destinations out of 1000 (max. 500000)
+ 260 PDF objects out of 1000 (max. 8388607)
+ 73 named destinations out of 1000 (max. 500000)
  19 words of extra memory for PDF output out of 10000 (max. 10000000)
 
