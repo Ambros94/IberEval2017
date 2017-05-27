@@ -1,7 +1,3 @@
-import csv
-import inspect
-from time import gmtime, strftime
-
 from data_loaders import stance
 from deep_models.bidirectional_lstm import BidirectionalLSTMModel
 from deep_models.cnn import CNNModel
@@ -9,9 +5,6 @@ from deep_models.cnn_lstm import CnnLstmModel
 from deep_models.fasttext import FastTextModel
 from deep_models.kim import KimModel
 from deep_models.lstm import LSTMModel
-
-
-# Create models
 
 
 def run(cleaning_function):
@@ -47,7 +40,7 @@ def run(cleaning_function):
                             persist_function=None, test_function=test_function)
     cnn_lstm.run(metrics=['categorical_accuracy'], maxlen=max_len, kernel_size=5, dropout=0.25, strides=1,
                  language=language,
-                 filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=4, clean_tweets=cleaning_function)
+                 filters=64, pool_size=4, lstm_output_size=70, batch_size=30, epochs=3, clean_tweets=cleaning_function)
     cnn_lstm_accuracy = cnn_lstm.test_accuracy()
 
     fast_text = FastTextModel(data_function=data_function, decode_function=stance.decode_gender,
@@ -62,24 +55,7 @@ def run(cleaning_function):
     kim.run(metrics=['categorical_accuracy'], maxlen=max_len,
             batch_size=32, strides=1, filters=150, language=language,
             dropout=0.5, dropout_final=0.5, trainable=True,
-            recurrent_units=128, epochs=4, padding='same', dilation_rate=3, pool_size=5, clean_tweets=cleaning_function)
+            recurrent_units=128, epochs=2, padding='same', dilation_rate=3, pool_size=5, clean_tweets=cleaning_function)
     kim_accuracy = kim.test_accuracy()
 
-    with open("../gender_ca-" + strftime("%Y%m%d_%H%M%S", gmtime()) + ".log", 'w') as outcsv:
-        writer = csv.writer(outcsv, delimiter='\t')
-        writer.writerow(["model_name", "test_accuracy"])
-        writer.writerow(["cnn", cnn_accuracy])
-        writer.writerow(["fast_text", fast_text_accuracy])
-        writer.writerow(["cnn_lstm", cnn_lstm_accuracy])
-        writer.writerow(["b_lstm", b_lstm_accuracy])
-        writer.writerow(["lstm", lstm_accuracy])
-        writer.writerow(["kim", kim_accuracy])
-        print(["model_name", "test_accuracy"])
-        print(["cnn", cnn_accuracy])
-        print(["fast_text", fast_text_accuracy])
-        print(["cnn_lstm", cnn_lstm_accuracy])
-        print(["b_lstm", b_lstm_accuracy])
-        print(["lstm", lstm_accuracy])
-        print(["kim", kim_accuracy])
-        outcsv.write("Pre-processing:")
-        outcsv.write(''.join(inspect.getsourcelines(cleaning_function)[0]))
+    return lstm_accuracy, cnn_accuracy, b_lstm_accuracy, cnn_lstm_accuracy, fast_text_accuracy, kim_accuracy
