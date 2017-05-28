@@ -15,8 +15,10 @@ class KimModel(ToppeModel):
     def build(self, params):
         # Cleaning data
         language = params['language']
-        self.x_train = clean_tweets(self.x_train)
-        self.x_test = clean_tweets(self.x_test)
+        clean_function = params['clean_tweets']
+        self.x_train = clean_tweets(cleaning_function=clean_function, tweets=self.x_train)
+        self.x_test = clean_tweets(cleaning_function=clean_function, tweets=self.x_test)
+        self.x_persist = clean_tweets(cleaning_function=clean_function, tweets=self.x_persist)
         # Prepare data
         tokenizer = Tokenizer()
         tokenizer.fit_on_texts(self.x_train)
@@ -33,7 +35,7 @@ class KimModel(ToppeModel):
         # Create real model
         x = Input(shape=(params['maxlen'],))
         emb = Embedding(num_words,
-                        300, weights=[embedding_matrix], trainable=params['trainable'],
+                        300, weights=[embedding_matrix], trainable=True,
                         input_length=params['maxlen'])(x)
         noisy_embedding = GaussianNoise(0.2)(emb)
         merge_input = []

@@ -1,0 +1,165 @@
+\section{Evaluation} \label{sec:evaluation}
+
+In this section we are going to illustrate results from the comparative study elaborated during the system development. First we illustrate the metric used to evaluate the system (\Cref{subsec:metric}) and then we report results produced by a 10-fold cross validation over the given data set (\Cref{subsec:results}).
+
+\subsection{Metrics} \label{subsec:metric}
+
+System evaluation metrics were given by the organizers and reported here in the following \cref{eq:f1macro,eq:f1,eq:precision,eq:recall}. Their choice was to use an $F_{1-macro}$ measure due to class unbalance in the corpus.
+
+\begin{multicols}{2}
+\begin{equation} \label{eq:f1macro}
+F_{1-macro} = \frac{1}{|L|} \displaystyle\sum_{l\in L} F_1(y_l, \hat{y}_l)
+\end{equation}
+
+\begin{equation} \label{eq:f1}
+F_1 = 2 \cdot \frac{precision \cdot recall }{precision + recall}
+\end{equation}
+
+\begin{equation} \label{eq:precision}
+precision = \frac{1}{|L|} \displaystyle\sum_{l\in L} Pr(y_l, \hat{y}_l)
+\end{equation}
+
+\begin{equation} \label{eq:recall}
+recall = \frac{1}{|L|} \displaystyle\sum_{l\in L} R(y_l, \hat{y}_l)
+\end{equation}
+\end{multicols}
+
+\noindent where $L$ is the set of classes, $y_l$ is the set of correct label and $\hat{y}_l$ is the set of predicted labels.
+
+
+\subsection{Results} \label{subsec:results}
+
+Following, we present a comparative study over possible combinations of pre-processing (\Cref{tab:preprocessing}) and text representation (\Cref{tab:representation}), in both cases results are calculated from averaging three runs of a 10-fold cross validation over the complete data set. For each combination the best performing model has its result in bold and for each model the best combination is marked in shared grey box.
+Notations used in \Cref{tab:preprocessing} refer to the one introduced in \Cref{subsec:preprocessing}, where the listing of a notation means its use for the reported result. To simplify notation SW and PR were merged as SR.
+%Regarding the tweet specific pre-processing, all the items have been substituted, with the exception for URL and RW that have been removed (in the table reported as RM). From all the possible combinations (i.e. $2^3\cdot3^{7}+1$) we report only the most relevant ones.
+Regarding the tweet specific pre-processing, all the items have been substituted, with the exception for URL and RW that have been removed. We report the contribution of each analysed pre-processing alone.
+
+
+\begin{comment}
+\begin{table}[h]
+\footnotesize
+\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
+%\label{tab:preprocessing}
+\centering
+\begin{tabular}{l|ccccc}
+\toprule
+\multirow{2}{*}{Preprocessing}	& \multicolumn{5}{ c }{Models}       \\ 
+& CNN		& LSTM		& B-LSTM	& FAST-TEXT	& KIM	\\ 
+\hline 
+Nothing					& 50,5     & 55,6		& 51,1		& 53,0 		& \textbf{55,8}	\\ 
+\hline 
+ST						& 49,6		& 49,9		& 47,5		& \textbf{53,1}	& \textbf{53,1}	\\ 
+ST+SR					& 47,6		& \textbf{55,3}	& 47,6		& 52,9		& 51,1	\\ 
+ST+SR+RM				& 51,9		& \win\textbf{56,8}		& 52,2		& 56,0		& 50,8	\\ 
+ST+SR+RM+MT				& 54,6		& \textbf{56,1}		& 47,7		& 54,6		& 53,6	\\ 
+ST+SR+RM+MT+NUM			& 53,2		& \textbf{55,5}		& 51,0		& 53,4		& 51,5 \\ 
+ST+SR+RM+MT+NUM+EM+SM	& 52,7		& \textbf{56,4}		& 53,7		& 54,2		& 51,8 \\ 
+ST+SR+RM+MT+NUM+EM+SM+HT& 55,1		& 54,0		& 52,9		& \textbf{56,7}		& 51,1 \\ 
+\hline
+SR+RM+MT+NUM+EM+SM		& 54,5		& 54,8		& 53,9		& \win\textbf{57,0}		& 54,8 \\ 
+\hline
+RM						& 55,9		& 43,4		& 48,5		& 56,5		& \textbf{57,7} \\ 
+RM+EM+SM				& \win57,1		& 52,1		& 49,9		& 54,8		& \win\textbf{58,9} \\
+RM+MT+NUM+EM+SM			& 54,3		& 54,6		& \win55,5		& \textbf{56,8}		& 54,8 \\ 
+\bottomrule
+\end{tabular}
+\end{table}
+\end{comment}
+
+\begin{table}[h]
+\footnotesize
+\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
+\label{tab:preprocessing}
+\centering
+\begin{tabular}{l|cccccccccc}
+\toprule
+\hline
+\multirow{2}{*}{Models}		& \multicolumn{10}{ c }{Pre-processing}       \\ 
+							& Nothing	& ST	& SR	& URL	& RW	& MT	& HT	& NUM	& EM	& SM	\\
+\hline
+Kim							& 1			& ST	& SR	& URL	& RW	& MT	& HT	& NUM	& EM	& SM	\\
+FastText					& 1			&  ST	& SR	& URL	& RW	& MT	& HT	& NUM	& EM	& SM	\\
+\hline
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+From the analysis of \Cref{tab:preprocessing} no absolute conclusion can be drawn, meaning that it wasn't possible to find a combination of pre-processing that gives the best performance for all the model, meaning that each model is highly sensible to the performed combination. Nevertheless, some relative observation can be made:
+\begin{itemize}
+\item The RM preprocessing (i.e. removing of the URL and RW) leads to performance improvement to all the model respect to no pre-processing at all,
+\item Kim's model is the only one having a significant decrease in the performance when stemming is applied alone or with other preprocessing.
+\end{itemize}
+
+\begin{table}[h]
+\footnotesize
+\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
+\label{tab:representation}
+\centering
+\begin{tabular}{l|ccccc}
+\toprule
+\hline
+\multirow{2}{*}{Models}		& \multicolumn{5}{ c }{Text representation}       \\ 
+							& Non-static	& CA static		& ES static		& CA non-static	& ES non-static	\\
+\hline
+Kim							& Non-static	& CA static		& ES static		& CA non-static	& ES non-static	\\
+FastText					& Non-static	& CA static		& ES static		& CA non-static	& ES non-static	\\
+\hline
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+Analysing results in \Cref{tab:representation}, here the used notation refers to the one introduced in \Cref{subsec:representation}, where the listing of a notation means its use as embedded input layer for the reported result. From its analysis the following interpretation can be drawn:
+\begin{itemize}
+\item Setting as \emph{static} the sentence matrix weights has the worst performance (independently of the used language)
+\item As opposite to the previous point, setting as \emph{non-static} leads to better performance, where this insight can be deduced by corpus characteristic (i.e. a good example of Computer Mediated Communication)
+\item The use of pre-trained embedding is useful in combination with \emph{non-static} weights (i.e. best performances with ES non-static)
+\item Even if is not available a pre-trained embedding for the task language, the use of a similar language with non-static weight (i.e. CA non-static) can increase the performance respect only to non-static. This can be interpreted as a case of transfer learning.
+\end{itemize}
+
+\begin{comment}
+\begin{table}[h]
+\footnotesize
+\caption{Text representation study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. The pre-processing setting was fixed at RM+EM.}
+%\label{tab:representation}
+\centering
+\begin{tabular}{l|ccccc}
+\toprule
+\multirow{2}{*}{Embedding}	& \multicolumn{5}{ c }{Models}       \\ 
+					& CNN		& LSTM		& B-LSTM	& FAST-TEXT	& KIM	\\ 
+\hline 
+ES static			& \textbf{48,1}		& 36,1		& 38,9		& 36,4		& 43,6\\
+CA static			& \textbf{45,1}		& 30,6		& 38,5		& 30,1		& 39,6\\ 
+\hline
+ES non-static		& \win57,1		& 52,1		& 49,9		& \win54,8		& \win\textbf{58,9}\\
+CA non-static		& 53,5		& \win53,6		& 46,3		& 54,1		& \textbf{56,2}\\
+\hline
+non-static			& 52,6		& 47,3		& \win51,8		& 53,3		& \textbf{54,7}\\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{comment}
+
+Overview some text here
+
+\begin{table}[h]
+\footnotesize
+\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
+\label{tab:overview}
+\centering
+\begin{tabular}{c|c}
+\toprule
+\hline
+System		& $F_{1-macro}$		\\
+\hline
+LSTM		& 0.556 ($\pm$ 0.012) \\
+Bi-LSTM		& 0.555 ($\pm$ 0.035) \\
+CNN			& 0.571 ($\pm$ 0.030) \\
+\textbf{FastText}	& \textbf{0.589} ($\pm$ 0.018) \\
+Kim			& 0.579 ($\pm$ 0.009) \\
+\hline
+\bottomrule
+\end{tabular}
+\end{table}

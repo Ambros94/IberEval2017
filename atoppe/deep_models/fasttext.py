@@ -1,4 +1,4 @@
-from keras.layers import Embedding, Dense
+from keras.layers import Embedding, Dense, GaussianNoise, BatchNormalization
 from keras.layers import GlobalAveragePooling1D
 from keras.models import Sequential
 from keras.preprocessing import sequence
@@ -16,11 +16,14 @@ class FastTextModel(ToppeModel):
         language = params['language']
         ngram_range = params['ngram_range']
         maxlen = params['maxlen']
-        embedding_dims = params['embedding_dims']
         hidden_dims = params['hidden_dims']
+        noise = params['noise']
         # Cleaning data
-        self.x_train = clean_tweets(self.x_train)
-        self.x_test = clean_tweets(self.x_test)
+        clean_function = params['clean_tweets']
+        self.x_train = clean_tweets(cleaning_function=clean_function, tweets=self.x_train)
+        self.x_test = clean_tweets(cleaning_function=clean_function, tweets=self.x_test)
+        self.x_persist = clean_tweets(cleaning_function=clean_function, tweets=self.x_persist)
+
         # Prepare data
         tokenizer = Tokenizer()
         tokenizer.fit_on_texts(self.x_train)
@@ -41,14 +44,15 @@ class FastTextModel(ToppeModel):
         self.x_persist = sequence.pad_sequences(self.x_persist, maxlen=maxlen)
         # Model creation
         self.keras_model = Sequential()
-
         self.keras_model.add(Embedding(max_features,
-                                       embedding_dims, trainable=True,
+                                       300, trainable=True,
                                        weights=[embedding_matrix],
                                        input_length=maxlen))
-
+        self.keras_model.add(GaussianNoise(noise))
         self.keras_model.add(GlobalAveragePooling1D())
         self.keras_model.add(Dense(hidden_dims, activation='relu'))
+        self.keras_model.add(BatchNormalization())
+        self.keras_model.add(GaussianNoise(noise))
         self.keras_model.add(Dense(self.output_size, activation='softmax'))
 
         self.keras_model.compile(loss='categorical_crossentropy',

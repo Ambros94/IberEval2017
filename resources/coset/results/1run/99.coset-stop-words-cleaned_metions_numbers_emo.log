@@ -1,0 +1,11 @@
+model_name	test_f1_macro	test_f1_macro
+cnn	0.587691004795
+fast_text	0.585130408004
+b_lstm	0.580055471564
+lstm	0.597047086991
+kim	0.600123276579
+Pre-processing:def _clean_tweet(tweet):
+    p.set_options(p.OPT.URL, p.OPT.RESERVED, p.OPT.NUMBER)
+    tweet = p.clean(tweet)
+    p. (p.OPT.MENTION, p.OPT.SMILEY, p.OPT.EMOJI)
+    return tweet
