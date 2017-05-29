@@ -29,53 +29,22 @@ recall = \frac{1}{|L|} \displaystyle\sum_{l\in L} R(y_l, \hat{y}_l)
 
 \subsection{Results} \label{subsec:results}
 
-Following, we present a comparative study over possible combinations of pre-processing (\Cref{tab:preprocessing}) and text representation (\Cref{tab:representation}), in both cases results are calculated from averaging three runs of a 10-fold cross validation over the complete data set. For each combination the best performing model has its result in bold and for each model the best combination is marked in shared grey box.
-Notations used in \Cref{tab:preprocessing} refer to the one introduced in \Cref{subsec:preprocessing}, where the listing of a notation means its use for the reported result. To simplify notation SW and PR were merged as SR.
-%Regarding the tweet specific pre-processing, all the items have been substituted, with the exception for URL and RW that have been removed (in the table reported as RM). From all the possible combinations (i.e. $2^3\cdot3^{7}+1$) we report only the most relevant ones.
+Following, we present a comparative study over possible combinations of pre-processing (\Cref{tab:preprocessing}) and word embeddings (\Cref{tab:representation}), in both cases results are calculated from averaging three runs of a 10-fold cross validation over the complete data set.
+Notations used in \Cref{tab:preprocessing} refer to the one introduced in \Cref{subsec:preprocessing}, where the listing of a notation means its use for the reported result. 
 Regarding the tweet specific pre-processing, all the items have been substituted, with the exception for URL and RW that have been removed. We report the contribution of each analysed pre-processing alone.
 
-
-\begin{comment}
 \begin{table}[h]
 \footnotesize
-\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
-%\label{tab:preprocessing}
-\centering
-\begin{tabular}{l|ccccc}
-\toprule
-\multirow{2}{*}{Preprocessing}	& \multicolumn{5}{ c }{Models}       \\ 
-& CNN		& LSTM		& B-LSTM	& FAST-TEXT	& KIM	\\ 
-\hline 
-Nothing					& 50,5     & 55,6		& 51,1		& 53,0 		& \textbf{55,8}	\\ 
-\hline 
-ST						& 49,6		& 49,9		& 47,5		& \textbf{53,1}	& \textbf{53,1}	\\ 
-ST+SR					& 47,6		& \textbf{55,3}	& 47,6		& 52,9		& 51,1	\\ 
-ST+SR+RM				& 51,9		& \win\textbf{56,8}		& 52,2		& 56,0		& 50,8	\\ 
-ST+SR+RM+MT				& 54,6		& \textbf{56,1}		& 47,7		& 54,6		& 53,6	\\ 
-ST+SR+RM+MT+NUM			& 53,2		& \textbf{55,5}		& 51,0		& 53,4		& 51,5 \\ 
-ST+SR+RM+MT+NUM+EM+SM	& 52,7		& \textbf{56,4}		& 53,7		& 54,2		& 51,8 \\ 
-ST+SR+RM+MT+NUM+EM+SM+HT& 55,1		& 54,0		& 52,9		& \textbf{56,7}		& 51,1 \\ 
-\hline
-SR+RM+MT+NUM+EM+SM		& 54,5		& 54,8		& 53,9		& \win\textbf{57,0}		& 54,8 \\ 
-\hline
-RM						& 55,9		& 43,4		& 48,5		& 56,5		& \textbf{57,7} \\ 
-RM+EM+SM				& \win57,1		& 52,1		& 49,9		& 54,8		& \win\textbf{58,9} \\
-RM+MT+NUM+EM+SM			& 54,3		& 54,6		& \win55,5		& \textbf{56,8}		& 54,8 \\ 
-\bottomrule
-\end{tabular}
-\end{table}
-\end{comment}
-
-\begin{table}[h]
-\footnotesize
-\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
+\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. 
+For each model processing tecnique that brought an improvement has its result in bold.
+}
 \label{tab:preprocessing}
 \centering
 \begin{tabular}{l|cccccccccc}
 \toprule
 \hline
 \multirow{2}{*}{Models}		& \multicolumn{10}{ c }{Pre-processing}       \\ 
-							& Nothing	& ST	& SR	& URL	& RW	& MT	& HT	& NUM	& EM	& SM	\\
+							& Nothing	& ST	& SW	& URL	& RW	& MT	& HT	& NUM	& EM	& SM	\\
 \hline
 Kim							& 0.543			& 0.528	& \textbf{0.557}	&  \textbf{0.571}	& 0.533	&  \textbf{0.558}	& 0.540	&  \textbf{0.554}	& 0.537	& 0.539	\\
 FastText					& 0.546			&  0.533	&  \textbf{0.550}	& 0.534	&  \textbf{0.553}	& 0.519	& 0.538	&  \textbf{0.558}	&  \textbf{0.552}	&  \textbf{0.566}	\\
@@ -87,13 +56,15 @@ FastText					& 0.546			&  0.533	&  \textbf{0.550}	& 0.534	&  \textbf{0.553}	& 0.
 
 From the analysis of \Cref{tab:preprocessing} no absolute conclusion can be drawn, meaning that it wasn't possible to find a combination of pre-processing that gives the best performance for all the model, meaning that each model is highly sensible to the performed combination. Nevertheless, some relative observation can be made:
 \begin{itemize}
-\item The RM preprocessing (i.e. removing of the URL and RW) leads to performance improvement to all the model respect to no pre-processing at all,
-\item Kim's model is the only one having a significant decrease in the performance when stemming is applied alone or with other preprocessing.
+\item SW (i.e. removing spanish stop words) and NUM (i.e. substitute numbers with a constant string) leads to performance improvement to all the model respect to no pre-processing at all,
+\item ST (i.e. stemming) and HT (i.e. substitute hashtags with a constant string) decrease the performance of both models respect to no-preprocessing at all,
 \end{itemize}
 
 \begin{table}[h]
 \footnotesize
-\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
+\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score.
+For each model the best performing word embeddings configuration has its result in bold.
+ }
 \label{tab:representation}
 \centering
 \begin{tabular}{l|ccccc}
