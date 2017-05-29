@@ -5,23 +5,23 @@ In this section we describe the tweet classification systems we built. From a mo
 
 \subsection{Initial investigation} \label{subsec:boh}
 To address the tweets classification problem we began our investigation analysing some of the most widely used text representations and classifiers.
-In the analysing for possible text representations we began focusing our attention on lexical features based on: \emph{Bag Of Words} \cite{harris1954distributional},\emph{Bag Of N-Grams} (bigrams and trigrams), both with and without \emph{term frequency-inverse document frequency} normalization (i.e. TF-IDF norm).
+In the analysing for possible text representations we began focusing our attention on lexical features based on: \emph{Bag Of Words} \cite{harris1954distributional},\emph{Bag Of N-Grams} (bigrams and trigrams), both with and without \emph{term frequency-inverse document frequency} normalization (i.e., TF-IDF norm).
 In relation to classification models that can exploit the above representations,  we analysed \emph{Random Forest, Decision Trees, Support Vector Machines} and \emph{Multi Layer Perceptron}. Since the results obtained with the combination of those \emph{model + representation} were outperformed by neural network based models, we decided not to report their analysis in this paper, but rather focus on the module description of the neural models.
 
 
 \subsection{Text pre-processing} \label{subsec:preprocessing}
 Regarding the text pre-preprocessing, has to be mentioned that the corpus under observation can not be treated as proper written language, because computer-mediated communication (CMC) is highly informal, affecting diamesic\footnote{The variation in a language across medium of communication (e.g. Spanish over the phone versus Spanish over email)} variation with creation of new items supposed to pertain lexicon and graphematic domains \cite{bazzanella2011oscillazioni,cerruti2013netspeak}.
-Therefore, in addition to well know pre-processing approach, as stemming (i.e. ST), stopwords (i.e. SW) and punctuation removal (i.e. PR), specific tweets pre-processing techniques has to be taken in consideration.
+Therefore, in addition to well know pre-processing approach, as stemming (i.e., ST), stopwords (i.e., SW) and punctuation removal (i.e., PR), specific tweets pre-processing techniques has to be taken in consideration.
 
 From previous consideration, we define a set of specific tweet pre-processing approach that take into consideration the following items:
 \begin{enumerate*}
-\item mentions (i.e. MT),
-\item smiley (i.e. SM),
-\item emoji (i.e. EM),
-\item hashtags (i.e. HT),
-\item numbers (i.e. NUM),
-\item URL (i.e. URL)
-\item and Tweeter reserve-word as RT and FAV (i.e. RW).
+\item mentions (i.e., MT),
+\item smiley (i.e., SM),
+\item emoji (i.e., EM),
+\item hashtags (i.e., HT),
+\item numbers (i.e., NUM),
+\item URL (i.e., URL)
+\item and Tweeter reserve-word as RT and FAV (i.e., RW).
 \end{enumerate*}
 
 For each of these items we leave the possibility to be removed or substituted by constant string (e.g.
@@ -42,8 +42,8 @@ To implement above pre-processing tecnique we take advantage of the following to
 \subsection{Text representation} \label{subsec:representation}
 The use of neural model suggest us to exploit recent trend over text representation, in particular we decided to use embedding vectors as representation following the approach described by \cite{bojanowski2016enriching}, where tweet elements like \emph{words} and \emph{word n-grams} are represented as vectors of real number with fixed dimension $|v|$.
 In this way a whole sentence $s$, with length $|s|$ its number of word, is represented as a \emph{sentence-matrix} $M$ of dimension $|M| = |s| \times |v|$. $|M|$ has to be fixed a priori, therefore $|s|$ and $|v|$ have to be estimated. $|v|$ was fixed to 300 following \cite{bojanowski2016enriching}. $|s|$ was left as a system parameter that after optimization was fixed to $|s| = 30$, with this choice 
-input sentences longer than $|s|$ are truncated, while shorter ones are padded with null vectors (i.e. a vector of all zeros).
-Depending of chosen tweets elements a different embedding function has to be estimated (i.e. learnt), in the continuation we are going to analyse the possible choices.
+input sentences longer than $|s|$ are truncated, while shorter ones are padded with null vectors (i.e., a vector of all zeros).
+Depending of chosen tweets elements a different embedding function has to be estimated (i.e., learnt), in the continuation we are going to analyse the possible choices.
 
 \subsubsection{Word embedding.}
 Choosing words as elements to be mapped by the embedding function, raise some challenge over the function estimation related to data availability. In our case the available corpus is very small and estimated embeddings could lead to low performance.
@@ -53,10 +53,10 @@ Using this approach, after the sentence-matrix embeddings are calculated, matrix
 
 In this way four possible combination of sentence-matrix embeddings can be formulated: 
 \begin{enumerate*}
-\item the use of a pre-trained embedding function (i.e. FastText from Wikipedia) and
+\item the use of a pre-trained embedding function (i.e., FastText from Wikipedia) and
 \item static or non-static weights.
 \end{enumerate*}
-From this combination the one composed of static weight without pre-trained embeddings won't be take in consideration for obvious reasons, while we decided to use two pre-trained function from Spanish (i.e. ES) and Catalan (i.e. CA) to see how the use of pre-trained embeddings of a similar language will perform in relation to static/non-static weights.
+From this combination the one composed of static weight without pre-trained embeddings won't be take in consideration for obvious reasons, while we decided to use two pre-trained function from Spanish (i.e., ES) and Catalan (i.e., CA) to see how the use of pre-trained embeddings of a similar language will perform in relation to static/non-static weights.
 Meaning that the cases in consideration will be five:
 \begin{enumerate*}
 \item ES static,
@@ -72,7 +72,7 @@ Our insight was empirically validated by a very low performance. Nevertheless, a
 
 
 \subsection{Classification models} \label{subsec:classificationModel}
-Following, we describe the neural models used for the classification module, where for each of them the input layer uses text representations described in \Cref{subsec:representation} (i.e. sentence-matrix).
+Following, we describe the neural models used for the classification module, where for each of them the input layer uses text representations described in \Cref{subsec:representation} (i.e., sentence-matrix).
 
 
 \subsubsection{Fast text.}
@@ -94,7 +94,7 @@ Convolutional Neural Networks (CNN) are considered state of the art in many text
 
 \subsubsection{KIM.}
 This model was introduced in \cite{kim2014convolutional}. It can be seen as a particular CNN where the convolutional layer has multiple filter widths and feature maps.
-The complete architecture is illustrated in \Cref{fig:kim}, here the input layer (i.e. sentence-matrix) is processed in a convolutional layer of multiple filters with different width, each of these results are fed into \emph{Max Pooling} layers and finally the concatenation of them (previously flatten to be dimensional coherent) is projected into a dense layer.
+The complete architecture is illustrated in \Cref{fig:kim}, here the input layer (i.e., sentence-matrix) is processed in a convolutional layer of multiple filters with different width, each of these results are fed into \emph{Max Pooling} layers and finally the concatenation of them (previously flatten to be dimensional coherent) is projected into a dense layer.
 The intuition behind this model is that smaller filter should be able to capture short sentence patterns similar to n-grams, while bigger ones should capture sentence level features.
 Regarding the architectural references in \cite{kim2014convolutional}, the number filter $|f|$ and their size was optimized leading to the following results: $|f| = 4, f_1 = 2\times2, f_2 = 3\times3, f_3 = 5\times5, f_4 = 7\times7$.
 

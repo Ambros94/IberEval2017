@@ -56,8 +56,8 @@ FastText					& 0.546			&  0.533	&  \textbf{0.550}	& 0.534	&  \textbf{0.553}	& 0.
 
 From the analysis of \Cref{tab:preprocessing} no absolute conclusion can be drawn, meaning that it wasn't possible to find a combination of pre-processing that gives the best performance for all the model, meaning that each model is highly sensible to the performed combination. Nevertheless, some relative observation can be made:
 \begin{itemize}
-\item SW (i.e. removing spanish stop words) and NUM (i.e. substitute numbers with a constant string) leads to performance improvement to all the model respect to no pre-processing at all,
-\item ST (i.e. stemming) and HT (i.e. substitute hashtags with a constant string) decrease the performance of both models respect to no-preprocessing at all,
+\item SW (i.e., removing spanish stop words) and NUM (i.e., substitute numbers with a constant string) leads to performance improvement to all the model respect to no pre-processing at all,
+\item ST (i.e., stemming) and HT (i.e., substitute hashtags with a constant string) decrease the performance of both models respect to no-preprocessing at all,
 \end{itemize}
 
 \begin{table}[h]
@@ -85,9 +85,9 @@ FastText					& 0.556	        & 0.351	    	& 0.450		    & 0.509	        &  \textb
 Analysing results in \Cref{tab:representation}, here the used notation refers to the one introduced in \Cref{subsec:representation}, where the listing of a notation means its use as embedded input layer for the reported result. From its analysis the following interpretation can be drawn:
 \begin{itemize}
 \item Setting as \emph{static} the sentence matrix weights has the worst performance (independently of the used language)
-\item As opposite to the previous point, setting as \emph{non-static} leads to better performance, where this insight can be deduced by corpus characteristic (i.e. a good example of Computer Mediated Communication)
-\item The use of pre-trained embedding is useful in combination with \emph{non-static} weights (i.e. best performances with ES non-static)
-\item Even if is not available a pre-trained embedding for the task language, the use of a similar language with non-static weight (i.e. CA non-static) can increase the performance respect only to non-static. This can be interpreted as a case of transfer learning.
+\item As opposite to the previous point, setting as \emph{non-static} leads to better performance, where this insight can be deduced by corpus characteristic (i.e., a good example of Computer Mediated Communication)
+\item The use of pre-trained embedding is useful in combination with \emph{non-static} weights (i.e., best performances with ES non-static)
+\item Even if is not available a pre-trained embedding for the task language, the use of a similar language with non-static weight (i.e., CA non-static) can increase the performance respect only to non-static. This can be interpreted as a case of transfer learning.
 \end{itemize}
 
 \begin{comment}

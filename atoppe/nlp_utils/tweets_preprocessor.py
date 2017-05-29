@@ -7,8 +7,8 @@ from nltk.stem.snowball import SpanishStemmer
 def kim_coset(tweet):
     """
     Stopwords removal, Reserved words removal, substitute numbers, substitute emoji
-    :param tweet: 
-    :return: 
+    :param tweet:
+    :return:
     """
     p.set_options(p.OPT.RESERVED)
     tweet = p.clean(tweet)
@@ -19,6 +19,21 @@ def kim_coset(tweet):
     filtered_words = [word for word in word_list if word not in stopwords.words('spanish')]
     tweet = " ".join([word for word in filtered_words])
     return tweet
+
+
+def kim_stance_es(tweet):
+    """
+    Stemming and mention substitution
+    :param tweet:
+    :return:
+    """
+    p.set_options(p.OPT.MENTION)
+    tweet = p.tokenize(tweet)
+    tokenizer = TweetTokenizer(reduce_len=True)
+    word_list = tokenizer.tokenize(tweet)
+    stemmer = SpanishStemmer()
+    stemmed_words = [stemmer.stem(word=word) for word in word_list]
+    return " ".join([word for word in stemmed_words])
 
 
 def cnn_gender_es(tweet):

@@ -4,7 +4,6 @@ from deep_models.cnn import CNNModel
 
 # Catalan stance
 from deep_models.cnn_lstm import CnnLstmModel
-from nlp_utils.tweets_preprocessor import st, cl
 
 max_len = 30
 language = 'ca'

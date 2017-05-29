@@ -6,8 +6,7 @@ from arf_runners.stance_runner_ca import run as run_stance_ca
 from nlp_utils.tweets_preprocessor import *
 
 K_folds = 3
-pre_processing_functions = [remove_url,
-                            removed_reserved_words, sub_mentions, sub_emoji]
+pre_processing_functions = [nothing, sub_smiley, stemming, sub_hashtags, sub_numbers, stop_words]
 with open("../stance_ca.csv", 'a') as outcsv:
     csv.writer(outcsv, delimiter=';').writerow(["model_name", "cleaning_function", "mean_accuracy", "std_accuracy"])
 
