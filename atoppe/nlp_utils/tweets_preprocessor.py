@@ -4,7 +4,7 @@ from nltk.corpus import stopwords
 from nltk.stem.snowball import SpanishStemmer
 
 
-def kim(tweet):
+def kim_coset(tweet):
     """
     Stopwords removal, Reserved words removal, substitute numbers, substitute emoji
     :param tweet: 
@@ -21,7 +21,31 @@ def kim(tweet):
     return tweet
 
 
-def fast_text(tweet):
+def cnn_gender_es(tweet):
+    """
+    Remove URLs, Substitute, emoji
+    :param tweet:
+    :return:
+    """
+    p.set_options(p.OPT.URL)
+    tweet = p.clean(tweet)
+    p.set_options(p.OPT.EMOJI)
+    return p.tokenize(tweet)
+
+
+def cnn_gender_ca(tweet):
+    """
+    Remove URLs, reserved words, Substitute hashtags, numbers, emoji
+    :param tweet:
+    :return:
+    """
+    p.set_options(p.OPT.URL, p.OPT.RESERVED)
+    tweet = p.clean(tweet)
+    p.set_options(p.OPT.HASHTAG, p.OPT.NUMBER, p.OPT.EMOJI)
+    return p.tokenize(tweet)
+
+
+def fast_text_coset(tweet):
     """
     Stopwords removal, Reserved words removal, substitute numbers, substitute emoji
     :param tweet: 
