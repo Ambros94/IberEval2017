@@ -1,6 +1,6 @@
 import keras
 from keras.engine import Input, Model
-from keras.layers import Conv1D, Dense, Flatten, GaussianNoise
+from keras.layers import Conv1D, Dense, Flatten
 from keras.layers import Embedding
 from keras.layers import MaxPooling1D
 from keras.preprocessing import sequence
@@ -37,21 +37,44 @@ class KimModel(ToppeModel):
         emb = Embedding(num_words,
                         300, weights=[embedding_matrix], trainable=True,
                         input_length=params['maxlen'])(x)
-        noisy_embedding = GaussianNoise(0.2)(emb)
         merge_input = []
-        for kernel_size in [2, 3, 5, 7]:
-            conv = Conv1D(filters=params['filters'],
-                          kernel_size=kernel_size,
-                          padding=params['padding'],
-                          dilation_rate=params['dilation_rate'],
-                          activation='relu', input_shape=(params['maxlen'], 300))(noisy_embedding)
-            max_pooling = MaxPooling1D(pool_size=params['pool_size'])(conv)
-            flatten = Flatten()(max_pooling)
-            merge_input.append(flatten)
+        # k=2 d=1
+        conv = Conv1D(filters=150,
+                      kernel_size=2,
+                      padding='same',
+                      dilation_rate=1,
+                      activation='relu', input_shape=(params['maxlen'], 300))(emb)
+        max_pooling = MaxPooling1D(pool_size=5)(conv)
+        flatten = Flatten()(max_pooling)
+        merge_input.append(flatten)
+        # k=2 d=0
+        conv = Conv1D(filters=150,
+                      kernel_size=2,
+                      padding='same',
+                      activation='relu', input_shape=(params['maxlen'], 300))(emb)
+        max_pooling = MaxPooling1D(pool_size=5)(conv)
+        flatten = Flatten()(max_pooling)
+        merge_input.append(flatten)
+        # k=5 d=0
+        conv = Conv1D(filters=150,
+                      kernel_size=5,
+                      padding='same',
+                      dilation_rate=1,
+                      activation='relu', input_shape=(params['maxlen'], 300))(emb)
+        max_pooling = MaxPooling1D(pool_size=5)(conv)
+        flatten = Flatten()(max_pooling)
+        merge_input.append(flatten)
+        # k=7 d=0
+        conv = Conv1D(filters=150,
+                      kernel_size=7,
+                      padding='same',
+                      activation='relu', input_shape=(params['maxlen'], 300))(emb)
+        max_pooling = MaxPooling1D(pool_size=5)(conv)
+        flatten = Flatten()(max_pooling)
+        merge_input.append(flatten)
 
         merged = keras.layers.concatenate(merge_input)
-        noisy_merge = GaussianNoise(0.2)(merged)
-        y = Dense(self.output_size, activation='sigmoid')(noisy_merge)
+        y = Dense(self.output_size, activation='sigmoid')(merged)
         self.keras_model = Model(inputs=x, outputs=y)
 
         self.keras_model.compile(loss='categorical_crossentropy',
