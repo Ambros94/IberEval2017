@@ -36,6 +36,22 @@ def kim_stance_es(tweet):
     return " ".join([word for word in stemmed_words])
 
 
+def kim_stance_ca(tweet):
+    """
+    Stemming and mention substitution
+    :param tweet:
+    :return:
+    """
+    p.set_options(p.OPT.MENTION, p.OPT.HASHTAG, p.OPT.NUMBER)
+    tweet = p.tokenize(tweet)
+    tokenizer = TweetTokenizer(reduce_len=True)
+    word_list = tokenizer.tokenize(tweet)
+    stemmer = SpanishStemmer()
+    stemmed_words = [stemmer.stem(word=word) for word in word_list]
+    filtered_words = [word for word in stemmed_words if word not in stopwords.words('spanish')]
+    return " ".join([word for word in filtered_words])
+
+
 def cnn_gender_es(tweet):
     """
     Remove URLs, Substitute, emoji
