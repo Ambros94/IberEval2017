@@ -46,9 +46,16 @@
 
 \begin{document}
 
+\begin{equation}
+Gender = accuracy = \frac{\sum TP + \sum TN}{\sum sample}
+\end{equation}
 
 \begin{equation}
-F_{1-macro} = \frac{1}{|L|} \displaystyle\sum_{l\in L} F_1(y_l, \hat{y}_l)
+Stance = \frac{F_{1-macro}(Favor) + F_{1-macro}(Against)}{2}
+\end{equation}
+
+\begin{equation}
+F_{1-macro}(L) = \frac{1}{|L|} \displaystyle\sum_{l\in L} F_1(y_l, \hat{y}_l)
 \end{equation}
 
 \begin{equation}

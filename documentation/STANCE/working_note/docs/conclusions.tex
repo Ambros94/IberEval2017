@@ -1,0 +1,6 @@
+\section{Conclusions} \label{sec:conclusion}
+
+In this paper we have presented our participation in the IberEval2017 Classification Of Spanish Election Tweets (COSET) shared task. Five distinct neural models were explored, in combination with different types of preprocessing and text representation.
+From the systems evaluation it wasn't possible to find a combination of pre-processing that gives the best performance for all the models, meaning that each model is highly sensible to the pipeline combination.
+Regarding the analysed text representation, the setting of sentence matrix to non-static always leads to good performance as a result of the specific text under observation (i.e., a CMC corpus). Moreover, the use of pre-trained word embedding is always suggested even when not available of the language under observation but of a similar language (i.e., is possible to take advantage of transfer learning between similar languages).
+Moreover, we outline a not so promising performance of the recurrent model, meaning that for this task the word order (a feature well captured by LSTM family model) seams not so prominent as other tasks.
