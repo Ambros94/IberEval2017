@@ -6,6 +6,7 @@ from deep_models.cnn_lstm import CnnLstmModel
 from deep_models.fasttext import FastTextModel
 from deep_models.kim import KimModel
 from deep_models.lstm import LSTMModel
+from nlp_utils.tweets_preprocessor import sub_mentions
 
 
 def run(cleaning_function):
@@ -13,7 +14,14 @@ def run(cleaning_function):
     test_function = stance.load_test_ca
     max_len = 30
     language = 'ca'
-
+    kim = KimModel(data_function=data_function, decode_function=stance.decode_stance,
+                   persist_function=None, test_function=test_function)
+    kim.run(metrics=[metrics.fbeta_score], maxlen=max_len,
+            batch_size=32, strides=1, filters=150, language=language,
+            dropout=0.5, dropout_final=0.5, trainable=True,
+            recurrent_units=128, epochs=3, padding='same', dilation_rate=2, pool_size=5, clean_tweets=cleaning_function)
+    kim_accuracy = kim.test_f1_macro()
+    print(kim_accuracy)
     lstm = LSTMModel(data_function=data_function, decode_function=stance.decode_stance,
                      persist_function=None, test_function=test_function)
     lstm.run(metrics=[metrics.fbeta_score], maxlen=max_len, language=language,
@@ -51,11 +59,7 @@ def run(cleaning_function):
                   batch_size=32, epochs=3, noise=0.2, clean_tweets=cleaning_function)
     fast_text_accuracy = fast_text.test_f1_macro()
 
-    kim = KimModel(data_function=data_function, decode_function=stance.decode_stance,
-                   persist_function=None, test_function=test_function)
-    kim.run(metrics=[metrics.fbeta_score], maxlen=max_len,
-            batch_size=32, strides=1, filters=150, language=language,
-            dropout=0.5, dropout_final=0.5, trainable=True,
-            recurrent_units=128, epochs=4, padding='same', dilation_rate=3, pool_size=5, clean_tweets=cleaning_function)
-    kim_accuracy = kim.test_f1_macro()
     return lstm_metric, cnn_accuracy, b_lstm_accuracy, cnn_lstm_accuracy, fast_text_accuracy, kim_accuracy
+
+
+run(sub_mentions)

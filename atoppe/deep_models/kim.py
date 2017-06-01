@@ -37,7 +37,7 @@ class KimModel(ToppeModel):
         emb = Embedding(num_words,
                         300, weights=[embedding_matrix], trainable=True,
                         input_length=params['maxlen'])(x)
-        noisy_embedding = GaussianNoise(0.2)(emb)
+        noisy_embedding = GaussianNoise(0.3)(emb)
         merge_input = []
         for kernel_size in [2, 3, 5, 7]:
             conv = Conv1D(filters=params['filters'],
@@ -50,7 +50,7 @@ class KimModel(ToppeModel):
             merge_input.append(flatten)
 
         merged = keras.layers.concatenate(merge_input)
-        noisy_merge = GaussianNoise(0.2)(merged)
+        noisy_merge = GaussianNoise(0.3)(merged)
         y = Dense(self.output_size, activation='sigmoid')(noisy_merge)
         self.keras_model = Model(inputs=x, outputs=y)
 
