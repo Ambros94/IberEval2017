@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  28 MAY 2017 19:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  1 JUN 2017 20:26
 entering extended mode
 **./master.tex
 (master.tex
@@ -1032,25 +1032,23 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  (docs/abstract.tex)
 (docs/introduction.tex) (docs/task.tex [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]) (docs/system.tex [2]
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+
+LaTeX Warning: Reference `tab:corpus' on page 1 undefined on input line 5.
+
+) (docs/system.tex [2]
 Underfull \hbox (badness 10000) in paragraph at lines 37--37
  [][][]\OT1/cmr/m/n/9 Preprocessor is a pre-pro-cess-ing li-brary for tweet dat
 a writ-ten in Python,
  []
 
-
-Overfull \hbox (0.80142pt too wide) in paragraph at lines 54--68
-[][]\OT1/cmr/m/n/9 (i)[]  the use of a pre--trained em-bed-ding func-tion (i.e.
- Fast-Text from Wikipedia) and[] [](ii)[]  static
- []
-
-[3] <figs/fast_text.png, id=106, 373.395pt x 188.705pt>
+[3] <figs/fast_text.png, id=101, 373.395pt x 188.705pt>
 File: figs/fast_text.png Graphic file (type png)
 
 <use figs/fast_text.png>
 Package pdftex.def Info: figs/fast_text.png used on input line 86.
 (pdftex.def)             Requested size: 209.12683pt x 105.68846pt.
- <figs/kim_cnn.png, id=117, 754.82pt x 690.58pt>
+ <figs/kim_cnn.png, id=112, 754.82pt x 690.58pt>
 File: figs/kim_cnn.png Graphic file (type png)
 
 <use figs/kim_cnn.png>
@@ -1061,6 +1059,9 @@ Package pdftex.def Info: figs/kim_cnn.png used on input line 104.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [4 <./figs/fast_text.png>]) (docs/evaluation.tex [5 <./figs/kim_cnn.png>]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
 [6]) (docs/conclusions.tex) (refs/references_llncs.tex [7]
 Missing character: There is no Ã in font cmr9!
 Missing character: There is no   in font cmr9!
@@ -1072,6 +1073,8 @@ Underfull \hbox (badness 1789) in paragraph at lines 30--31
 f (and prac-ti-tion-ers'
  []
 
+Missing character: There is no Å in font cmr9!
+Missing character: There is no ¾ in font cmr9!
 )
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 58.
  [8]
@@ -1080,7 +1083,11 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 58.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 58.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 58.
 Package rerunfilecheck Info: File `master.out' has not changed.
-(rerunfilecheck)             Checksum: B6EF63EABC419DFC498CBC0BD286AA47;113.
+(rerunfilecheck)             Checksum: 327561D90BE3C3F3055C39AC3FC93409;117.
+
+
+LaTeX Warning: There were undefined references.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 58.
  )
 (\end occurred inside a group at level 1)
@@ -1088,13 +1095,13 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 58.
 ### simple group (level 1) entered at line 1061 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 22367 strings out of 493334
- 418261 string characters out of 3139253
- 509571 words of memory out of 3000000
- 25602 multiletter control sequences out of 15000+200000
+ 22374 strings out of 493334
+ 418440 string characters out of 3139253
+ 511575 words of memory out of 3000000
+ 25609 multiletter control sequences out of 15000+200000
  13660 words of font info for 53 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,13n,43p,10381b,4330s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 43i,13n,43p,10381b,4334s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
 x10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Progr
@@ -1113,9 +1120,9 @@ type1/public/amsfonts/cm/cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
 lic/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmti9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mtt9.pfb>
-Output written on master.pdf (8 pages, 407092 bytes).
+Output written on master.pdf (8 pages, 407595 bytes).
 PDF statistics:
- 260 PDF objects out of 1000 (max. 8388607)
+ 259 PDF objects out of 1000 (max. 8388607)
  73 named destinations out of 1000 (max. 500000)
  19 words of extra memory for PDF output out of 10000 (max. 10000000)
 

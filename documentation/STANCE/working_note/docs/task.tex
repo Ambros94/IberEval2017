@@ -1,26 +1,40 @@
 \section{Task definition} \label{sec:task}
 
-The COSET shared task aim was to classify Spanish written tweets talking about the 2015 Spanish General Election, where each tweet had to be classified into one of five different categories:
-\begin{enumerate*}
-\item political issues, related to the most abstract electoral confrontation; 
-\item policy issues, about sectorial policies; 
-\item personal issues, on the life and activities of the candidates; 
-\item campaign issues, related with the evolution of the campaign;
-\item and other issues.
-\end{enumerate*}
+The StanceCat shared task aim was to detect the author's gender and stance with respect to the target \emph{independence of Catalonia} in tweets written in Spanish and/or Catalan, where participants is allowed in the detection of both stance and gender or only in stance detection.
 
-
-Participants had access to a labelled corpus composed of training set (2242 tweets) and development set (250 tweets) for system benchmarking, we analysed it and find the following statistical informations presented in \cref{tab:corpus}.
+Participants had access to a labelled corpus for each languages composed of 4319 tweets. We analysed it and find the following statistical informations presented in \cref{tab:corpus}.
 
 \begin{table}[h]
 \footnotesize
 \centering
-\begin{tabular}{|l|c|c|}
+\begin{tabular}{lccc}
+\toprule
 \hline
-			& Average length	& Maximum length	\\ \hline
-Chars		& 135				& 140				\\ \hline
-Words		& 140				& 49				\\ \hline
+Tweets		& Average		& Deviation		& Max		\\
+\hline
+ES			& 135			& 140			&			\\ 
+CA			& 140			& 49			&			\\ 
+\hline
+\bottomrule
 \end{tabular}
 \caption{Statistical analysis of given corpus' tweets.}
-\label{tab:corpus}
+\label{tab:tweet}
+\end{table}
+
+
+\begin{table}[h]
+\footnotesize
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\toprule
+\hline
+Label		& Favor		& Neutral		& Against	& Total		\\
+\hline
+ES			& 135		& 140			& 33		& 44		\\
+CA			& 140		& 49			& 33		& 44		\\
+\hline
+\bottomrule
+\end{tabular}
+\caption{Statistical analysis of given corpus' tweets.}
+\label{tab:label}
 \end{table}
