@@ -2,39 +2,40 @@
 
 The StanceCat shared task aim was to detect the author's gender and stance with respect to the target \emph{independence of Catalonia} in tweets written in Spanish and/or Catalan, where participants is allowed in the detection of both stance and gender or only in stance detection.
 
-Participants had access to a labelled corpus for each languages composed of 4319 tweets. We analysed it and find the following statistical informations presented in \cref{tab:corpus}.
+Participants had access to a labelled corpus for each languages composed of 4319 tweets. We analysed it and find the following statistical informations presented in \cref{tab:tweet,tab:label}.
+
+\begin{table}[h]
+\footnotesize
+\centering
+\begin{tabular}{lcccc}
+%\toprule
+\hline
+Label		& Favor		& Neutral		& Against	& Total		\\
+\hline
+ES			& 335		& 2538			& 1446		& 4319		\\
+CA			& 2648		& 1540			& 131		& 4319		\\
+\hline
+%\bottomrule
+\end{tabular}
+\caption{Statistical analysis of given corpus' tweets.}
+\label{tab:label}
+\end{table}
 
 \begin{table}[h]
 \footnotesize
 \centering
 \begin{tabular}{lccc}
-\toprule
+%\toprule
 \hline
 Tweets		& Average		& Deviation		& Max		\\
 \hline
-ES			& 135			& 140			&			\\ 
-CA			& 140			& 49			&			\\ 
+ES			& 14			& 3				& 23		\\ 
+CA			& 13			& 4				& 20		\\ 
 \hline
-\bottomrule
+%\bottomrule
 \end{tabular}
 \caption{Statistical analysis of given corpus' tweets.}
 \label{tab:tweet}
 \end{table}
 
 
-\begin{table}[h]
-\footnotesize
-\centering
-\begin{tabular}{|l|c|c|c|c|}
-\toprule
-\hline
-Label		& Favor		& Neutral		& Against	& Total		\\
-\hline
-ES			& 135		& 140			& 33		& 44		\\
-CA			& 140		& 49			& 33		& 44		\\
-\hline
-\bottomrule
-\end{tabular}
-\caption{Statistical analysis of given corpus' tweets.}
-\label{tab:label}
-\end{table}
