@@ -44,10 +44,14 @@ Convolutional Neural Networks (CNN) are considered state of the art in many text
 
 \subsubsection{Dilated KIM.}
 This model is our new topology of CNN. It can be seen as an extension of Kim's model \cite{kim2014convolutional} using the dilation ideas from computer graphics field \cite{yu2015multi}.
+
 The original Kim's model is a particular CNN where the convolutional layer has multiple filter widths and feature maps.
 The complete architecture is illustrated in \Cref{fig:kim}, here the input layer (i.e., sentence-matrix) is processed in a convolutional layer of multiple filters with different width, each of these results are fed into \emph{Max Pooling} layers and finally the concatenation of them (previously flatten to be dimensional coherent) is projected into a dense layer.
-Our extension is to use a dilated filters in combination with normal ones, the intuition is that normal filter capture \emph{adjacent words} features, while dilated one are able to capture relations \emph{non adjacent words}.
+Our extension is to use a dilated filters in combination with normal ones, the intuition is that normal filter capture \emph{adjacent words} features, while dilated one are able to capture relations between \emph{non adjacent words}.
 This behaviour can't be achieved by the original Kim's model, because, even though the filters size can be changed, they will capture only features from adjacent words.
+
+\textbf{Luca ho bisogno dei dati veri dei filtri}
+Regarding the architectural references in \cite{kim2014convolutional}, the filter's number $|f|$ and their dimension $(k,d)$, where $k$ is the kernel size and $d$ the dilation's unit, was optimized leading to the following results: $|f| = 4, f_1 = (2\times2,d), f_2 = (3\times3,d), f_3 = (5\times5,d), f_4 = (7\times7,d)$.
 
 \begin{figure}[h]
 \footnotesize
@@ -58,9 +62,5 @@ This behaviour can't be achieved by the original Kim's model, because, even thou
 \end{figure}
 
 \subsubsection{Recurrent neural network.}
-LSTM is a type of Recurrent Neural Network (RNN) that is relatively insensitive to gap length. Thanks to this behaviour, they are considered state of the art in some NLP problems.
-Our architecture was made of an embedded input layer followed by an LSTM layer of 128 units, terminated by a dense layer. Moreover, to avoid overfitting we used dropout and recurrent dropout.
-
-Similar to the previous model, bidirectional LSTM is a variation of LSTM where the two RNN receive different inputs, the original and its reverse order, and their results are connected through the recurrent layers.
-Our architecture follow the previous one with an LSTM layer of 128 units terminating with a dense layer, where all the layer used dropout and recurrent dropout.
-
+Long Short Term Memory (LSTM) and Bidirectional LSTM are types of Recurrent Neural Network (RNN) aiming at capture features expressed by gap length. \textbf{Che ne dici se ci spari dentro una references del tuo prof?}
+This behaviour suggest us to use them for the stance detection, in particular we use straightforward architectures made of an embedded input layer followed by an LSTM layer of 128 units, terminated by a dense layer for both normal and bidirectional models.
