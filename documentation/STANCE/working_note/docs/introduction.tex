@@ -1,14 +1,11 @@
 \section{Introduction} \label{sec:introduction}
 
-Nowadays the pervasive use of social network as a mean of communication helps researchers to found useful insight over open problems in the field of Natural Language Processing. %(put the cite of other work that use social network).
-In this context, the \emph{Twitter} social network has a huge role in text classification problems, because thanks to its \emph{API} is possible to retrieve specific formatted text (i.e., a sentence of maximum 140 characters called tweet) from a huge real-time text database, where different users publish their daily statements.
+The raising of social networks as worldwide means of communication and expression, is gaining lot of interest from company and academia, due to the huge availability of daily contents published by users.
+Focusing on academia perspective, especially in the Natural Language Processing field, the  contents available in form of written text are really useful for the study of specific open problems, where the stance detection related to political events is an example, and the \emph{Stance and Gender Detection in Tweets on Catalan Independence (StanceCat)} task at IberEval 2017 is a concrete application.
 
-This huge availability of data gives raise to the investigation of new text classification problems, with special interest in prediction problems related to temporal events that can influence statements published by social network users. An example of this problem category is the stance detection related to political events, where the  \emph{Stance and Gender Detection in Tweets on Catalan Independence (StanceCat)} task at IberEval 2017 is a concrete example. % try to find some citing about it
+In \emph{StanceCat}, the principal aim is to automatically detect if the text's author is in favor of, against, or neutral towards the Catalan Independence. Moreover, as a secondary aim, participants are asked to infer the author's gender. 
 
-In StanceCat, the principal aim is to automatically detect if the text's author is in favor of, against, or neutral towards the Catalan Independence. Moreover, as a secondary aim, participants are asked to infer the author's gender. 
-
-To tackle the above problem we built a classification system that can be decomposed in three main modules, each representing a specific approach widely used in the NLP literature: text pre-processing, text representation and classification model.
-During the modules design, we explore different design combinations leading the system development to a comparative study over the possible modules interactions.
-Analysing the produced study interesting insight can be drawn to create a system baseline for the tweet classification problem.
+To tackle the described problem we built a \emph{stance}\&\emph{gender detection} system mainly decomposed in two modules: text pre-processing and classification model.
+During the system's tuning process, different design choices were explored trying to find the best modules' combination and from their anlysis some interesting insight can be drawn.
 
 In the following sections we firstly describe the StanceCat task (\Cref{sec:task}), then we illustrate the module's design of developed stance\&gender detection system (\Cref{sec:system}), after that, an evaluation of the tuning process for submitted systems is analysed (\Cref{sec:evaluation}), finally, conclusion over the whole work are outlined (\Cref{sec:conclusion}).

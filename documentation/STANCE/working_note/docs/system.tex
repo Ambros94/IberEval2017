@@ -1,6 +1,6 @@
 \section{Systems description} \label{sec:system}
 
-In this section we describe the stance\&gender detection systems. Organizing the system by modules, it is organized in two blocks: text pre-preprocessing (\Cref{subsec:preprocessing}) and classification model (\Cref{subsec:classificationModel}). 
+In this section we describe the stance\&gender detection systems. Organizing the system by modules, it can be divided in two blocks: text pre-preprocessing (\Cref{subsec:preprocessing}) and classification model (\Cref{subsec:classificationModel}). 
 
 
 \subsection{Text pre-processing} \label{subsec:preprocessing}
@@ -27,16 +27,15 @@ In relation to above approaches we implement them using the following tools:
 
 
 
-\subsection{Text representation} \label{subsec:representation}
+\subsection{Classification models} \label{subsec:classificationModel}
+Following, we describe the neural models used for the classification module. Before introducing the models we describe the specific text representation used as input layer \Cref{subsubsec:representation} (i.e., sentence-matrix).
+
+\subsubsection{Text representation} \label{subsubsec:representation}
 To represent the text we used word embeddings as described by \cite{bojanowski2016enriching}, where tweet elements like \emph{words} and \emph{word n-grams} are represented as vectors of real number with fixed dimension $|v|$.
 In this way a whole sentence $s$, with length $|s|$ its number of word, is represented as a \emph{sentence-matrix} $M$ of dimension $|M| = |s| \times |v|$. $|M|$ has to be fixed a priori, therefore $|s|$ and $|v|$ have to be estimated. $|v|$ was fixed to 300 following \cite{bojanowski2016enriching}. $|s|$ was estimated analyzing \cref{tab:tweet}, in details we decided to fix it as the sum of average length plus the standard deviation (i.e. $|s| = 17$ for both language), with this choice input sentences longer than $|s|$ are truncated, while shorter ones are padded with null vectors (i.e., a vector of all zeros).
 
 Choosing words as elements to be mapped by the embedding function, raise some challenge over the function estimation related to data availability. In our case the available corpus is very small and estimated embeddings could lead to low performance.
 To solve this problem, we decided to used a pre-trained embeddings estimated over Wikipedia using a particular approach called \emph{fastText} \cite{bojanowski2016enriching}.
-
-
-\subsection{Classification models} \label{subsec:classificationModel}
-Following, we describe the neural models used for the classification module, where for each of them the input layer uses text representations described in \Cref{subsec:representation} (i.e., sentence-matrix).
 
 
 \subsubsection{Convolutional Neural Network.}
