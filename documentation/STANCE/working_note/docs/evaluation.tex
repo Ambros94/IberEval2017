@@ -1,7 +1,7 @@
 \section{Evaluation} \label{sec:evaluation}
 
 In this section we are going to illustrate the evaluation of developed systems regarding the modules design reported in \cref{sec:system}.
-First we illustrate the metric proposed by organizers for system's evaluation (\Cref{subsec:metric}), then we outline empirical results produced by a 10-fold cross validation over the given data set (\Cref{subsec:study}), finally we report our performance at the shared task (\Cref{subsec:results}).
+First we illustrate the metric proposed by organizers for system's evaluation (\Cref{subsec:metric}), then we outline empirical results produced by a 10-fold cross validation over the given data set (\Cref{subsec:tuning}), finally we report our performance at the shared task (\Cref{subsec:results}).
 
 \subsection{Metrics} \label{subsec:metric}
 
@@ -36,133 +36,148 @@ recall = \frac{1}{|L|} \displaystyle\sum_{l\in L} R(y_l, \hat{y}_l)
 \noindent where $L$ is the set of classes, $y_l$ is the set of correct label and $\hat{y}_l$ is the set of predicted labels.
 
 
-\subsection{Comparative study} \label{subsec:study}
+\subsection{Fine tuning process} \label{subsec:tuning}
 
-stance es
+Following, we describe the fine tuning process over possible combinations of pre-processing (\Cref{tab:preprocessing}), then we compare Kim's model against our extension (\Cref{tab:dilation}) and finally report the improvement over the use of a \emph{data augmentation} technique (\Cref{tab:augmentation}).
+For brevity of information only the evaluation of Kim's model over Spanish stance detection is reported, in details, the results are calculated from averaging three runs of a 10-fold cross validation over the complete data set.
+Nevertheless, the results obtained after the fine tuning process for all the models are reported in \cref{subsec:results}, where their development performances are compared against the ones obtained in the \emph{StanceCat} task.
 
-Following, we present a comparative study over possible combinations of pre-processing (\Cref{tab:preprocessing}) and word embeddings (\Cref{tab:representation}), in both cases results are calculated from averaging three runs of a 10-fold cross validation over the complete data set.
 Notations used in \Cref{tab:preprocessing} refer to the one introduced in \Cref{subsec:preprocessing}, where the listing of a notation means its use for the reported result. 
 Regarding the tweet specific pre-processing, all the items have been substituted, with the exception for URL and RW that have been removed. We report the contribution of each analysed pre-processing alone.
 
+\textbf{Luca to fill the table preprocessing with correct results}
+
 \begin{table}[h]
-	\footnotesize
-	\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. 
-		For each model processing tecnique that brought an improvement has its result in bold.
-	}
-	\label{tab:preprocessing}
-	\centering
-	\begin{tabular}{l|cccccccccc}
-		\toprule
-		\hline
-		\multirow{2}{*}{Models}		& \multicolumn{10}{ c }{Pre-processing}       \\ 
+\footnotesize
+\caption{Pre-processing fine tuning for the Kim's model from a three run of 10-fold cross validation over the development set. Results are in terms of average $F_{1-macro}$ score. The processing technique that brought a model's improvement has its result in bold.}
+\label{tab:preprocessing}
+\centering
+\begin{tabular}{l|cccccccccc}
+\toprule
+\hline
+\multirow{2}{*}{Models}		& \multicolumn{10}{ c }{Pre-processing}       \\ 
 		& Nothing	& ST	& SW	& URL	& RW	& MT	& HT	& NUM	& EM	& SM	\\
-		\hline
-		Kim							& 0.543			& 0.528	& \textbf{0.557}	&  \textbf{0.571}	& 0.533	&  \textbf{0.558}	& 0.540	&  \textbf{0.554}	& 0.537	& 0.539	\\
-		FastText					& 0.546			&  0.533	&  \textbf{0.550}	& 0.534	&  \textbf{0.553}	& 0.519	& 0.538	&  \textbf{0.558}	&  \textbf{0.552}	&  \textbf{0.566}	\\
-		\hline
-		\bottomrule
-	\end{tabular}
+\hline
+Kim		& 0.543		& 0.528	& \textbf{0.557}	&  \textbf{0.571}	& 0.533	&  \textbf{0.558}	& 0.540	&  \textbf{0.554}	& 0.537	& 0.539	\\
+\hline
+\bottomrule
+\end{tabular}
 \end{table}
 
+\textbf{Luca qui tocca a te mettere prima i dati nella tabella e poi mettere gli insight in maniera di concetto e poi io ci do una forma da paper}
 
+OLD from COSET
 From the analysis of \Cref{tab:preprocessing} no absolute conclusion can be drawn, meaning that it wasn't possible to find a combination of pre-processing that gives the best performance for all the model, meaning that each model is highly sensible to the performed combination. Nevertheless, some relative observation can be made:
 \begin{itemize}
 	\item SW (i.e., removing spanish stop words) and NUM (i.e., substitute numbers with a constant string) leads to performance improvement to all the model respect to no pre-processing at all,
 	\item ST (i.e., stemming) and HT (i.e., substitute hashtags with a constant string) decrease the performance of both models respect to no-preprocessing at all,
 \end{itemize}
 
-\begin{table}[h]
-	\footnotesize
-	\caption{Word embeddings study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score.
-		For each model the best performing word embeddings configuration has its result in bold.
-	}
-	\label{tab:representation}
-	\centering
-	\begin{tabular}{l|ccccc}
-		\toprule
-		\hline
-		\multirow{2}{*}{Models}		& \multicolumn{5}{ c }{Text representation}       \\ 
-		& Non-static	& CA static		& ES static		& CA non-static	& ES non-static	\\
-		\hline
-		Kim							& 0.541	        & 0.345	        & 0.550		    & 0.555	        &  \textbf{0.579}	\\
-		FastText					& 0.556	        & 0.351	    	& 0.450		    & 0.559	        &  \textbf{0.589}	\\
-		\hline
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-
-
-Analysing results in \Cref{tab:representation}, here the used notation refers to the one introduced in \Cref{subsec:representation}, where the listing of a notation means its use as embedded input layer for the reported result. From its analysis the following interpretation can be drawn:
+NEW for StanceCat
 \begin{itemize}
-	\item Setting as \emph{static} the sentence matrix weights has the worst performance (independently of the used language)
-	\item Setting as \emph{non-static} leads to better performance, where this insight can be deduced by corpus characteristic (i.e., a good example of Computer Mediated Communication)
-	\item The use of pre-trained embedding is useful in combination with \emph{non-static} weights (i.e., best performances with ES non-static)
-	\item Even if is not available a pre-trained embedding for the task language, the use of a similar language with non-static weight (i.e., CA non-static) can increase the performance respect only to non-static. This can be interpreted as a case of transfer learning.
+	\item insight
 \end{itemize}
 
-\begin{comment}
+
+
 \begin{table}[h]
 \footnotesize
-\caption{Text representation study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. The pre-processing setting was fixed at RM+EM.}
-%\label{tab:representation}
+\caption{Comparison of Kim's and Dilated Kim respect their best pre-processing tuning for stance\&gender detection task. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score.}
+\label{tab:dilation}
 \centering
-\begin{tabular}{l|ccccc}
+\begin{tabular}{l|cc|cc}
 \toprule
-\multirow{2}{*}{Embedding}	& \multicolumn{5}{ c }{Models}       \\ 
-& CNN		& LSTM		& B-LSTM	& FAST-TEXT	& KIM	\\ 
-\hline 
-ES static			& \textbf{48,1}		& 36,1		& 38,9		& 36,4		& 43,6\\
-CA static			& \textbf{45,1}		& 30,6		& 38,5		& 30,1		& 39,6\\ 
 \hline
-ES non-static		& \win57,1		& 52,1		& 49,9		& \win54,8		& \win\textbf{58,9}\\
-CA non-static		& 53,5		& \win53,6		& 46,3		& 54,1		& \textbf{56,2}\\
+\multirow{2}{*}{Models}		& \multicolumn{2}{c}{Stance}	& \multicolumn{2}{c}{Gender}\\
+\cline{2-5}
+							& ES		& CA		& ES		& CA		\\
 \hline
-non-static			& 52,6		& 47,3		& \win51,8		& 53,3		& \textbf{54,7}\\
+Kim							& $0.625 (\pm0.019)$ & $0.602 (\pm0.019)$ & $0.625 (\pm0.019)$ & $0.602 (\pm0.019)$	\\
+Dilated Kim					& $0.675 (\pm0.049)$ & $0.635 (\pm0.049)$ & $0.675 (\pm0.049)$ & $0.635 (\pm0.049)$	\\
+\hline
 \bottomrule
 \end{tabular}
 \end{table}
-\end{comment}
 
-In \cref{tab:overview} we report a complete overview of the evaluated models in respect to their best configurations of text pre-processing and word embedding. As can be seen, best performances are obtained by FastText and Kim's models, while recurrent models have the worst performance.
+\textbf{As before, Luca qui tocca a te mettere prima i dati nella tabella (devi trovare tu la coerenza rispetto al fatto della data augmentation) e poi mettere gli insight in maniera di concetto e poi io ci do una forma da paper}
+
+NEW for StanceCat
+\begin{itemize}
+	\item insight
+\end{itemize}
+
+
+Due to the fact that our development data set has a small number of samples, to train our models we decided to apply a \emph{data augmentation} technique that didn't rely over external data rather exploit the word embedding text representation. In details, we used a mixture of gaussian noise and batch normalization, first we \textbf{Luca put the description of where is putted the gn and how the batch normalization}. Results of this technique respect the Dilated Kim's model are reported in \cref{tab:augmentation}.
 
 \begin{table}[h]
-	\footnotesize
-	\caption{Best configurations study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
-	\label{tab:overview}
-	\centering
-	\begin{tabular}{c|c}
-		\toprule
-		\hline
-		System		& $F_{1-macro}$		\\
-		\hline
-		LSTM		& 0.556 ($\pm$ 0.012) \\
-		Bi-LSTM		& 0.555 ($\pm$ 0.035) \\
-		CNN			& 0.571 ($\pm$ 0.030) \\
-		\textbf{FastText}	& \textbf{0.589} ($\pm$ 0.018) \\
-		Kim			& 0.579 ($\pm$ 0.009) \\
-		\hline
-		\bottomrule
-	\end{tabular}
+\footnotesize
+\caption{Data augmentation study for Dilated Kim's model over the Spanish stance detection development dataset. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score. }
+\label{tab:augmentation}
+\centering
+\begin{tabular}{c|ccc}
+\toprule
+\hline
+System		& Nothing	& Gaussian noise	& Batch normalization	\\
+\hline
+Dilated Kim	& 0.556 ($\pm$ 0.012) & 0.556 ($\pm$ 0.012)	& 0.556 ($\pm$ 0.012)	\\
+\hline
+\bottomrule
+\end{tabular}
 \end{table}
 
 
 \subsection{Competition results} \label{subsec:results}
 
-For the system's submission, participants where allowed to send more than a model till a maximum of 5 possible runs, therefore in \cref{tab:results} we report our best performing systems at the COSET shared task.
+For the system's submission, participants where allowed to send more than a model till a maximum of 5 possible runs, therefore in \cref{tab:stance,tab:gender} we report our best performing systems (tuned following the process in \cref{subsec:tuning}) for the StanceCat shared task.
+
+Unfortunately, due to a submission error caught only after the official result were published, we didn't manage to be properly evaluated (the minus simbol in \cref{tab:stance,tab:gender}), therefore after the closing we asked organizers to evaluate some of our model to see how they would had performed (the test columns).
+
+\begin{table}[h]
+\footnotesize
+\caption{Comparison of the best tuning model for the stance detection respect development and test set. The reported ranking refers to the absolute position over all submissions.}
+\label{tab:stance}
+\centering
+\begin{tabular}{c|cc|cc|cc}
+\toprule
+\hline
+\multirow{3}{*}{System}	& \multicolumn{2}{c|}{Development} & \multicolumn{4}{c}{Test}	\\
+\cline{2-7}
+						& \multirow{2}{*}{ES}	& \multirow{2}{*}{CA}	& \multicolumn{2}{c|}{ES} & \multicolumn{2}{c}{CA}	\\
+\cline{4-7}
+						&		&		& Score & Ranking & Score & Ranking \\
+\hline
+LSTM					& $0.443 (\pm0.012)$ & $0.489 (\pm0.012)$ & - & - & - & - \\
+Bi-LSTM					& $0.564 (\pm0.035)$ & $0.566 (\pm0.035)$ & 0.410 & 17/31 & 0.386 & 20/31 \\
+CNN						& $0.539 (\pm0.030)$ & $0.566 (\pm0.030)$ & - & - & - & - \\
+Kim						& $0.625 (\pm0.019)$ & $0.602 (\pm0.019)$ & - & - & - & - \\
+Dilated Kim				& $0.675 (\pm0.049)$ & $0.635 (\pm0.049)$ & - & - & - & - \\
+\hline
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Luca put some comments over the result in relation to the dilated kim model also to updates the data in the gender and to change the variance in stance detection.}
+
 
 \begin{table}[h]
 	\footnotesize
-	\caption{Resulted obtained in the shared task participation. The absolute and team column represent the ranking over the whole participants.}
-	\label{tab:results}
+	\caption{Comparison of the best tuning model for the gender detection respect development and test set. The reported ranking refers to the absolute position over all submissions.}
+	\label{tab:gender}
 	\centering
-	\begin{tabular}{c|c|c|c}
+	\begin{tabular}{c|cc|cc|cc}
 		\toprule
 		\hline
-		System		& $F_{1-macro}$		& Absolute	& Team	\\
+		\multirow{3}{*}{System}	& \multicolumn{2}{c|}{Development} & \multicolumn{4}{c}{Test}	\\
+		\cline{2-7}
+		& \multirow{2}{*}{ES}	& \multirow{2}{*}{CA}	& \multicolumn{2}{c|}{ES} & \multicolumn{2}{c}{CA}	\\
+		\cline{4-7}
+		&		&		& Score & Ranking & Score & Ranking \\
 		\hline
-		\textbf{FastText}	& \textbf{0.6157}	& 7/39	& 4/17 \\
-		Kim			& 0.6065	& 8/39	& 4/17\\
+		LSTM					& $0.443 (\pm0.012)$ & $0.489 (\pm0.012)$ & - & - & - & - \\
+		Bi-LSTM					& $0.564 (\pm0.035)$ & $0.566 (\pm0.035)$ & 0.410 & 17/31 & 0.386 & 20/31 \\
+		CNN						& $0.539 (\pm0.030)$ & $0.566 (\pm0.030)$ & - & - & - & - \\
+		Kim						& $0.625 (\pm0.019)$ & $0.602 (\pm0.019)$ & - & - & - & - \\
+		Dilated Kim				& $0.675 (\pm0.049)$ & $0.635 (\pm0.049)$ & - & - & - & - \\
 		\hline
 		\bottomrule
 	\end{tabular}
