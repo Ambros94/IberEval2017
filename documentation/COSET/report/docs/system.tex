@@ -24,14 +24,14 @@ From previous consideration, we define a set of specific tweet pre-processing ap
 \item and Tweeter reserve-word as RT and FAV (i.e., RW).
 \end{enumerate*}
 
-For each of these items we leave the possibility to be removed or substituted by constant string (e.g.
+For each of these items we left the possibility to be removed or substituted by constant string (e.g.
 \begin{enumerate*}
 \item \emph{Pre-processing of @Ambros and \#atoppe :)} $\xrightarrow{substitution} $ \emph{Pre-processing of \$MENTION and \$HASHTAG \$SMILEY},
 \item \emph{Pre-processing of @Ambros and \#atoppe :)} $\xrightarrow{removing} $ \emph{Pre-processing of and}
 \end{enumerate*}
 ).
 
-To implement above pre-processing tecnique we take advantage of the following tools:
+To implement above pre-processing tecnique we took advantage of the following tools:
 \begin{enumerate*}
 \item NLTK \cite{nltk} and 
 \item Preprocessor\footnote{Preprocessor is a preprocessing library for tweet data written in Python, https://github.com/s/preprocessor}.
@@ -93,8 +93,8 @@ Regarding the architectural references in \cite{joulin2016bag}, they used a numb
 Convolutional Neural Networks (CNN) are considered state of the art in many text classification problem. Therefore, we decide to use them in a simple architecture composed by a convolutional layer, followed by a \emph{Global Max Pooling} layer and two dense layers.
 
 \subsubsection{KIM.}
-This model was introduced in \cite{kim2014convolutional}. It can be seen as a particular CNN where the convolutional layer has multiple filter widths and feature maps.
-The complete architecture is illustrated in \Cref{fig:kim}, here the input layer (i.e., sentence-matrix) is processed in a convolutional layer of multiple filters with different width, each of these results are fed into \emph{Max Pooling} layers and finally the concatenation of them (previously flatten to be dimensional coherent) is projected into a dense layer.
+This model was introduced in \cite{kim2014convolutional}. It can be seen as a particular CNN where the convolutional layer has multiple kernels' size and feature maps.
+The complete architecture is illustrated in \Cref{fig:kim}, here the input layer (i.e., sentence-matrix) is processed in a convolutional layer of multiple filters with different sizes, each of these results are fed into \emph{Max Pooling} layers and finally the concatenation of them (previously flatten to be dimensional coherent) is projected into a dense layer.
 The intuition behind this model is that smaller filter should be able to capture short sentence patterns similar to n-grams, while bigger ones should capture sentence level features.
 Regarding the architectural references in \cite{kim2014convolutional}, the number filter $|f|$ and their size was optimized leading to the following results: $|f| = 4, f_1 = 2\times2, f_2 = 3\times3, f_3 = 5\times5, f_4 = 7\times7$.
 
@@ -111,5 +111,5 @@ LSTM is a type of Recurrent Neural Network (RNN) that is relatively insensitive 
 Our architecture was made of an embedded input layer followed by an LSTM layer of 128 units, terminated by a dense layer. Moreover, to avoid overfitting we used dropout and recurrent dropout.
 
 \subsubsection{Bidirectional LSTM.} Similar to the previous model, bidirectional LSTM is a variation of LSTM where the two RNN receive different inputs, the original and its reverse order, and their results are connected through the recurrent layers.
-Our architecture follow the previous one with an LSTM layer of 128 units terminating with a dense layer, where all the layer used dropout and recurrent dropout.
+Our architecture follow the previous one with an LSTM layer of 128 units terminating with a dense layer, where all layers used dropout and recurrent dropout.
 
