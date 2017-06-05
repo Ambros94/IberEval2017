@@ -31,7 +31,7 @@ In relation to above approaches we implement them using the following tools:
 Following, we describe the neural models used for the classification module. Before introducing the models we describe the specific text representation used as input layer \Cref{subsubsec:representation} (i.e., sentence-matrix).
 
 \subsubsection{Text representation} \label{subsubsec:representation}
-To represent the text we used word embeddings as described by \cite{bojanowski2016enriching}, where tweet elements like \emph{words} and \emph{word n-grams} are represented as vectors of real number with fixed dimension $|v|$.
+To represent the text we used word embeddings as described by \cite{bojanowski2016enriching}, where \emph{words} are represented as vectors of real number with fixed dimension $|v|$.
 In this way a whole sentence $s$, with length $|s|$ its number of word, is represented as a \emph{sentence-matrix} $M$ of dimension $|M| = |s| \times |v|$. $|M|$ has to be fixed a priori, therefore $|s|$ and $|v|$ have to be estimated. $|v|$ was fixed to 300 following \cite{bojanowski2016enriching}. $|s|$ was estimated analyzing \cref{tab:tweet}, in details we decided to fix it as the sum of average length plus the standard deviation (i.e. $|s| = 17$ for both language), with this choice input sentences longer than $|s|$ are truncated, while shorter ones are padded with null vectors (i.e., a vector of all zeros).
 
 Choosing words as elements to be mapped by the embedding function, raise some challenge over the function estimation related to data availability. In our case the available corpus is very small and estimated embeddings could lead to low performance.
@@ -49,8 +49,7 @@ The complete architecture is illustrated in \Cref{fig:kim}, here the input layer
 Our extension is to use a dilated filters in combination with normal ones, the intuition is that normal filter capture \emph{adjacent words} features, while dilated one are able to capture relations between \emph{non adjacent words}.
 This behaviour can't be achieved by the original Kim's model, because, even though the filters size can be changed, they will capture only features from adjacent words.
 
-\textbf{Luca ho bisogno dei dati veri dei filtri}
-Regarding the architectural references in \cite{kim2014convolutional}, the filter's number $|f|$ and their dimension $(k,d)$, where $k$ is the kernel size and $d$ the dilation's unit, was optimized leading to the following results: $|f| = 4, f_1 = (2\times2,d), f_2 = (3\times3,d), f_3 = (5\times5,d), f_4 = (7\times7,d)$.
+Regarding the architectural references in \cite{kim2014convolutional}, the filter's number $|f|$ and their dimension $(k,d)$, where $k$ is the kernel size and $d$ the dilation's unit, was optimized leading to the following results: $|f| = 5, f_1 = (2\times2,0), f_2 = (2\times2,3), f_3 = (3\times3,1), f_4 = (5\times5,1), f_5 = (7\times7,1)$.
 
 \begin{figure}[h]
 \footnotesize
@@ -61,5 +60,5 @@ Regarding the architectural references in \cite{kim2014convolutional}, the filte
 \end{figure}
 
 \subsubsection{Recurrent neural network.}
-Long Short Term Memory (LSTM) and Bidirectional LSTM are types of Recurrent Neural Network (RNN) aiming at capture features expressed by gap length. \textbf{Che ne dici se ci spari dentro una references del tuo prof?}
+Long Short Term Memory (LSTM) and Bidirectional LSTM are types of Recurrent Neural Network (RNN) aiming at capture dynamic temporal behaviour.
 This behaviour suggest us to use them for the stance detection, in particular we use straightforward architectures made of an embedded input layer followed by an LSTM layer of 128 units, terminated by a dense layer for both normal and bidirectional models.

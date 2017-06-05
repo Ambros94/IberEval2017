@@ -38,18 +38,16 @@ recall = \frac{1}{|L|} \displaystyle\sum_{l\in L} R(y_l, \hat{y}_l)
 
 \subsection{Fine tuning process} \label{subsec:tuning}
 
-Following, we describe the fine tuning process over possible combinations of pre-processing (\Cref{tab:preprocessing}), then we compare Kim's model against our extension (\Cref{tab:dilation}) and finally report the improvement over the use of a \emph{data augmentation} technique (\Cref{tab:augmentation}).
-For brevity of information only the evaluation of Kim's model over Spanish stance detection is reported, in details, the results are calculated from averaging three runs of a 10-fold cross validation over the complete data set.
+Following, we describe the fine tuning process of our proposed model over possible combinations of pre-processing (\Cref{tab:preprocessing}), then we compare Kim's model against our extension (\Cref{tab:dilation}) and finally report the improvement over the use of a \emph{data augmentation} technique (\Cref{tab:augmentation}).
+For brevity of information only the evaluation of Dilated Kim's model over Spanish stance detection is reported, in details, the results are calculated from averaging three runs of a 10-fold cross validation over the complete data set.
 Nevertheless, the results obtained after the fine tuning process for all the models are reported in \cref{subsec:results}, where their development performances are compared against the ones obtained in the \emph{StanceCat} task.
 
 Notations used in \Cref{tab:preprocessing} refer to the one introduced in \Cref{subsec:preprocessing}, where the listing of a notation means its use for the reported result. 
 Regarding the tweet specific pre-processing, all the items have been substituted, with the exception for URL and RW that have been removed. We report the contribution of each analysed pre-processing alone.
 
-\textbf{Luca to fill the table preprocessing with correct results}
-
-\begin{table}[h]
+\begin{table}[t]
 \footnotesize
-\caption{Pre-processing fine tuning for the Kim's model from a three run of 10-fold cross validation over the development set. Results are in terms of average $F_{1-macro}$ score. The processing technique that brought a model's improvement has its result in bold.}
+\caption{Pre-processing fine tuning for the Dilated Kim's model from a three run of 10-fold cross validation over the development set. Results are in terms of average $F_{1-macro}$ score. The processing technique that brought a model's improvement has its result in bold.}
 \label{tab:preprocessing}
 \centering
 \begin{tabular}{l|cccccccccc}
@@ -58,29 +56,21 @@ Regarding the tweet specific pre-processing, all the items have been substituted
 \multirow{2}{*}{Models}		& \multicolumn{10}{ c }{Pre-processing}       \\ 
 		& Nothing	& ST	& SW	& URL	& RW	& MT	& HT	& NUM	& EM	& SM	\\
 \hline
-Kim		& 0.543		& 0.528	& \textbf{0.557}	&  \textbf{0.571}	& 0.533	&  \textbf{0.558}	& 0.540	&  \textbf{0.554}	& 0.537	& 0.539	\\
+Dilated Kim		& 0.606		& \textbf{0.615}	& 0.590	&  0.585	& 0.578	&  \textbf{0.610}	& 0.543	&  0.570	& 0.564	& 0.585	\\
 \hline
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Luca qui tocca a te mettere prima i dati nella tabella e poi mettere gli insight in maniera di concetto e poi io ci do una forma da paper}
-
-OLD from COSET
-From the analysis of \Cref{tab:preprocessing} no absolute conclusion can be drawn, meaning that it wasn't possible to find a combination of pre-processing that gives the best performance for all the model, meaning that each model is highly sensible to the performed combination. Nevertheless, some relative observation can be made:
+From the analysis of \Cref{tab:preprocessing} some relative observation can be made:
 \begin{itemize}
-	\item SW (i.e., removing spanish stop words) and NUM (i.e., substitute numbers with a constant string) leads to performance improvement to all the model respect to no pre-processing at all,
-	\item ST (i.e., stemming) and HT (i.e., substitute hashtags with a constant string) decrease the performance of both models respect to no-preprocessing at all,
-\end{itemize}
-
-NEW for StanceCat
-\begin{itemize}
-	\item insight
+\item Most of common used preprocessing decrease model's performance, meaning that their information can be directly exploited by the model
+\item Only the stemming and mention remoning brough small improvements, therefore they will be used as a best tuning for our proposed model.
 \end{itemize}
 
 
 
-\begin{table}[h]
+\begin{table}[t]
 \footnotesize
 \caption{Comparison of Kim's and Dilated Kim respect their best pre-processing tuning for stance\&gender detection task. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score.}
 \label{tab:dilation}
@@ -92,22 +82,18 @@ NEW for StanceCat
 \cline{2-5}
 							& ES		& CA		& ES		& CA		\\
 \hline
-Kim							& $0.625 (\pm0.019)$ & $0.602 (\pm0.019)$ & $0.625 (\pm0.019)$ & $0.602 (\pm0.019)$	\\
-Dilated Kim					& $0.675 (\pm0.049)$ & $0.635 (\pm0.049)$ & $0.675 (\pm0.049)$ & $0.635 (\pm0.049)$	\\
+Kim							& $0.624 (\pm0.017)$ & $0.630 (\pm0.022)$ & $0.634 (\pm0.011)$ & $0.655 (\pm0.017)$	\\
+Dilated Kim					& $0.658 (\pm0.039)$ & $0.659 (\pm0.028)$ & $0.652 (\pm0.013)$ & $0.715 (\pm0.015)$	\\
 \hline
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{As before, Luca qui tocca a te mettere prima i dati nella tabella (devi trovare tu la coerenza rispetto al fatto della data augmentation) e poi mettere gli insight in maniera di concetto e poi io ci do una forma da paper}
-
-NEW for StanceCat
-\begin{itemize}
-	\item insight
-\end{itemize}
+From the analysis of \Cref{tab:dilation} we can outline a significant performance's improvement of our proposed model respect the original Kim's model.
 
 
-Due to the fact that our development data set has a small number of samples, to train our models we decided to apply a \emph{data augmentation} technique that didn't rely over external data rather exploit the word embedding text representation. In details, we used a mixture of gaussian noise and batch normalization, first we \textbf{Luca put the description of where is putted the gn and how the batch normalization}. Results of this technique respect the Dilated Kim's model are reported in \cref{tab:augmentation}.
+Due to the fact that our development data set has few samples, to train our models we decided to apply a \emph{data augmentation} technique that didn't rely over external data rather exploit the word embedding text representation. In details, we applied Gaussian noise to word embeddings and after every convolutional layers, and, to further improve performances, we take advantage of batch normalization.
+Results of this technique respect the Dilated Kim's model are reported in \cref{tab:augmentation}.
 
 \begin{table}[h]
 \footnotesize
@@ -119,7 +105,7 @@ Due to the fact that our development data set has a small number of samples, to 
 \hline
 System		& Nothing	& Gaussian noise	& Batch normalization	\\
 \hline
-Dilated Kim	& 0.556 ($\pm$ 0.012) & 0.556 ($\pm$ 0.012)	& 0.556 ($\pm$ 0.012)	\\
+Dilated Kim	& 0.658 ($\pm$ 0.039) & 0.664 ($\pm$ 0.043)	& 0.675 ($\pm$ 0.049)	\\
 \hline
 \bottomrule
 \end{tabular}
@@ -130,7 +116,7 @@ Dilated Kim	& 0.556 ($\pm$ 0.012) & 0.556 ($\pm$ 0.012)	& 0.556 ($\pm$ 0.012)	\\
 
 For the system's submission, participants where allowed to send more than a model till a maximum of 5 possible runs, therefore in \cref{tab:stance,tab:gender} we report our best performing systems (tuned following the process in \cref{subsec:tuning}) for the StanceCat shared task.
 
-Unfortunately, due to a submission error caught only after the official result were published, we didn't manage to be properly evaluated (the minus simbol in \cref{tab:stance,tab:gender}), therefore after the closing we asked organizers to evaluate some of our model to see how they would had performed (the test columns).
+Unfortunately, due to a submission error caught only after the official results were published, we didn't manage to be properly evaluated (the minus simbol in \cref{tab:stance,tab:gender}), therefore after the closing we asked organizers to evaluate some of our model to see how they would had performed (the test columns).
 
 \begin{table}[h]
 \footnotesize
@@ -150,13 +136,11 @@ LSTM					& $0.443 (\pm0.012)$ & $0.489 (\pm0.012)$ & - & - & - & - \\
 Bi-LSTM					& $0.564 (\pm0.035)$ & $0.566 (\pm0.035)$ & 0.410 & 17/31 & 0.386 & 20/31 \\
 CNN						& $0.539 (\pm0.030)$ & $0.566 (\pm0.030)$ & - & - & - & - \\
 Kim						& $0.625 (\pm0.019)$ & $0.602 (\pm0.019)$ & - & - & - & - \\
-Dilated Kim				& $0.675 (\pm0.049)$ & $0.635 (\pm0.049)$ & - & - & - & - \\
+Dilated Kim				& \textbf{0.675 ($\pm$0.049)} & \textbf{0.635 ($\pm$0.049)} & - & - & - & - \\
 \hline
 \bottomrule
 \end{tabular}
 \end{table}
-
-\textbf{Luca put some comments over the result in relation to the dilated kim model also to updates the data in the gender and to change the variance in stance detection.}
 
 
 \begin{table}[h]
@@ -173,12 +157,16 @@ Dilated Kim				& $0.675 (\pm0.049)$ & $0.635 (\pm0.049)$ & - & - & - & - \\
 		\cline{4-7}
 		&		&		& Score & Ranking & Score & Ranking \\
 		\hline
-		LSTM					& $0.443 (\pm0.012)$ & $0.489 (\pm0.012)$ & - & - & - & - \\
-		Bi-LSTM					& $0.564 (\pm0.035)$ & $0.566 (\pm0.035)$ & 0.410 & 17/31 & 0.386 & 20/31 \\
-		CNN						& $0.539 (\pm0.030)$ & $0.566 (\pm0.030)$ & - & - & - & - \\
-		Kim						& $0.625 (\pm0.019)$ & $0.602 (\pm0.019)$ & - & - & - & - \\
-		Dilated Kim				& $0.675 (\pm0.049)$ & $0.635 (\pm0.049)$ & - & - & - & - \\
+		LSTM					& $0.579 (\pm0.010)$ & $0.648 (\pm0.008)$ & - & - & - & - \\
+		Bi-LSTM					& $0.679 (\pm0.025)$ & $0.766 (\pm0.028)$ & - & - & - & - \\
+		\textbf{CNN}			& \textbf{0.756 ($\pm$0.027)} & \textbf{0.810 ($\pm$0.022)} & \textbf{0.736} & \textbf{1/21} & \textbf{0.457} & \textbf{4/17} \\
+		Kim						& $0.608 (\pm0.017)$ & $0.715 (\pm0.014)$ & - & - & - & - \\
+		Dilated Kim				& $0.649 (\pm0.029)$ & $0.745 (\pm0.039)$ & - & - & - & - \\
 		\hline
 		\bottomrule
 	\end{tabular}
 \end{table}
+
+In \cref{tab:stance} (stance detection results), we see that our proposed Dilated Kim's model outperformed both recurrent and convolutional models, giving us insight for future developments.
+
+In \cref{tab:gender} (gender detection results), the best performance is achieved by a simple convolutional neural network, that from the test evaluation should had achieved the best result in the Spanish gender detection task.

@@ -33,12 +33,12 @@
 \citation{bojanowski2016enriching}
 \citation{bojanowski2016enriching}
 \citation{bojanowski2016enriching}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Statistical analysis of given corpus' tweets.\relax }}{2}{table.caption.2}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Statistical analysis of tweets' label from given corpus.\relax }}{2}{table.caption.2}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{tab:label}{{1}{2}{Statistical analysis of given corpus' tweets.\relax }{table.caption.2}{}}
+\newlabel{tab:label}{{1}{2}{Statistical analysis of tweets' label from given corpus.\relax }{table.caption.2}{}}
 \newlabel{tab:label@cref}{{[table][1][]1}{2}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Statistical analysis of given corpus' tweets.\relax }}{2}{table.caption.3}}
-\newlabel{tab:tweet}{{2}{2}{Statistical analysis of given corpus' tweets.\relax }{table.caption.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Statistical analysis of given corpus' tweets regarding words length.\relax }}{2}{table.caption.3}}
+\newlabel{tab:tweet}{{2}{2}{Statistical analysis of given corpus' tweets regarding words length.\relax }{table.caption.3}{}}
 \newlabel{tab:tweet@cref}{{[table][2][]2}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Text pre-processing}{2}{subsection.1.3.1}}
 \newlabel{subsec:preprocessing}{{3.1}{2}{Text pre-processing}{subsection.1.3.1}{}}
@@ -81,18 +81,23 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Fine tuning process}{4}{subsection.1.4.2}}
 \newlabel{subsec:tuning}{{4.2}{4}{Fine tuning process}{subsection.1.4.2}{}}
 \newlabel{subsec:tuning@cref}{{[subsection][2][4]4.2}{4}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Pre-processing fine tuning for the Kim's model from a three run of 10-fold cross validation over the development set. Results are in terms of average $F_{1-macro}$ score. The processing technique that brought a model's improvement has its result in bold.\relax }}{5}{table.caption.9}}
-\newlabel{tab:preprocessing}{{3}{5}{Pre-processing fine tuning for the Kim's model from a three run of 10-fold cross validation over the development set. Results are in terms of average $F_{1-macro}$ score. The processing technique that brought a model's improvement has its result in bold.\relax }{table.caption.9}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Pre-processing fine tuning for the Dilated Kim's model from a three run of 10-fold cross validation over the development set. Results are in terms of average $F_{1-macro}$ score. The processing technique that brought a model's improvement has its result in bold.\relax }}{5}{table.caption.9}}
+\newlabel{tab:preprocessing}{{3}{5}{Pre-processing fine tuning for the Dilated Kim's model from a three run of 10-fold cross validation over the development set. Results are in terms of average $F_{1-macro}$ score. The processing technique that brought a model's improvement has its result in bold.\relax }{table.caption.9}{}}
 \newlabel{tab:preprocessing@cref}{{[table][3][]3}{5}}
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Comparison of Kim's and Dilated Kim respect their best pre-processing tuning for stance\&gender detection task. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score.\relax }}{5}{table.caption.10}}
 \newlabel{tab:dilation}{{4}{5}{Comparison of Kim's and Dilated Kim respect their best pre-processing tuning for stance\&gender detection task. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score.\relax }{table.caption.10}{}}
 \newlabel{tab:dilation@cref}{{[table][4][]4}{5}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Data augmentation study for Dilated Kim's model over the Spanish stance detection development dataset. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score. \relax }}{5}{table.caption.11}}
+\newlabel{tab:augmentation}{{5}{5}{Data augmentation study for Dilated Kim's model over the Spanish stance detection development dataset. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score. \relax }{table.caption.11}{}}
+\newlabel{tab:augmentation@cref}{{[table][5][]5}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Competition results}{5}{subsection.1.4.3}}
 \newlabel{subsec:results}{{4.3}{5}{Competition results}{subsection.1.4.3}{}}
 \newlabel{subsec:results@cref}{{[subsection][3][4]4.3}{5}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Data augmentation study for Dilated Kim's model over the Spanish stance detection development dataset. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score. \relax }}{6}{table.caption.11}}
-\newlabel{tab:augmentation}{{5}{6}{Data augmentation study for Dilated Kim's model over the Spanish stance detection development dataset. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score. \relax }{table.caption.11}{}}
-\newlabel{tab:augmentation@cref}{{[table][5][]5}{6}}
+\bibstyle{splncs}
+\bibcite{kim2014convolutional}{1}
+\bibcite{joulin2016bag}{2}
+\bibcite{nltk}{3}
+\bibcite{bojanowski2016enriching}{4}
 \@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Comparison of the best tuning model for the stance detection respect development and test set. The reported ranking refers to the absolute position over all submissions.\relax }}{6}{table.caption.12}}
 \newlabel{tab:stance}{{6}{6}{Comparison of the best tuning model for the stance detection respect development and test set. The reported ranking refers to the absolute position over all submissions.\relax }{table.caption.12}{}}
 \newlabel{tab:stance@cref}{{[table][6][]6}{6}}
@@ -102,11 +107,6 @@
 \@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{6}{section.1.5}}
 \newlabel{sec:conclusion}{{5}{6}{Conclusions}{section.1.5}{}}
 \newlabel{sec:conclusion@cref}{{[section][5][]5}{6}}
-\bibstyle{splncs}
-\bibcite{kim2014convolutional}{1}
-\bibcite{joulin2016bag}{2}
-\bibcite{nltk}{3}
-\bibcite{bojanowski2016enriching}{4}
 \bibcite{harris1954distributional}{5}
 \bibcite{bazzanella2011oscillazioni}{6}
 \bibcite{cerruti2013netspeak}{7}
