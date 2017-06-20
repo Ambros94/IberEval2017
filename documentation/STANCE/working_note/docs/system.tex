@@ -48,7 +48,7 @@ The complete architecture is illustrated in \Cref{fig:kim}, here the input layer
 Our extension is to use a dilated filters in combination with normal ones, the intuition is that normal filter capture \emph{adjacent words} features, while dilated one are able to capture relations between \emph{non adjacent words}.
 This behaviour can't be achieved by the original Kim's model, because, even though the filters size can be changed, they will capture only features from adjacent words.
 
-Regarding the architectural references in \cite{kim2014convolutional}, the filter's number $|f|$ and their dimension $(k,d)$, where $k$ is the kernel size and $d$ the dilation's unit, was optimized leading to the following results: $|f| = 5, f_1 = (2\times2,0), f_2 = (2\times2,3), f_3 = (3\times3,1), f_4 = (5\times5,1), f_5 = (7\times7,1)$.
+Regarding the architectural references in \cite{kim2014convolutional}, the filter's number $|f|$ and their dimension $(k,d)$, where $k$ is the kernel size and $d$ the dilation's unit, was optimized leading to the following results: $|f| = 5, f_1 = (2\times|v|,0), f_2 = (2\times|v|,3), f_3 = (3\times|v|,1), f_4 = (5\times|v|,1), f_5 = (7\times|v|,1)$.
 
 \begin{figure}[h]
 \footnotesize
@@ -57,6 +57,7 @@ Regarding the architectural references in \cite{kim2014convolutional}, the filte
 \caption{\cite{zhang2015sensitivity} Illustration of a Convolutional Neural Network (CNN) architecture for sentence classification}
 \label{fig:kim}
 \end{figure}
+
 
 \subsubsection{Recurrent neural network.}
 Long Short Term Memory (LSTM) and Bidirectional LSTM are types of Recurrent Neural Network (RNN) aiming at capture dynamic temporal behaviour.

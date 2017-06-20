@@ -45,10 +45,12 @@ Nevertheless, the results obtained after the fine tuning process for all the mod
 Notations used in \Cref{tab:preprocessing} refer to the one introduced in \Cref{subsec:preprocessing}, where the listing of a notation means its use for the reported result. 
 Regarding the tweet specific pre-processing, all the items have been substituted, with the exception for URL and RW that have been removed. We report the contribution of each analysed pre-processing alone.
 
+\begin{comment}
+
 \begin{table}[t]
 \footnotesize
 \caption{Pre-processing fine tuning for the Dilated Kim's model from a three run of 10-fold cross validation over the development set. Results are in terms of average $F_{1-macro}$ score. The processing technique that brought a model's improvement has its result in bold.}
-\label{tab:preprocessing}
+\label{tab:preprocessingOLD}
 \centering
 \begin{tabular}{l|cccccccccc}
 \toprule
@@ -61,6 +63,24 @@ Dilated Kim		& 0.606		& \textbf{0.615}	& 0.590	&  0.585	& 0.578	&  \textbf{0.610
 \bottomrule
 \end{tabular}
 \end{table}
+\end{comment}
+
+
+\begin{table}[h]
+	\centering
+	\caption{Pre-processing fine tuning for the Dilated Kim's model from a three run of 10-fold cross validation over the development set. Results are in terms of average $F_{1-macro}$ score. The processing technique that brought a model's improvement has its result in bold.}
+	\label{tab:preprocessing}
+	\begin{tabular}{l|cccccccccc}
+		\hline\noalign{\smallskip}
+		\multirow{2}{*}{Models}		& \multicolumn{10}{ c }{Pre-processing}       \\ 
+		& Nothing	& ST	& SW	& URL	& RW	& MT	& HT	& NUM	& EM	& SM	\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		Dilated Kim		& 0.606		& \textbf{0.615}	& 0.590	&  0.585	& 0.578	&  \textbf{0.610}	& 0.543	&  0.570	& 0.564	& 0.585	\\
+		\hline
+	\end{tabular}
+\end{table}
 
 From the analysis of \Cref{tab:preprocessing} some relative observation can be made:
 \begin{itemize}
@@ -69,11 +89,12 @@ From the analysis of \Cref{tab:preprocessing} some relative observation can be m
 \end{itemize}
 
 
+\begin{comment}
 
 \begin{table}[t]
 \footnotesize
 \caption{Comparison of Kim's and Dilated Kim respect their best pre-processing tuning for stance\&gender detection task. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score.}
-\label{tab:dilation}
+\label{tab:dilationOLD}
 \centering
 \begin{tabular}{l|cc|cc}
 \toprule
@@ -88,6 +109,26 @@ Dilated Kim					& $0.658 (\pm0.039)$ & $0.659 (\pm0.028)$ & $0.652 (\pm0.013)$ &
 \bottomrule
 \end{tabular}
 \end{table}
+\end{comment}
+
+\begin{table}[h]
+	\centering
+	\caption{Comparison of Kim's and Dilated Kim respect their best pre-processing tuning for stance\&gender detection task. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score.}
+	\label{tab:dilation}
+	\begin{tabular}{l|cc|cc}
+		\hline\noalign{\smallskip}
+		\multirow{2}{*}{Models}		& \multicolumn{2}{c|}{Stance}	& \multicolumn{2}{c}{Gender}\\
+		\cline{2-5}
+		& ES		& CA		& ES		& CA		\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		Kim							& $0.624 (\pm0.017)$ & $0.630 (\pm0.022)$ & $0.634 (\pm0.011)$ & $0.655 (\pm0.017)$	\\
+		Dilated Kim					& $0.658 (\pm0.039)$ & $0.659 (\pm0.028)$ & $0.652 (\pm0.013)$ & $0.715 (\pm0.015)$	\\
+		\hline
+	\end{tabular}
+\end{table}
+
 
 From the analysis of \Cref{tab:dilation} we can outline a significant performance's improvement of our proposed model respect the original Kim's model.
 
@@ -95,10 +136,11 @@ From the analysis of \Cref{tab:dilation} we can outline a significant performanc
 Due to the fact that our development data set has few samples, to train our models we decided to apply a \emph{data augmentation} technique that didn't rely over external data rather exploit the word embedding text representation. In details, we applied Gaussian noise to word embeddings and after every convolutional layers, and, to further improve performances, we take advantage of batch normalization.
 Results of this technique respect the Dilated Kim's model are reported in \cref{tab:augmentation}.
 
+\begin{comment}
 \begin{table}[h]
 \footnotesize
 \caption{Data augmentation study for Dilated Kim's model over the Spanish stance detection development dataset. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score. }
-\label{tab:augmentation}
+\label{tab:augmentationOLD}
 \centering
 \begin{tabular}{c|ccc}
 \toprule
@@ -110,18 +152,34 @@ Dilated Kim	& 0.658 ($\pm$ 0.039) & 0.664 ($\pm$ 0.043)	& 0.675 ($\pm$ 0.049)	\\
 \bottomrule
 \end{tabular}
 \end{table}
+\end{comment}
 
+\begin{table}[h]
+	\centering
+	\caption{Data augmentation study for Dilated Kim's model over the Spanish stance detection development dataset. Results are averaged after three run of 10-fold cross validation over the development set in terms of averaged $F_{1-macro}$ score. }
+	\label{tab:augmentation}
+	\begin{tabular}{c|ccc}
+		\hline\noalign{\smallskip}
+		System		& Nothing	& Gaussian noise	& Batch normalization	\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		Dilated Kim	& 0.658 ($\pm$ 0.039) & 0.664 ($\pm$ 0.043)	& 0.675 ($\pm$ 0.049)	\\
+		\hline
+	\end{tabular}
+\end{table}
 
 \subsection{Competition results} \label{subsec:results}
 
 For the system's submission, participants where allowed to send more than a model till a maximum of 5 possible runs, therefore in \cref{tab:stance,tab:gender} we report our best performing systems (tuned following the process in \cref{subsec:tuning}) for the StanceCat shared task.
 
-Unfortunately, due to a submission error caught only after the official results were published, we didn't manage to be properly evaluated (the minus simbol in \cref{tab:stance,tab:gender}), therefore after the closing we asked organizers to evaluate some of our model to see how they would had performed (the test columns).
+Unfortunately, due to a submission error caught only after the official results were published, we didn't manage to be properly evaluated (in \cref{tab:stance,tab:gender} the submitted models with name in parentheses and asterisk), therefore after the closing we asked organizers to evaluate some of our model to see how they would had performed (the models with test results in bold).
 
+\begin{comment}
 \begin{table}[h]
 \footnotesize
 \caption{Comparison of the best tuning model for the stance detection respect development and test set. The reported ranking refers to the absolute position over all submissions.}
-\label{tab:stance}
+\label{tab:stanceOLD}
 \centering
 \begin{tabular}{c|cc|cc|cc}
 \toprule
@@ -141,12 +199,39 @@ Dilated Kim				& \textbf{0.675 ($\pm$0.049)} & \textbf{0.635 ($\pm$0.049)} & - &
 \bottomrule
 \end{tabular}
 \end{table}
+\end{comment}
 
+
+\begin{table}[h]
+	\centering
+	\caption{Comparison of the best tuning model for the stance detection respect development and test set. The reported ranking refers to the absolute position over all submissions.}
+	\label{tab:stance}
+	\begin{tabular}{c|cc|cc|cc}
+		\hline\noalign{\smallskip}
+		\multirow{3}{*}{System}	& \multicolumn{2}{c|}{Development} & \multicolumn{4}{c}{Test}	\\
+		\cline{2-7}
+		& \multirow{2}{*}{ES}	& \multirow{2}{*}{CA}	& \multicolumn{2}{c|}{ES} & \multicolumn{2}{c}{CA}	\\
+		\cline{4-7}
+		&		&		& Score & Ranking & Score & Ranking \\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		LSTM (attoppe.1)*		& $0.443 (\pm0.012)$ & $0.489 (\pm0.012)$ & 0.1906 & 31/31 & 0.271 & 31/31 \\
+		Bi-LSTM	(attoppe.2)		& $0.564 (\pm0.035)$ & $0.566 (\pm0.035)$ & \textbf{0.410} & \textbf{17/31} & \textbf{0.386} & \textbf{20/31} \\
+		CNN	(attoppe.3)*			& $0.539 (\pm0.030)$ & $0.566 (\pm0.030)$ & 0.2074 & 30/31 & 0.331 & 24/31 \\
+		Kim	(attoppe.4)*			& $0.625 (\pm0.019)$ & $0.602 (\pm0.019)$ & 0.2426 & 29/31 & 0.291 & 30/31 \\
+		Dilated Kim	(attoppe.5)*	& \textbf{0.675 ($\pm$0.049)} & \textbf{0.635 ($\pm$0.049)} & 0.2466 & 27/31 & 0.312 & 26/31 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\begin{comment}
 
 \begin{table}[h]
 	\footnotesize
 	\caption{Comparison of the best tuning model for the gender detection respect development and test set. The reported ranking refers to the absolute position over all submissions.}
-	\label{tab:gender}
+	\label{tab:genderOLD}
 	\centering
 	\begin{tabular}{c|cc|cc|cc}
 		\toprule
@@ -164,6 +249,30 @@ Dilated Kim				& \textbf{0.675 ($\pm$0.049)} & \textbf{0.635 ($\pm$0.049)} & - &
 		Dilated Kim				& $0.649 (\pm0.029)$ & $0.745 (\pm0.039)$ & - & - & - & - \\
 		\hline
 		\bottomrule
+	\end{tabular}
+\end{table}
+\end{comment}
+
+\begin{table}[h]
+	\centering
+	\caption{Comparison of the best tuning model for the gender detection respect development and test set. The reported ranking refers to the absolute position over all submissions.}
+	\label{tab:gender}
+	\begin{tabular}{c|cc|cc|cc}
+		\hline\noalign{\smallskip}
+		\multirow{3}{*}{System}	& \multicolumn{2}{c|}{Development} & \multicolumn{4}{c}{Test}	\\
+		\cline{2-7}
+		& \multirow{2}{*}{ES}	& \multirow{2}{*}{CA}	& \multicolumn{2}{c|}{ES} & \multicolumn{2}{c}{CA}	\\
+		\cline{4-7}
+		&		&		& Score & Ranking & Score & Ranking \\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		LSTM (attoppe.1)*		& $0.579 (\pm0.010)$ & $0.648 (\pm0.008)$ & - & 22/21 & - & 18/17 \\
+		Bi-LSTM	(attoppe.2)*		& $0.679 (\pm0.025)$ & $0.766 (\pm0.028)$ & - & 22/21 & - & 18/17 \\
+		CNN (attoppe.3)& \textbf{0.756 ($\pm$0.027)} & \textbf{0.810 ($\pm$0.022)} & \textbf{0.736} & \textbf{1/21} & \textbf{0.457} & \textbf{4/17} \\
+		Kim (attoppe.4)*			& $0.608 (\pm0.017)$ & $0.715 (\pm0.014)$ & - & 22/21 & - & 18/17 \\
+		Dilated Kim	(attoppe.5)*	& $0.649 (\pm0.029)$ & $0.745 (\pm0.039)$ & - & 22/21 & - & 18/17 \\
+		\hline
 	\end{tabular}
 \end{table}
 

@@ -1,8 +1,11 @@
 \section{Task definition} \label{sec:task}
 
-The StanceCat shared task aim was to detect the author's gender and stance with respect to the target \emph{independence of Catalonia} in tweets written in Spanish and Catalan, where participants are allowed to detect both stance and gender or only stance.
+The StanceCat shared task aim was to detect the author's gender and stance with respect to the target \emph{independence of Catalonia} in tweets written in Spanish and Catalan, where participants are allowed to detect both stance and gender or only stance \cite{taule2017overview}.
 
 Participants had access to a labelled corpus of 4319 tweets for each language. We analysed it and find the following statistical informations presented in \cref{tab:tweet,tab:label}.
+
+\begin{comment}
+
 
 \begin{table}[h]
 \footnotesize
@@ -18,7 +21,7 @@ CA			& 2648		& 1540			& 131		& 4319		\\
 \bottomrule
 \end{tabular}
 \caption{Statistical analysis of tweets' label from given corpus.}
-\label{tab:label}
+\label{tab:labelold}
 \end{table}
 
 \begin{table}[h]
@@ -35,7 +38,41 @@ CA			& 13			& 4				& 20		\\
 \bottomrule
 \end{tabular}
 \caption{Statistical analysis of given corpus' tweets regarding words length.}
-\label{tab:tweet}
+\label{tab:tweetold}
 \end{table}
 
+\end{comment}
+
+\begin{table}[h]
+	\centering
+	\caption{Statistical analysis of tweets' label from given corpus.}
+	\label{tab:label}
+	\begin{tabular}{l|cccc}
+		\hline\noalign{\smallskip}
+		Label		& Favor		& Neutral		& Against	& Total		\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		ES			& 335		& 2538			& 1446		& 4319		\\
+		CA			& 2648		& 1540			& 131		& 4319		\\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\begin{table}[h]
+	\centering
+	\caption{Statistical analysis of given corpus' tweets regarding words length.}
+	\label{tab:tweet}
+	\begin{tabular}{l|cccc}
+		\hline\noalign{\smallskip}
+		Tweets		& Average		& Deviation		& Max		\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		ES			& 14			& 3				& 23		\\ 
+		CA			& 13			& 4				& 20		\\ 
+		\hline
+	\end{tabular}
+\end{table}
 
