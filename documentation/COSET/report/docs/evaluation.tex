@@ -32,13 +32,15 @@ recall = \frac{1}{|L|} \displaystyle\sum_{l\in L} R(y_l, \hat{y}_l)
 Following, we present a comparative study over possible combinations of pre-processing (\Cref{tab:preprocessing}) and word embeddings (\Cref{tab:representation}), in both cases results are calculated from averaging three runs of a 10-fold cross validation over the complete data set.
 Notations used in \Cref{tab:preprocessing} refer to the one introduced in \Cref{subsec:preprocessing}, where the listing of a notation means its use for the reported result. 
 Regarding the tweet specific pre-processing, all the items have been substituted, with the exception for URL and RW that have been removed. We report the contribution of each analysed pre-processing alone.
+To not overwhelm reader with verbose data, reported results are focused only over the two best performing model (Kim's model and FastText).
 
+\begin{comment}
 \begin{table}[h]
 \footnotesize
 \caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. 
 For each model processing tecnique that brought an improvement has its result in bold.
 }
-\label{tab:preprocessing}
+\label{tab:preprocessingOLD}
 \centering
 \begin{tabular}{l|cccccccccc}
 \toprule
@@ -52,20 +54,43 @@ FastText					& 0.546			&  0.533	&  \textbf{0.550}	& 0.534	&  \textbf{0.553}	& 0.
 \bottomrule
 \end{tabular}
 \end{table}
+\end{comment}
+
+\begin{table}[h]
+	\centering
+	\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. 
+		For each model processing tecnique that brought an improvement has its result in bold.
+	}
+	\label{tab:preprocessing}
+	\begin{tabular}{l|cccccccccc}
+		\hline\noalign{\smallskip}
+		\multirow{2}{*}{Models}		& \multicolumn{10}{ c }{Pre-processing}       \\ 
+		& Nothing	& ST	& SW	& URL	& RW	& MT	& HT	& NUM	& EM	& SM	\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		Kim							& 0.543			& 0.528	& \textbf{0.557}	&  \textbf{0.571}	& 0.533	&  \textbf{0.558}	& 0.540	&  \textbf{0.554}	& 0.537	& 0.539	\\
+		FastText					& 0.546			&  0.533	&  \textbf{0.550}	& 0.534	&  \textbf{0.553}	& 0.519	& 0.538	&  \textbf{0.558}	&  \textbf{0.552}	&  \textbf{0.566}	\\
+		\hline
+	\end{tabular}
+\end{table}
 
 
 From the analysis of \Cref{tab:preprocessing} no absolute conclusion can be drawn, meaning that it wasn't possible to find a combination of pre-processing that gives the best performance for all the model, meaning that each model is highly sensible to the performed combination. Nevertheless, some relative observation can be made:
 \begin{itemize}
 \item SW (i.e., removing spanish stop words) and NUM (i.e., substitute numbers with a constant string) leads to performance improvement to all the model respect to no pre-processing at all,
-\item ST (i.e., stemming) and HT (i.e., substitute hashtags with a constant string) decrease the performance of both models respect to no-preprocessing at all,
+\item ST (i.e., stemming) and HT (i.e., substitute hashtags with a constant string) decrease the performance of both models respect to no-preprocessing at all.
 \end{itemize}
 
+From above observations, to continue our study and fix system's pre-processing pipeline, for each classification model we decided to use the combination of pre-processings that singularly applied give improvements to the system.
+
+\begin{comment}
 \begin{table}[h]
 \footnotesize
 \caption{Word embeddings study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score.
 For each model the best performing word embeddings configuration has its result in bold.
  }
-\label{tab:representation}
+\label{tab:representationOLD}
 \centering
 \begin{tabular}{l|ccccc}
 \toprule
@@ -81,6 +106,26 @@ FastText					& 0.556	        & 0.351	    	& 0.450		    & 0.559	        &  \textb
 \end{table}
 
 
+%with CA
+
+\begin{table}[h]
+	\centering
+	\caption{Word embeddings study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score.
+		For each model the best performing word embeddings configuration has its result in bold.
+	}
+	\label{tab:representationwithCA}
+	\begin{tabular}{l|ccccc}
+		\hline\noalign{\smallskip}
+		\multirow{2}{*}{Models}		& \multicolumn{5}{ c }{Text representation}       \\ 
+		& Non-static	& CA static		& ES static		& CA non-static	& ES non-static	\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		Kim							& 0.541	        & 0.345	        & 0.550		    & 0.555	        &  \textbf{0.579}	\\
+		FastText					& 0.556	        & 0.351	    	& 0.450		    & 0.559	        &  \textbf{0.589}	\\
+		\hline
+	\end{tabular}
+\end{table}
 
 Analysing results in \Cref{tab:representation}, here the used notation refers to the one introduced in \Cref{subsec:representation}, where the listing of a notation means its use as embedded input layer for the reported result. From its analysis the following interpretation can be drawn:
 \begin{itemize}
@@ -90,7 +135,8 @@ Analysing results in \Cref{tab:representation}, here the used notation refers to
 \item Even if is not available a pre-trained embedding for the task language, the use of a similar language with non-static weight (i.e., CA non-static) can increase the performance respect only to non-static. This can be interpreted as a case of transfer learning.
 \end{itemize}
 
-\begin{comment}
+%with all models
+
 \begin{table}[h]
 \footnotesize
 \caption{Text representation study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. The pre-processing setting was fixed at RM+EM.}
@@ -99,7 +145,7 @@ Analysing results in \Cref{tab:representation}, here the used notation refers to
 \begin{tabular}{l|ccccc}
 \toprule
 \multirow{2}{*}{Embedding}	& \multicolumn{5}{ c }{Models}       \\ 
-					& CNN		& LSTM		& B-LSTM	& FAST-TEXT	& KIM	\\ 
+& CNN		& LSTM		& B-LSTM	& FAST-TEXT	& KIM	\\ 
 \hline 
 ES static			& \textbf{48,1}		& 36,1		& 38,9		& 36,4		& 43,6\\
 CA static			& \textbf{45,1}		& 30,6		& 38,5		& 30,1		& 39,6\\ 
@@ -111,14 +157,43 @@ non-static			& 52,6		& 47,3		& \win51,8		& 53,3		& \textbf{54,7}\\
 \bottomrule
 \end{tabular}
 \end{table}
+
+
 \end{comment}
 
-In \cref{tab:overview} we report a complete overview of the evaluated models in respect to their best configurations of text pre-processing and word embedding. As can be seen, best performances are obtained by FastText and Kim's models, while recurrent models have the worst performance.
+\begin{table}[h]
+	\centering
+	\caption{Word embeddings study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score.
+		For each model the best performing word embeddings configuration has its result in bold.
+	}
+	\label{tab:representation}
+	\begin{tabular}{l|ccc}
+		\hline\noalign{\smallskip}
+		\multirow{2}{*}{Models}		& \multicolumn{3}{ c }{Text representation}       \\ 
+		& Non-static	& ES static		& ES non-static	\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		Kim							& 0.541 ($\pm$ 0.019)	& 0.550 ($\pm$ 0.015)	&  \textbf{0.579 ($\pm$ 0.018)}	\\
+		FastText					& 0.556	($\pm$ 0.013)	& 0.450	($\pm$ 0.011)	&  \textbf{0.589 ($\pm$ 0.010)}	\\
+		\hline
+	\end{tabular}
+\end{table}
 
+Analysing results in \Cref{tab:representation}, here the used notation refers to the one introduced in \Cref{subsec:representation}, where the listing of a notation means its use as embedded input layer for the reported result. From its analysis the following interpretation can be drawn:
+\begin{itemize}
+	\item Setting as \emph{static} the sentence matrix weights has the worst performance
+	\item Setting as \emph{non-static} leads to better performance, where this insight can be deduced by corpus characteristic (i.e., a good example of Computer Mediated Communication)
+	\item The use of pre-trained embedding is useful in combination with \emph{non-static} weights (i.e., best performances with ES non-static)
+\end{itemize}
+
+
+In \cref{tab:overview} we report a complete overview of the evaluated models in respect to their best configurations of text pre-processing and word embedding. As can be seen, best performances are obtained by FastText and Kim's models, while recurrent models have the worst performance.
+\begin{comment}
 \begin{table}[h]
 \footnotesize
 \caption{Best configurations study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
-\label{tab:overview}
+\label{tab:overviewOLD}
 \centering
 \begin{tabular}{c|c}
 \toprule
@@ -134,16 +209,38 @@ Kim			& 0.579 ($\pm$ 0.009) \\
 \bottomrule
 \end{tabular}
 \end{table}
+\end{comment}
+
+
+\begin{table}[h]
+	\centering
+	\caption{Best configurations study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
+	\label{tab:overview}
+	\begin{tabular}{c|c}
+		\hline\noalign{\smallskip}
+		System		& $F_{1-macro}$		\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		LSTM		& 0.556 ($\pm$ 0.012) \\
+		Bi-LSTM		& 0.555 ($\pm$ 0.035) \\
+		CNN			& 0.571 ($\pm$ 0.030) \\
+		\textbf{FastText}	& \textbf{0.589 ($\pm$ 0.018)} \\
+		Kim			& 0.579 ($\pm$ 0.009) \\
+		\hline
+	\end{tabular}
+\end{table}
 
 
 \subsection{Competition results} \label{subsec:results}
 
 For the system's submission, participants where allowed to send more than a model till a maximum of 5 possible runs, therefore in \cref{tab:results} we report our best performing systems at the COSET shared task.
 
+\begin{comment}
 \begin{table}[h]
 \footnotesize
 \caption{Resulted obtained in the shared task participation. The absolute and team column represent the ranking over the whole participants.}
-\label{tab:results}
+\label{tab:resultsOLD}
 \centering
 \begin{tabular}{c|c|c|c}
 \toprule
@@ -155,4 +252,21 @@ Kim			& 0.6065	& 8/39	& 4/17\\
 \hline
 \bottomrule
 \end{tabular}
+\end{table}
+\end{comment}
+
+\begin{table}[h]
+	\centering
+	\caption{Resulted obtained in the shared task participation. The absolute and team column represent the ranking over the whole participants.}
+	\label{tab:results}
+	\begin{tabular}{c|c|c|c}
+		\hline\noalign{\smallskip}
+		System		& $F_{1-macro}$		& Absolute	& Team	\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		\textbf{FastText}	& \textbf{0.6157}	& 7/39	& 4/17 \\
+		Kim			& 0.6065	& 8/39	& 4/17\\
+		\hline
+	\end{tabular}
 \end{table}

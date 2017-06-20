@@ -1,6 +1,6 @@
 \section{Task definition} \label{sec:task}
 
-The COSET shared task aim was to classify Spanish written tweets talking about the 2015 Spanish General Election, where each tweet had to be classified into one of five different categories:
+The COSET shared task \cite{gimenez2017overview} aim was to classify Spanish written tweets talking about the 2015 Spanish General Election, where each tweet had to be classified into one of five different categories:
 \begin{enumerate*}
 \item political issues, related to the most abstract electoral confrontation; 
 \item policy issues, about sectorial policies; 
@@ -12,6 +12,7 @@ The COSET shared task aim was to classify Spanish written tweets talking about t
 
 Participants had access to a labelled corpus composed of training set (2242 tweets) and development set (250 tweets) for system benchmarking, we analysed it and find the following statistical informations presented in \cref{tab:corpus}.
 
+\begin{comment}
 \begin{table}[h]
 \footnotesize
 \centering
@@ -25,5 +26,23 @@ Words		& 140				& 49				\\
 \bottomrule
 \end{tabular}
 \caption{Statistical analysis of given corpus' tweets.}
-\label{tab:corpus}
+\label{tab:corpusOLD}
+\end{table}
+\end{comment}
+
+
+\begin{table}[h]
+	\centering
+	\caption{Statistical analysis of given corpus' tweets.}
+	\label{tab:corpus}
+	\begin{tabular}{l|cc}
+		\hline\noalign{\smallskip}
+					& Average length	& Maximum length	\\
+		\noalign{\smallskip}
+		\hline
+		\noalign{\smallskip}
+		Chars		& 135				& 140				\\ 
+		Words		& 140				& 49				\\ 
+		\hline
+	\end{tabular}
 \end{table}

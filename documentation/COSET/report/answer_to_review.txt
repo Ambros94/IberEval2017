@@ -1,0 +1,17 @@
+1) just put (via grid search) after word "optimization"
+2) add to subsubsection word embedding "this choice was made after previous tries over other embeddings estimated from other corpus that lead to poor performance."
+3) remove all the catalan citing and commented
+4) change from "the complete architecture" -> "The architecture's idea"
+5) LUCA
+6) Ignorata perchè sta scritto nel kim's model
+7) change of kernel
+8) LUCA
+9) two dense layer
+10) [written after pre-processing observation]
+From above observations, to continue our study and fix system's pre-processing pipeline, for each classification model we decided to use the combination of pre-processings that singularly applied give improvements to the system.
+11) To not overwhelm reader of  verbose data, reported results are focused only over the two best performing model (Kim's model and FastText).
+12) invented results
+13) Ignored due to explanation inside the comparative study.
+It's still missing the best configuration for each system, @Luca if you have it just
+send them and I will write them ;)
+
