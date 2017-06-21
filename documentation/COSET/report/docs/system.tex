@@ -100,6 +100,7 @@ Regarding the architectural references in \cite{joulin2016bag}, they used a numb
 
 \subsubsection{Convolutional Neural Network.}
 Convolutional Neural Networks (CNN) are considered state of the art in many text classification problem. Therefore, we decide to use them in a simple architecture composed by a convolutional layer, followed by a \emph{Global Max Pooling} layer and two dense layers.
+Between the two dense layers we used dropout(0.2) to avoid overfitting.
 
 \subsubsection{KIM.}
 This model was introduced in \cite{kim2014convolutional}. It can be seen as a particular CNN where the convolutional layer has multiple kernels' size and feature maps.
@@ -117,8 +118,8 @@ Regarding the architectural references in \cite{kim2014convolutional}, the numbe
 
 \subsubsection{Long short-term memory.}
 LSTM is a type of Recurrent Neural Network (RNN) that is relatively insensitive to gap length. Thanks to this behaviour, they are considered state of the art in some NLP problems.
-Our architecture was made of an embedded input layer followed by an LSTM layer of 128 units, terminated by a dense layer. Moreover, to avoid overfitting we used dropout and recurrent dropout.
+Our architecture was made of an embedded input layer followed by an LSTM layer of 128 units, terminated by a dense layer. Moreover, to avoid overfitting we used dropout (0.25) and recurrent dropout (0.25).
 
 \subsubsection{Bidirectional LSTM.} Similar to the previous model, bidirectional LSTM is a variation of LSTM where the two RNN receive different inputs, the original and its reverse order, and their results are connected through the recurrent layers.
-Our architecture follow the previous one with an LSTM layer of 128 units terminating with two dense layers, where all layers used dropout and recurrent dropout.
+Our architecture follow the previous one with an LSTM layer of 128 units terminating with two dense layers, where all layers used dropout (0.25) and recurrent dropout(0.25).
 
