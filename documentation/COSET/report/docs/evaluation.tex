@@ -37,8 +37,8 @@ To not overwhelm reader with verbose data, reported results are focused only ove
 \begin{comment}
 \begin{table}[h]
 \footnotesize
-\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. 
-For each model processing tecnique that brought an improvement has its result in bold.
+\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentage of $F_{1-macro}$ score.
+Each model processing technique that gave an improvement has its result in bold.
 }
 \label{tab:preprocessingOLD}
 \centering
@@ -58,8 +58,8 @@ FastText					& 0.546			&  0.533	&  \textbf{0.550}	& 0.534	&  \textbf{0.553}	& 0.
 
 \begin{table}[h]
 	\centering
-	\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. 
-		For each model processing tecnique that brought an improvement has its result in bold.
+	\caption{Pre-processing study comparing 10-fold cross validation results over the development set in terms of percentage of $F_{1-macro}$ score.
+		For each model processing technique that brought an improvement has its result in bold.
 	}
 	\label{tab:preprocessing}
 	\begin{tabular}{l|cccccccccc}
@@ -76,10 +76,10 @@ FastText					& 0.546			&  0.533	&  \textbf{0.550}	& 0.534	&  \textbf{0.553}	& 0.
 \end{table}
 
 
-From the analysis of \Cref{tab:preprocessing} no absolute conclusion can be drawn, meaning that it wasn't possible to find a combination of pre-processing that gives the best performance for all the model, meaning that each model is highly sensible to the performed combination. Nevertheless, some relative observation can be made:
+From the analysis of \Cref{tab:preprocessing} no absolute conclusion can be drawn, meaning that it wasn't possible to find a combination of pre-processing that gives the best performance for all the models, meaning that each model is highly sensible to the performed combination. Nevertheless, some relative observation can be made:
 \begin{itemize}
-\item SW (i.e., removing spanish stop words) and NUM (i.e., substitute numbers with a constant string) leads to performance improvement to all the model respect to no pre-processing at all,
-\item ST (i.e., stemming) and HT (i.e., substitute hashtags with a constant string) decrease the performance of both models respect to no-preprocessing at all.
+\item SW (i.e., removing Spanish stopwords) and NUM (i.e., substitute numbers with a constant string) lead to performance improvement to all the model respect to no pre-processing at all,
+\item ST (i.e., stemming) and HT (i.e., substitute hashtags with a constant string) decrease the performance of both models respect to non-preprocessing at all.
 \end{itemize}
 
 From above observations, to continue our study and fix system's pre-processing pipeline, for each classification model we decided to use the combination of pre-processings that singularly applied give improvements to the system.
@@ -87,8 +87,8 @@ From above observations, to continue our study and fix system's pre-processing p
 \begin{comment}
 \begin{table}[h]
 \footnotesize
-\caption{Word embeddings study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score.
-For each model the best performing word embeddings configuration has its result in bold.
+\caption{Word embeddings study comparing 10-fold cross validation results over the development set in terms of percentage of $F_{1-macro}$ score.
+Each model the best performing word embeddings configuration has its result in bold.
  }
 \label{tab:representationOLD}
 \centering
@@ -110,7 +110,7 @@ FastText					& 0.556	        & 0.351	    	& 0.450		    & 0.559	        &  \textb
 
 \begin{table}[h]
 	\centering
-	\caption{Word embeddings study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score.
+	\caption{Word embeddings study comparing 10-fold cross validation results over the development set in terms of percentage of $F_{1-macro}$ score.
 		For each model the best performing word embeddings configuration has its result in bold.
 	}
 	\label{tab:representationwithCA}
@@ -139,7 +139,7 @@ Analysing results in \Cref{tab:representation}, here the used notation refers to
 
 \begin{table}[h]
 \footnotesize
-\caption{Text representation study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. The pre-processing setting was fixed at RM+EM.}
+\caption{Text representation study comparing 10-fold cross validation results over the development set in terms of percentage of $F_{1-macro}$ score. The pre-processing setting was fixed at RM+EM.}
 %\label{tab:representation}
 \centering
 \begin{tabular}{l|ccccc}
@@ -163,7 +163,7 @@ non-static			& 52,6		& 47,3		& \win51,8		& 53,3		& \textbf{54,7}\\
 
 \begin{table}[h]
 	\centering
-	\caption{Word embeddings study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score.
+	\caption{Word embeddings study comparing 10-fold cross validation results over the development set in terms of percentage of $F_{1-macro}$ score.
 		For each model the best performing word embeddings configuration has its result in bold.
 	}
 	\label{tab:representation}
@@ -183,7 +183,7 @@ non-static			& 52,6		& 47,3		& \win51,8		& 53,3		& \textbf{54,7}\\
 Analysing results in \Cref{tab:representation}, here the used notation refers to the one introduced in \Cref{subsec:representation}, where the listing of a notation means its use as embedded input layer for the reported result. From its analysis the following interpretation can be drawn:
 \begin{itemize}
 	\item Setting as \emph{static} the sentence matrix weights has the worst performance
-	\item Setting as \emph{non-static} leads to better performance, where this insight can be deduced by corpus characteristic (i.e., a good example of Computer Mediated Communication)
+	\item Setting as \emph{non-static} leads to a better performance, where this insight can be deduced by corpus characteristic (i.e., a good example of Computer Mediated Communication)
 	\item The use of pre-trained embedding is useful in combination with \emph{non-static} weights (i.e., best performances with ES non-static)
 \end{itemize}
 
@@ -192,7 +192,7 @@ In \cref{tab:overview} we report a complete overview of the evaluated models in 
 \begin{comment}
 \begin{table}[h]
 \footnotesize
-\caption{Best configurations study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
+\caption{Best configurations study comparing 10-fold cross validation results over the development set in terms of percentage of $F_{1-macro}$ score. }
 \label{tab:overviewOLD}
 \centering
 \begin{tabular}{c|c}
@@ -214,7 +214,7 @@ Kim			& 0.579 ($\pm$ 0.009) \\
 
 \begin{table}[h]
 	\centering
-	\caption{Best configurations study comparing 10-fold cross validation results over the development set in terms of percentuage of $F_{1-macro}$ score. }
+	\caption{Best configurations study comparing 10-fold cross validation results over the development set in terms of percentage of $F_{1-macro}$ score. }
 	\label{tab:overview}
 	\begin{tabular}{c|c}
 		\hline\noalign{\smallskip}
@@ -234,7 +234,7 @@ Kim			& 0.579 ($\pm$ 0.009) \\
 
 \subsection{Competition results} \label{subsec:results}
 
-For the system's submission, participants where allowed to send more than a model till a maximum of 5 possible runs, therefore in \cref{tab:results} we report our best performing systems at the COSET shared task.
+For the system's submission, participants were allowed to send more than a model till a maximum of 5 possible runs, \cref{tab:results} reports our best performing systems at the COSET shared task.
 
 \begin{comment}
 \begin{table}[h]
