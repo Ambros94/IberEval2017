@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  20 JUN 2017 21:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.9.5)  21 JUN 2017 19:58
 entering extended mode
 **./master.tex
 (master.tex
@@ -1395,22 +1395,10 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  (docs/abstract.tex)
 (docs/introduction.tex) (docs/task.tex [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]) (docs/system.tex
-Overfull \hbox (1.44159pt too wide) in paragraph at lines 16--26
-\OT1/cmr/m/n/10 take into con-sid-er-a-tion the fol-low-ing items: [][](i)[]  m
-en-tions (i.e., MT),[] [](ii)[]  smi-ley (i.e., SM),[] [](iii)[]  emoji
- []
-
-[2]
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]) (docs/system.tex [2]
 Underfull \hbox (badness 10000) in paragraph at lines 37--37
  [][][]\OT1/cmr/m/n/9 Preprocessor is a pre-pro-cess-ing li-brary for tweet dat
 a writ-ten in Python,
- []
-
-
-Overfull \hbox (4.05261pt too wide) in paragraph at lines 34--39
-[]\OT1/cmr/m/n/10 To im-ple-ment above pre-processing tec-nique we took ad-van-
-tage of the fol-low-ing tools: [][](i)[]  NLTK
  []
 
 [3] <figs/fast_text.png, id=110, 373.395pt x 188.705pt>
@@ -1423,7 +1411,7 @@ Package pdftex.def Info: figs/fast_text.png used on input line 95.
 File: figs/kim_cnn.png Graphic file (type png)
 
 <use figs/kim_cnn.png>
-Package pdftex.def Info: figs/kim_cnn.png used on input line 113.
+Package pdftex.def Info: figs/kim_cnn.png used on input line 114.
 (pdftex.def)             Requested size: 313.69025pt x 286.98578pt.
 
 
@@ -1457,11 +1445,11 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 58.
 Here is how much of TeX's memory you used:
  21734 strings out of 493334
  402649 string characters out of 3139253
- 492517 words of memory out of 3000000
+ 493517 words of memory out of 3000000
  24956 multiletter control sequences out of 15000+200000
  13661 words of font info for 53 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,13n,35p,10381b,4133s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 43i,13n,35p,10381b,4141s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
 x10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Progr
@@ -1480,9 +1468,9 @@ pe1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
 c/amsfonts/cm/cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
 s/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmt
 i9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on master.pdf (8 pages, 425763 bytes).
+Output written on master.pdf (8 pages, 426976 bytes).
 PDF statistics:
- 272 PDF objects out of 1000 (max. 8388607)
+ 270 PDF objects out of 1000 (max. 8388607)
  74 named destinations out of 1000 (max. 500000)
  19 words of extra memory for PDF output out of 10000 (max. 10000000)
 
