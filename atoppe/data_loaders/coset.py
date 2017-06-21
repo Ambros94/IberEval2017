@@ -11,7 +11,9 @@ __author__ = "Ambrosini Luca (@Ambros94)"
 script_dir = os.path.dirname(__file__)
 abs_train_path = os.path.join(script_dir, '../../resources/coset/coset-train.csv')
 abs_dev_path = os.path.join(script_dir, '../../resources/coset/coset-dev.csv')
-abs_test_path = os.path.join(script_dir, '../../resources/coset/coset-test-text.csv')
+abs_test_text_path = os.path.join(script_dir, '../../resources/coset/coset-test-text.csv')
+abs_test_labels_path = os.path.join(script_dir, '../../resources/coset/coset-test-labels.csv')
+abs_bigger_test_path = os.path.join(script_dir, '../../resources/coset/coset-bigger-test.csv')
 
 """
 1. Political issues Related to the most abstract electoral confrontation.
@@ -50,6 +52,20 @@ def load_data():
             labels.append(row[2])
             validation_samples += 1
 
+    # Loading ex test set
+    with open(abs_test_text_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
+        for row in csv_reader:
+            ids.append(row[0])
+            labels.append(row[1])
+
+    with open(abs_test_labels_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='\t')
+        for row in csv_reader:
+            data.append(row[1])
+    assert len(ids) == len(data)
+    assert len(ids) == len(labels)
+
     # Prepare labels
     encoder = LabelEncoder()
     encoder.fit(labels)
@@ -78,9 +94,10 @@ def load_test():
     ids = []
     data = []
     # Loading test set
-    with open(abs_test_path, 'rt', encoding="utf-8") as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',', quotechar='"')
+    with open(abs_bigger_test_path, 'rt', encoding="utf-8") as csv_file:
+        csv_reader = csv.reader(csv_file)
         for row in csv_reader:
+            print(row)
             ids.append(row[0])
             data.append(row[1])
     return ids, data

@@ -133,7 +133,8 @@ Dilated Kim					& $0.658 (\pm0.039)$ & $0.659 (\pm0.028)$ & $0.652 (\pm0.013)$ &
 From the analysis of \Cref{tab:dilation} we can outline a significant performance's improvement of our proposed model respect the original Kim's model.
 
 
-Due to the fact that our development data set has few samples, to train our models we decided to apply a \emph{data augmentation} technique that didn't rely over external data rather exploit the word embedding text representation. In details, we applied Gaussian noise to word embeddings and after every convolutional layers, and, to further improve performances, we take advantage of batch normalization.
+Due to the fact that our development data set has few samples, to train our models we decided to apply a \emph{data augmentation} technique that didn't rely over external data rather exploit the word embedding text representation. In details, we applied Gaussian noise  to word embeddings and after every convolutional layers, and, to further improve performances, we take advantage of batch normalization.
+Best results were archived with additive zero centered noise, with a standard deviation of 0.2. Regarding the batch normalization layers, default keras parameters were used.
 Results of this technique respect the Dilated Kim's model are reported in \cref{tab:augmentation}.
 
 \begin{comment}

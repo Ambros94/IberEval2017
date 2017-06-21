@@ -5,12 +5,13 @@ from time import gmtime, strftime
 from data_loaders import coset
 from deep_models import metrics
 from deep_models.fasttext import FastTextModel
+from nlp_utils.tweets_preprocessor import fast_text_coset
 
 
 def run(cleaning_function):
     data_function = coset.load_data
     max_len = 30
-    language = 'ca'
+    language = 'es'
     fast_text = FastTextModel(data_function=data_function, decode_function=coset.decode_label,
                               persist_function=coset.persist_solution,
                               test_function=coset.load_test)
@@ -35,3 +36,6 @@ def run(cleaning_function):
         writer.writerow(["fasttext", cleaning_function.__name__, ('%.3f' % fast_text_f1_macro).replace('.', ',')])
         outcsv.write("Pre-processing:")
         outcsv.write(''.join(inspect.getsourcelines(cleaning_function)[0]))
+
+
+run(cleaning_function=fast_text_coset)
